@@ -1,5 +1,13 @@
-.signUpContent{
-    background-color: #b98b63;
+.signUpContent {
+    background: rgba(185, 139, 99, 0.4);
+    /* background-color: rgba(255, 255, 255, 0.1); */
+    backdrop-filter: blur(10px);
     border-radius: 20px;
-    border: 0 solid transparent;
+    /* border: 2px solid #b98b63; */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.btnSubmitForm {
+    color: #b98b63;
 }
