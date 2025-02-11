@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'login-container',
   standalone: false,
@@ -9,7 +10,7 @@ import { AccountService } from '../../../services/account.service';
 export class LoginContainerComponent {
   accountService : AccountService = inject(AccountService);
 
-  onSubmit(loginForm : any){
+  onSubmit(loginForm : NgForm){
     console.log(loginForm.value);
   }
 }
