@@ -3,6 +3,8 @@ package com.example.backend_app.auth.services;
 import com.example.backend_app.auth.DTOs.AuthenticationRequest;
 import com.example.backend_app.auth.DTOs.AuthenticationResponse;
 import com.example.backend_app.auth.DTOs.RegisterRequest;
+import com.example.backend_app.exception.ExceptionBadRequest;
+import com.example.backend_app.exception.ExceptionConflict;
 import com.example.backend_app.user.models.User;
 import com.example.backend_app.user.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -25,7 +27,7 @@ public class AuthService {
 
     public AuthenticationResponse registerUser(RegisterRequest user) {
         if(userRepository.existsByEmail(user.getEmail())) {
-            //user already exists -exception
+            throw new ExceptionConflict("Account with this email already exists");
         }
         User newUser = new User();
         newUser.setEmail(user.getEmail());
@@ -42,12 +44,12 @@ public class AuthService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
+        if(!userRepository.existsByEmail(authenticationRequest.getEmail())) {
+            throw new ExceptionBadRequest("User Not Found");
+        }
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         var user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
-        if(user == null) {
-            return null;
-            //user not found -exception
-        }
+
         Map<String, Object> claims =  new HashMap<>();
         claims.put("role",user.getRole());
         claims.put("id",user.getId());
