@@ -13,12 +13,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public AuthenticationResponse registerUser(RegisterRequest user) {
         if(!userRepository.existsByEmail(user.getEmail())) {
             User newUser = new User();
             newUser.setEmail(user.getEmail());
-            newUser.setPassword(user.getPassword());
+            newUser.setPassword(passwordEncoder.encode(user.getPassword()));
             newUser.setName(user.getName());
             newUser.setLastName(user.getLastName());
             newUser.setUsername(user.getUsername());
