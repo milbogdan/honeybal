@@ -2,15 +2,10 @@ package com.example.backend_app.auth.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class RegisterRequest {
-    private String name;
-    private String lastName;
+public class AuthenticationRequest {
     private String email;
     private String password;
-    private String username;
 }
