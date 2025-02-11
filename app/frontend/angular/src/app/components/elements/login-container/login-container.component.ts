@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
   selector: 'login-container',
   standalone: false,
   templateUrl: './login-container.component.html',
-  styleUrl: './login-container.component.css'
+  styleUrl: './login-container.component.css',
 })
 export class LoginContainerComponent {
   onSubmit(loginForm : any){
