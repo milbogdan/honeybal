@@ -4,30 +4,49 @@
             <div class="card-body d-flex flex-column justify-content-center">
                 <h5 class="card-title text-center">Login</h5>
                 <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-                    <!-- <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" ngModel required email placeholder="Enter email">
-                    </div> -->
-                    
-                    <p-inputgroup>
-                        <p-inputgroup-addon>
-                            <i class="pi pi-envelope"></i>
-                        </p-inputgroup-addon>
-                        <input pInputText placeholder="Username" ngModel required name="username"/>
-                    </p-inputgroup>
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-envelope"></i>
+                            </p-inputgroup-addon>
+                            <input pInputText placeholder="Email or username" ngModel required name="usernameEmail"/>
+                        </p-inputgroup>
+                    </div>
 
-                    <br>
-                    <p-inputgroup>
-                        <p-inputgroup-addon>
-                            <i class="pi pi-lock"></i>
-                        </p-inputgroup-addon>
-                        <input type="password" pInputText ngModel required placeholder="Password" name="password"/>
-                    </p-inputgroup>
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-lock"></i>
+                            </p-inputgroup-addon>
+                            <input type="password" pInputText ngModel required placeholder="Password" name="password"/>
+                        </p-inputgroup> 
+                    </div>
 
-                    <br>
-                    <!-- [disabled]="!loginForm.valid" -->
-                    <p-button fluid label="Submit" variant="outlined" severity="secondary" class="btnSubmitForm"/>
-                    <!-- <button type="submit" class="col-lg-12 btn btn-primary btn-block" [disabled]="!loginForm.valid">Submit</button> -->
+                    <div class="mb-3 row-wrapper">
+                        <div class="checkbox-wrapper-4">
+                            <input class="inp-cbx" id="rm" type="checkbox" name="rememberMe" ngModel/>
+                            <label class="cbx" for="rm"><span>
+                            <svg width="12px" height="10px">
+                                <use xlink:href="#check-4"></use>
+                            </svg></span><span class="rmText">Remeber me</span></label>
+                            <svg class="inline-svg">
+                                <symbol id="check-4" viewbox="0 0 12 10">
+                                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </symbol>
+                            </svg>
+                        </div>
+                        <div class="reset-password">
+                            <span>Reset password</span>
+                        </div>
+                    </div>
+
+                    <div class="wrapper mb-3">
+                        <p-button type="submit" label="Submit" fluid class="btnSubmitForm"/>
+                    </div>
+
+                    <div class="wrapper">
+                        <span class="noAcc">Don't have an account? <a routerLink="/register">Sign up here.</a></span>
+                    </div>
                 </form>
             </div>
         </div>

@@ -1,0 +1,72 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="row col-12 mx-auto" style="height: 50vh;">
+        <div class="card col-sm-6 col-md-6 col-lg-6 col-xl-4 mx-auto signUpContent">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <h5 class="card-title text-center">Register</h5>
+                <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-envelope"></i>
+                            </p-inputgroup-addon>
+                            <input pInputText placeholder="Email Address" ngModel required name="email"/>
+                        </p-inputgroup>
+                    </div>
+
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-user"></i>
+                            </p-inputgroup-addon>
+                            <input type="text" pInputText ngModel required placeholder="Username" name="username"/>
+                        </p-inputgroup> 
+                    </div>
+
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-address-book"></i>
+                            </p-inputgroup-addon>
+                            <input type="text" pInputText ngModel required placeholder="First name" name="firstName"/>
+                        </p-inputgroup> 
+                    </div>
+
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-address-book"></i>
+                            </p-inputgroup-addon>
+                            <input type="text" pInputText ngModel required placeholder="Last name" name="lastName"/>
+                        </p-inputgroup> 
+                    </div>
+
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-lock"></i>
+                            </p-inputgroup-addon>
+                            <input type="password" pInputText ngModel required placeholder="Password" name="password"/>
+                        </p-inputgroup> 
+                    </div>
+
+                    <div class="mb-3">
+                        <p-inputgroup>
+                            <p-inputgroup-addon>
+                                <i class="pi pi-lock"></i>
+                            </p-inputgroup-addon>
+                            <input type="password" pInputText ngModel required placeholder="Confirm password" name="confirmPassword"/>
+                        </p-inputgroup> 
+                    </div>
+
+                    <div class="wrapper mb-3">
+                        <p-button type="submit" label="Submit" fluid class="btnSubmitForm"/>
+                    </div>
+
+                    <div class="wrapper">
+                        <span class="noAcc">Already have an account? <a routerLink="/login">Login here!</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
