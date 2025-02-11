@@ -1,0 +1,35 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="row col-12 mx-auto" style="height: 50vh;">
+        <div class="card col-sm-6 col-md-6 col-lg-6 col-xl-4 mx-auto signUpContent">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <h5 class="card-title text-center">Login</h5>
+                <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+                    <!-- <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" ngModel required email placeholder="Enter email">
+                    </div> -->
+                    
+                    <p-inputgroup>
+                        <p-inputgroup-addon>
+                            <i class="pi pi-envelope"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText placeholder="Username" ngModel required name="username"/>
+                    </p-inputgroup>
+
+                    <br>
+                    <p-inputgroup>
+                        <p-inputgroup-addon>
+                            <i class="pi pi-lock"></i>
+                        </p-inputgroup-addon>
+                        <input type="password" pInputText ngModel required placeholder="Password" name="password"/>
+                    </p-inputgroup>
+
+                    <br>
+                    <!-- [disabled]="!loginForm.valid" -->
+                    <p-button fluid label="Submit" variant="outlined" severity="secondary" class="btnSubmitForm"/>
+                    <!-- <button type="submit" class="col-lg-12 btn btn-primary btn-block" [disabled]="!loginForm.valid">Submit</button> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
