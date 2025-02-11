@@ -1,6 +1,6 @@
 package com.example.backend_app.orders.models;
 
-import com.example.backend_app.auth.models.User;
+import com.example.backend_app.user.models.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

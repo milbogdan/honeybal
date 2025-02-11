@@ -1,16 +1,19 @@
-package com.example.backend_app.auth.models;
+package com.example.backend_app.user.models;
 
 import com.example.backend_app.orders.models.Order;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Entity
 @Table(name="users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -29,7 +32,7 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String address;
 
     @Column(nullable = false)
