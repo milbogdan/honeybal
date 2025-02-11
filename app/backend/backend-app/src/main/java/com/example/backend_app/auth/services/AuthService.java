@@ -32,7 +32,7 @@ public class AuthService {
         User newUser = new User();
         newUser.setEmail(user.getEmail());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setName(user.getName());
+        newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setUsername(user.getUsername());
         userRepository.save(newUser);
@@ -44,9 +44,10 @@ public class AuthService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
-        if(!userRepository.existsByEmail(authenticationRequest.getEmail())) {
+        if(!userRepository.existsByEmail(authenticationRequest.getEmail()) && !userRepository.existsByUsername(authenticationRequest.getEmail())) {
             throw new ExceptionBadRequest("User Not Found");
         }
+
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         var user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
 
