@@ -18,12 +18,16 @@ import { SelectModule } from 'primeng/select';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { RegisterContainerComponent } from './components/elements/register-container/register-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    LoginContainerComponent
+    LoginContainerComponent,
+    RegisterPageComponent,
+    RegisterContainerComponent
   ],
   imports: [
     BrowserModule,
