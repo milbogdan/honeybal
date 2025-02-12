@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { LoginContainerComponent } from './components/elements/login-container/login-container.component';
 import { FormsModule } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 // PrimeNg
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -20,6 +21,13 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { RegisterContainerComponent } from './components/elements/register-container/register-container.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { NavbarComponent } from './components/elements/navbar/navbar.component';
+import { MenuItem } from 'primeng/api';
+import { Menubar } from 'primeng/menubar';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+import { Ripple } from 'primeng/ripple';
 
 @NgModule({
   declarations: [
@@ -27,7 +35,9 @@ import { RegisterContainerComponent } from './components/elements/register-conta
     LoginPageComponent,
     LoginContainerComponent,
     RegisterPageComponent,
-    RegisterContainerComponent
+    RegisterContainerComponent,
+    HomePageComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -39,10 +49,16 @@ import { RegisterContainerComponent } from './components/elements/register-conta
     SelectModule,
     InputNumberModule,
     ButtonModule,
-    CheckboxModule
+    CheckboxModule,
+    BadgeModule,
+    AvatarModule,
+    InputTextModule,
+    CommonModule,
+    Ripple,
+    Menubar
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideAnimationsAsync(),
     provideClientHydration(withEventReplay()),
     providePrimeNG({

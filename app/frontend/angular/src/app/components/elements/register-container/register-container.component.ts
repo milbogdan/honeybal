@@ -17,17 +17,19 @@ export class RegisterContainerComponent {
     let user = {
       email: registerForm.value.email,
       username: registerForm.value.username,
-      name: registerForm.value.firstName,
+      firstName: registerForm.value.firstName,
       lastName: registerForm.value.lastName,
       password: registerForm.value.password
     };
 
     // Privremeno ostavljeno ovako dok se ne namesti ispis gresaka
-    if((!user.email || !user.username || !user.name || !user.lastName || !user.password) && registerForm.value.password === registerForm.value.confirmPassword){
+    console.log(registerForm.value);
+    console.log(user);
+    if(user.email && user.username && user.firstName && user.lastName && user.password && registerForm.value.password === registerForm.value.confirmPassword) {
       this.accountService.register(user).subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
-      }); 
+      });
     }
 
     registerForm.reset();
