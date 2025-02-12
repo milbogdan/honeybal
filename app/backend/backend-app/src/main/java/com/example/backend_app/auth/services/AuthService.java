@@ -44,7 +44,7 @@ public class AuthService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
-        if(!userRepository.existsByEmail(authenticationRequest.getEmail()) && !userRepository.existsByUsername(authenticationRequest.getEmail())) {
+        if(!userRepository.existsByEmail(authenticationRequest.getEmail())) {
             throw new ExceptionBadRequest("User Not Found");
         }
 
