@@ -2,6 +2,7 @@ package com.example.backend_app.products.services;
 
 import com.example.backend_app.exception.ExceptionBadRequest;
 import com.example.backend_app.products.DTOs.CreateProductDTO;
+import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
 import com.example.backend_app.products.models.ProductCategory;
 import com.example.backend_app.products.repositories.ProductCategoryRepository;
@@ -32,5 +33,39 @@ public class ProductService {
     public Page<Product> getAllProducts(int page,int pageSize,Integer categoryId,String searchName) {
         Pageable pageable = PageRequest.of(page,pageSize);
         return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName);
+    }
+
+    public Product editProduct(Long id, EditProductDTO editProductDTO) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        Product product = productOptional.orElseThrow(() -> new ExceptionBadRequest("Product not found"));
+        if(editProductDTO.getIn_stock()!=null){
+            product.setIn_stock(editProductDTO.getIn_stock());
+        }
+        if(editProductDTO.getName()!=null){
+            product.setName(editProductDTO.getName());
+        }
+        if(editProductDTO.getDescription()!=null){
+            product.setDescription(editProductDTO.getDescription());
+        }
+        if(editProductDTO.getDiscount()!=null){
+            product.setDiscount(editProductDTO.getDiscount());
+            product.calculatePrice();
+        }
+        if(editProductDTO.getBasePrice()!=null){
+            product.setBasePrice(editProductDTO.getBasePrice());
+            product.calculatePrice();
+        }
+        if(editProductDTO.getCategory()!=null){
+            product.setCategory(productCategoryRepository.findById(editProductDTO.getCategory()).orElseThrow(() -> new ExceptionBadRequest("Category not found")));
+        }
+        if(editProductDTO.getImageUrl()!=null){
+            product.setImageUrl(editProductDTO.getImageUrl());
+        }
+        if(editProductDTO.getSize()!=null){
+            product.setSize(editProductDTO.getSize());
+        }
+
+        return productRepository.save(product);
+
     }
 }

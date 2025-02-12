@@ -1,6 +1,7 @@
 package com.example.backend_app.products.controllers;
 
 import com.example.backend_app.products.DTOs.CreateProductDTO;
+import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
 import com.example.backend_app.products.services.ProductService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -34,6 +35,13 @@ public class ProductController {
     public ResponseEntity<Page<Product>> getAllProducts(@RequestParam int page, @RequestParam int pageSize, @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String searchName){
         Page<Product> products=productService.getAllProducts(page,pageSize,categoryId,searchName);
         return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
+
+    @PutMapping("/put{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name="bearerAuth")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody EditProductDTO editProductDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(productService.editProduct(id,editProductDTO));
     }
 
 }
