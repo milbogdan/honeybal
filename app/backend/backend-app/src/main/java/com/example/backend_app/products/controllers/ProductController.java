@@ -37,6 +37,11 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
+    @GetMapping("/get{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(id));
+    }
+
     @PutMapping("/put{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name="bearerAuth")
