@@ -31,11 +31,17 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/public",
+                                "/api/users/unsecured/**",
                                 "/auth/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
+                        .requestMatchers(
+                                "/api/users/secured/**,",
+                                "/auth/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())

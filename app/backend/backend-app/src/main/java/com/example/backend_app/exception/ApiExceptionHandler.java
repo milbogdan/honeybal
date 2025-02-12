@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
+
     @ExceptionHandler(value={ExceptionNotFound.class})
     public ResponseEntity<Object> handleApiRequestNotFoundException(ExceptionNotFound e){
         ApiException apiException = new ApiException(
