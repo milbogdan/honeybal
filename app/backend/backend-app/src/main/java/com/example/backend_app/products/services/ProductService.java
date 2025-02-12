@@ -8,8 +8,12 @@ import com.example.backend_app.products.repositories.ProductCategoryRepository;
 import com.example.backend_app.products.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,5 +27,10 @@ public class ProductService {
                 .orElseThrow(() -> new ExceptionBadRequest("Category not found"));
 
         return productRepository.save(Product.fromDTO(productDTO,productCategory));
+    }
+
+    public Page<Product> getAllProducts(int page,int pageSize,Integer categoryId,String searchName) {
+        Pageable pageable = PageRequest.of(page,pageSize);
+        return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName);
     }
 }
