@@ -3,6 +3,7 @@ package com.example.backend_app.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,18 +31,19 @@ public class SecurityConfiguration {
        http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        //user endpoints
+                        .requestMatchers(HttpMethod.GET,"/api/users/get").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/users/get2").authenticated()
+
+                        //product endpoints
+                        .requestMatchers(HttpMethod.POST,"/api/products/post").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/products/getAll").permitAll()
+                        .requestMatchers(HttpMethod.PUT,"/api/products/put{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/products/get{id}").permitAll()
                         .requestMatchers(
-                                "/api/users/unsecured/**",
                                 "/auth/**",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**"
-                        ).permitAll()
-                        .requestMatchers(
-                                "/api/users/secured/**,",
-                                "/auth/**",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
-                        ).authenticated()
+                                "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())

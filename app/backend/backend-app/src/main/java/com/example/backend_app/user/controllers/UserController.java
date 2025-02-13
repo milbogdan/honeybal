@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class UserController {
 
-    @GetMapping("/unsecured/get")
+    @GetMapping("/get")
     public String get() {
         return "Hello World";
     }
 
-    @GetMapping("/secured/get")
+    @GetMapping("/get2")
     @SecurityRequirement(name="bearerAuth")
     public String get2() {
         return "Hello World";
