@@ -28,6 +28,9 @@ import { Menubar } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { Ripple } from 'primeng/ripple';
+import { ProductsPageComponent } from './pages/products-page/products-page.component';
+import { ProductListComponent } from './components/elements/product-list/product-list.component';
+import { ProductComponent } from './components/elements/product/product.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { Ripple } from 'primeng/ripple';
     RegisterPageComponent,
     RegisterContainerComponent,
     HomePageComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProductsPageComponent,
+    ProductListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
