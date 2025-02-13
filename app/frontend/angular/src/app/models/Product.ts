@@ -1,11 +1,14 @@
+import { ProductCategory } from "./ProductCategory";
+
 export interface Product {
     id: number,
-    category_id : number,
+    category : ProductCategory,
     name : string,
     description : string,
     in_stock: boolean,
-    size?: string,
-    base_price: number,
+    imageUrl: string,
+    size: string,
+    basePrice: number,
     discount: number,
     price : number
 }
