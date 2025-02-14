@@ -11,23 +11,30 @@ import { ProductService } from '../../../services/product.service';
 export class ProductListComponent implements OnInit {
   first: number = 0;
   rows: number = 5;
+  currentPage : number = 0;
   products : Product[] = [];
+  totalElements : number = 0;
+  totalPages : number = 0;  
   productService: ProductService = inject(ProductService);
 
   ngOnInit(){
-    this.fetchProducts();    
+    this.fetchProducts(this.currentPage, this.rows);
   }
 
   onPageChange(event: any) {
       this.first = event.first ?? 0;
       this.rows = event.rows ?? 5;
-      this.fetchProducts();
+      this.currentPage = (this.first / this.rows);
+      this.fetchProducts(this.currentPage, this.rows);
+      console.log(this.currentPage, this.rows);
   }
 
-  private fetchProducts(){
-    this.productService.getAllProducts(this.first, this.rows).subscribe({
+  private fetchProducts(currentPage : number, pageSize: number){
+    this.productService.getAllProducts(currentPage, pageSize).subscribe({
       next: (data : any) => {
         // console.log(data);
+        this.totalElements = data.totalElements;
+        this.totalPages = data.totalPages;
         this.products = data.content;
       },
       error: (err : any) => {
