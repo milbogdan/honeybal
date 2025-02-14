@@ -1,7 +1,10 @@
 <app-navbar></app-navbar>
 
-<div class="container">
-    <product-filter></product-filter>
+
+<div
+[ngClass]="windowWidth > 500 ? 'content__wrapper container' : ''">
+    <product-filter
+    *ngIf="windowWidth > 500"></product-filter>
 
     <product-list></product-list>
 </div>

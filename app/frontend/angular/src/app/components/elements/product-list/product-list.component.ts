@@ -10,7 +10,7 @@ import { ProductService } from '../../../services/product.service';
 })
 export class ProductListComponent implements OnInit {
   first: number = 0;
-  rows: number = 5;
+  rows: number = 6;
   currentPage : number = 0;
   products : Product[] = [];
   totalElements : number = 0;

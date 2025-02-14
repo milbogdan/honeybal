@@ -15,8 +15,10 @@ export class LoginContainerComponent {
   onSubmit(loginForm : NgForm){
     this.accountService.login(loginForm.value.email, loginForm.value.password).subscribe({
       next: (resp) =>{
-        console.log(resp);
         this.router.navigate(['/']);
+      },
+      error:(err)=>{
+        console.log(err)
       }
     })
   }
