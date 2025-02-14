@@ -7,3 +7,10 @@
     </ng-container>
   </div>
 </div>
+
+<p-paginator 
+  (onPageChange)="onPageChange($event)"
+  [first]="first" 
+  [rows]="rows" 
+  [totalRecords]="120" 
+  [rowsPerPageOptions]="[5, 15, 20, 30]" />

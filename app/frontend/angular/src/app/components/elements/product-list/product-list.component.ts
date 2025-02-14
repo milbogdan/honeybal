@@ -9,11 +9,23 @@ import { ProductService } from '../../../services/product.service';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent implements OnInit {
+  first: number = 0;
+  rows: number = 5;
   products : Product[] = [];
   productService: ProductService = inject(ProductService);
 
   ngOnInit(){
-    this.productService.getAllProducts(0,7).subscribe({
+    this.fetchProducts();    
+  }
+
+  onPageChange(event: any) {
+      this.first = event.first ?? 0;
+      this.rows = event.rows ?? 5;
+      this.fetchProducts();
+  }
+
+  private fetchProducts(){
+    this.productService.getAllProducts(this.first, this.rows).subscribe({
       next: (data : any) => {
         // console.log(data);
         this.products = data.content;
@@ -21,7 +33,6 @@ export class ProductListComponent implements OnInit {
       error: (err : any) => {
         // console.log(err);
       }
-    })
+    });
   }
-
 }

@@ -23,7 +23,6 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { RegisterContainerComponent } from './components/elements/register-container/register-container.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NavbarComponent } from './components/elements/navbar/navbar.component';
-import { MenuItem } from 'primeng/api';
 import { Menubar } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
@@ -31,6 +30,7 @@ import { Ripple } from 'primeng/ripple';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductListComponent } from './components/elements/product-list/product-list.component';
 import { ProductComponent } from './components/elements/product/product.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,8 @@ import { ProductComponent } from './components/elements/product/product.componen
     InputTextModule,
     CommonModule,
     Ripple,
-    Menubar
+    Menubar,
+    PaginatorModule
   ],
   providers: [
     provideHttpClient(withFetch()),
