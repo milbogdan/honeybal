@@ -5,23 +5,45 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { LoginContainerComponent } from './components/elements/login-container/login-container.component';
 import { FormsModule } from '@angular/forms';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
+// PrimeNg
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { RegisterContainerComponent } from './components/elements/register-container/register-container.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { NavbarComponent } from './components/elements/navbar/navbar.component';
+import { Menubar } from 'primeng/menubar';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+import { Ripple } from 'primeng/ripple';
+import { ProductsPageComponent } from './pages/products-page/products-page.component';
+import { ProductListComponent } from './components/elements/product-list/product-list.component';
+import { ProductComponent } from './components/elements/product/product.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    LoginContainerComponent
+    LoginContainerComponent,
+    RegisterPageComponent,
+    RegisterContainerComponent,
+    HomePageComponent,
+    NavbarComponent,
+    ProductsPageComponent,
+    ProductListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +54,18 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     SelectModule,
     InputNumberModule,
-    ButtonModule
+    ButtonModule,
+    CheckboxModule,
+    BadgeModule,
+    AvatarModule,
+    InputTextModule,
+    CommonModule,
+    Ripple,
+    Menubar,
+    PaginatorModule
   ],
   providers: [
+    provideHttpClient(withFetch()),
     provideAnimationsAsync(),
     provideClientHydration(withEventReplay()),
     providePrimeNG({

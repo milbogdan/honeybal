@@ -7,11 +7,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users")
-@SecurityRequirement(name="bearerAuth")
+
 public class UserController {
 
-    @GetMapping("/public/get")
+    @GetMapping("/get")
     public String get() {
+        return "Hello World";
+    }
+
+    @GetMapping("/get2")
+    @SecurityRequirement(name="bearerAuth")
+    public String get2() {
         return "Hello World";
     }
 }

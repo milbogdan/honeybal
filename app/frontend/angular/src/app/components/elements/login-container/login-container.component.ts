@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AccountService } from '../../../services/account.service';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'login-container',
   standalone: false,
@@ -6,7 +9,15 @@ import { Component } from '@angular/core';
   styleUrl: './login-container.component.css',
 })
 export class LoginContainerComponent {
-  onSubmit(loginForm : any){
-    console.log(loginForm.value);
+  accountService : AccountService = inject(AccountService);
+  router : Router = inject(Router);
+
+  onSubmit(loginForm : NgForm){
+    this.accountService.login(loginForm.value.email, loginForm.value.password).subscribe({
+      next: (resp) =>{
+        console.log(resp);
+        this.router.navigate(['/']);
+      }
+    })
   }
 }
