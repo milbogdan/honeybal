@@ -26,7 +26,7 @@ public class ProductController {
 
     @PostMapping("/post")
     @PreAuthorize("hasRole('ADMIN')")
-    @SecurityRequirement(name="bearerAuth")
+    //@SecurityRequirement(name="bearerAuth")
     public ResponseEntity<Product> createProduct(@RequestBody CreateProductDTO product){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(product));
     }
@@ -42,9 +42,9 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(id));
     }
 
-    @PutMapping("/put{id}")
+    @PutMapping("/put/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @SecurityRequirement(name="bearerAuth")
+    //@SecurityRequirement(name="bearerAuth")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody EditProductDTO editProductDTO){
         return ResponseEntity.status(HttpStatus.OK).body(productService.editProduct(id,editProductDTO));
     }
