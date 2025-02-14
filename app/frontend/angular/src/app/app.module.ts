@@ -31,6 +31,7 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { ProductListComponent } from './components/elements/product-list/product-list.component';
 import { ProductComponent } from './components/elements/product/product.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { ProductFilterComponent } from './components/elements/product-filter/product-filter.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PaginatorModule } from 'primeng/paginator';
     NavbarComponent,
     ProductsPageComponent,
     ProductListComponent,
-    ProductComponent
+    ProductComponent,
+    ProductFilterComponent
   ],
   imports: [
     BrowserModule,

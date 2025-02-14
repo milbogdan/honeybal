@@ -11,7 +11,9 @@
                 <span>500 g</span>
             </div>
             <div class="in_stock">
-                <h3>Na stanju</h3>
+                <h3
+                [ngStyle]="{'color': product.in_stock ? '#4caf50' : '#f44336'}"
+                >{{product.in_stock ? "In stock" : "Out of stock"}}</h3>
             </div>
         </div>
         <div class="buttons_details_buy">
