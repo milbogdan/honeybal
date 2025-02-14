@@ -21,14 +21,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request, HttpServletResponse response){
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request, HttpServletResponse response){
         authService.registerUser(request,response);
-        return ResponseEntity.ok("Register successfull!");
+        return ResponseEntity.ok(new AuthenticationResponse("Successfully registered!"));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest request,HttpServletResponse response){
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request,HttpServletResponse response){
         authService.authenticate(request,response);
-        return ResponseEntity.ok("Login successfull!");
+        return ResponseEntity.ok(new AuthenticationResponse("Successfully authenticated!"));
     }
 }

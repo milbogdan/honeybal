@@ -41,6 +41,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,"/api/products/getAll").permitAll()
                         .requestMatchers(HttpMethod.PUT,"/api/products/put{id}").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/products/get{id}").permitAll()
+
+                        //productCategories endpoints
+                        .requestMatchers(HttpMethod.GET,"/api/productCategories/getAll").permitAll()
                         .requestMatchers(
                                 "/auth/**",
                                 "/swagger-ui/**",
