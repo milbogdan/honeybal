@@ -1,6 +1,7 @@
 package com.example.backend_app.products.repositories;
 
 import com.example.backend_app.products.models.Product;
+import com.example.backend_app.products.models.ProductCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "AND (:categoryId IS NULL OR p.category.id = :categoryId)")
     Page<Product> findAllWithSearchAndPagination(Pageable pageable, @Param("categoryId") Integer categoryId, @Param("nameSearch") String nameSearch);
 
-
+    @Query("SELECT p FROM Product p WHERE p.name = :name AND p.category = :category AND p.description = :description")
+    Product findByNameCategoryAndDescription(String name, ProductCategory category, String description);
 }
