@@ -32,6 +32,7 @@ import { ProductListComponent } from './components/elements/product-list/product
 import { ProductComponent } from './components/elements/product/product.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProductFilterComponent } from './components/elements/product-filter/product-filter.component';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ProductFilterComponent } from './components/elements/product-filter/pro
     CommonModule,
     Ripple,
     Menubar,
-    PaginatorModule
+    PaginatorModule,
+    PanelModule
   ],
   providers: [
     provideHttpClient(withFetch()),
