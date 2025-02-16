@@ -7,6 +7,10 @@
     background-size: cover;
 }
 
+.search{
+    margin: auto;
+}
+
 .content__wrapper {
     margin-top: 2rem;
     display: grid;
