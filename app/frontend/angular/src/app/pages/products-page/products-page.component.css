@@ -1,6 +1,16 @@
+#page-wrapper{
+    background-color: #423738;
+    height: 100%;
+    margin:0px;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+
 .content__wrapper {
     margin-top: 2rem;
     display: grid;
     grid-template-columns: 20% 80%;
     gap: 16px;
+    flex-grow: 1; 
 }

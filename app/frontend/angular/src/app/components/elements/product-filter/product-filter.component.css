@@ -16,3 +16,16 @@
     flex-direction: row;
     gap: 0.725rem;
 }
+
+:host ::ng-deep .p-panel{
+    background-color: transparent;
+    color: white;
+}
+
+:host ::ng-deep .p-panel .p-panel-header{
+    color: white;
+}
+
+:host ::ng-deep .p-panel .p-panel-header .p-ripple{
+    color: white;
+}
