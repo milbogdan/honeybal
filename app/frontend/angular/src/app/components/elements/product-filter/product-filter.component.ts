@@ -17,7 +17,11 @@ export class ProductFilterComponent {
   filterService : FilterService = inject(FilterService);
   
   ngOnInit(){
-    this.categories = this.categoryService.categories;
+    this.categoryService.getAllCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+      }
+    });
   }
 
   onCategoryChange(category: ProductCategory, event: any) {
@@ -27,11 +31,9 @@ export class ProductFilterComponent {
       this.selectedCategories = this.selectedCategories.filter(c => c !== category);
     }
     this.updateFilters();
-    console.log(this.selectedCategories);
   }
 
   onStockChange(value: boolean | null) {
-    console.log(this.inStock);
     this.inStock = value;
     this.updateFilters();
   }

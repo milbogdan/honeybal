@@ -6,8 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FilterService {
     data = {
-        viewMode: '0',
-        searchTerm: '',
+        viewMode: 0,
+        searchName: '',
         categories: [],
         inStock: null
     }

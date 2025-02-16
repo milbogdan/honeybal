@@ -1,22 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ProductCategory } from '../models/ProductCategory';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductCategoryService {
-    categories : ProductCategory[] = [
-        {
-            id: 1,
-            name: "Med"
-        },
-        {
-            id: 2,
-            name: "Rakije"
-        },
-        {
-            id: 3,
-            name: "Ostali proizvodi"
-        }
-    ];
+    http : HttpClient = inject(HttpClient);
+
+    getAllCategories() : Observable<ProductCategory[]>{
+        return this.http.get<ProductCategory[]>(environment.apiUrl + "api/productCategories/getAll");
+    }
 }

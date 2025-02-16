@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FilterService } from '../../../services/filter.service';
 
 @Component({
   selector: 'search-bar',
@@ -7,7 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './search-bar.component.css'
 })
 export class SearchBarComponent {
-  funk(){
-    console.log('funk'); 
+  filterService : FilterService = inject(FilterService);
+
+  onSearchProducts(search : string){
+    this.filterService.updateFilters({searchName : search})
   }
 }
