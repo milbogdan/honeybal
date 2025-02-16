@@ -5,10 +5,27 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root'
 })
 export class FilterService {
-    private filterState = new BehaviorSubject<any>({categories: [], inStock: null});
+    data = {
+        viewMode: '0',
+        searchTerm: '',
+        categories: [],
+        inStock: null
+    }
+
+    private filterState = new BehaviorSubject<any>(this.data);
     filter$ = this.filterState.asObservable();
 
     updateFilters(newFilters: any) {
-        this.filterState.next(newFilters);
+        const updateFilter = {
+            ...this.filterState.getValue(), 
+            ...newFilters
+        };
+        
+        this.filterState.next(updateFilter);
     }
+
+    getFilters() {
+        return this.filterState.getValue();
+    }
+
 }

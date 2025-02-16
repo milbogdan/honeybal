@@ -34,6 +34,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProductFilterComponent } from './components/elements/product-filter/product-filter.component';
 import { PanelModule } from 'primeng/panel';
 import { SearchBarComponent } from './components/elements/search-bar/search-bar.component';
+import { ViewChangeComponent } from './components/elements/view-change/view-change.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SearchBarComponent } from './components/elements/search-bar/search-bar.
     ProductListComponent,
     ProductComponent,
     ProductFilterComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ViewChangeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,18 @@
 <div class="product__container">
   <div class="products">
-   <ng-container *ngFor="let product of products">
-      <product
+
+    <ng-container *ngTemplateOutlet="currentFillters.viewMode === 0 ? gridTemplate : listTemplate"></ng-container>
+
+    <ng-template #gridTemplate >
+      <product *ngFor="let product of products"
         [product]="product">
       </product>
-    </ng-container>
+      Grid prikaz
+    </ng-template>
+
+    <ng-template #listTemplate>
+      <p>List prikaz</p>
+    </ng-template>
   </div>
 </div>
 
