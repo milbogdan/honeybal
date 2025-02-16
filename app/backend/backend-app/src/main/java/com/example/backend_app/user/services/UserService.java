@@ -14,11 +14,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+
     public UserDTO getUserFromToken(String token) {
         String username = jwtService.extractClaim(token,Claims::getSubject);
-        return UserMapper.INSTANCE.usertoUserDTO(userRepository.findByUsername(username).orElseThrow(() -> new ExceptionBadRequest("User not found!")));
+        return userMapper.usertoUserDTO(userRepository.findByUsername(username).orElseThrow(() -> new ExceptionBadRequest("User not found!")));
     }
 }

@@ -4,10 +4,10 @@ import com.example.backend_app.user.DTOs.UserDTO;
 import com.example.backend_app.user.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
+@Mapper(componentModel = "spring")
+@Component
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
     UserDTO usertoUserDTO(User user);
 }
