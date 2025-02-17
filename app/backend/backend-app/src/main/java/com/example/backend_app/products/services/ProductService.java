@@ -5,8 +5,10 @@ import com.example.backend_app.products.DTOs.CreateProductDTO;
 import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
 import com.example.backend_app.products.models.ProductCategory;
+import com.example.backend_app.products.models.ProductVariation;
 import com.example.backend_app.products.repositories.ProductCategoryRepository;
 import com.example.backend_app.products.repositories.ProductRepository;
+import com.example.backend_app.products.repositories.ProductVariationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
@@ -22,24 +24,61 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductCategoryRepository productCategoryRepository;
+    private final ProductVariationRepository productVariationRepository;
 
     public Product createProduct(CreateProductDTO productDTO) throws ExceptionBadRequest {
         ProductCategory productCategory = productCategoryRepository.findById(productDTO.getCategory())
-                .orElseThrow(() -> new ExceptionBadRequest("Category not found"));
+                .orElseThrow(() -> new ExceptionBadRequest("Category not found!"));
 
-        return productRepository.save(Product.fromDTO(productDTO,productCategory));
+
+        Product product = productRepository.findByNameCategoryAndDescription(productDTO.getName(),productCategory,productDTO.getDescription());
+        if(product == null){
+            product = Product.fromDTO(productDTO,productCategory);
+            productRepository.save(product);
+        }
+
+        ProductVariation newProductVariation = new ProductVariation();
+        newProductVariation.setImageUrl(productDTO.getImageUrl());
+        newProductVariation.setSize(productDTO.getSize());
+        newProductVariation.setBasePrice(productDTO.getBasePrice());
+        newProductVariation.setDiscount(productDTO.getDiscount());
+        newProductVariation.setIn_stock(productDTO.getIn_stock());
+        newProductVariation.setProduct(product);
+        newProductVariation.setPrice(newProductVariation.getBasePrice() * (1 - newProductVariation.getDiscount()/100));
+
+        productVariationRepository.save(newProductVariation);
+
+        product.getVariations().add(newProductVariation);
+
+        return productRepository.save(product);
     }
 
-    public Page<Product> getAllProducts(int page,int pageSize,Integer categoryId,String searchName) {
+    public Page<Product> getAllProducts(int page,int pageSize,Integer categoryId,String searchName,Boolean inStock) {
         Pageable pageable = PageRequest.of(page,pageSize);
-        return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName);
+        return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName,inStock);
     }
 
     public Product editProduct(Long id, EditProductDTO editProductDTO) {
         Optional<Product> productOptional = productRepository.findById(id);
         Product product = productOptional.orElseThrow(() -> new ExceptionBadRequest("Product not found"));
-        if(editProductDTO.getIn_stock()!=null){
-            product.setIn_stock(editProductDTO.getIn_stock());
+
+        Optional<ProductVariation> variation = productVariationRepository.findById(editProductDTO.getVariation().getId());
+        ProductVariation productVariation = variation.orElseThrow(() -> new ExceptionBadRequest("Variation not found"));
+
+        //checking if variation belongs to the product sent in dto
+        boolean rightVariation=false;
+        for(ProductVariation prodVar : product.getVariations()){
+            if(prodVar.getId().equals(editProductDTO.getVariation().getId())){
+                rightVariation=true;
+            }
+        }
+        if(!rightVariation){
+            throw new ExceptionBadRequest("Variation does not belong to this product!");
+        }
+
+
+        if(editProductDTO.getVariation().getIn_stock()!=null){
+            productVariation.setIn_stock(editProductDTO.getVariation().getIn_stock());
         }
         if(editProductDTO.getName()!=null){
             product.setName(editProductDTO.getName());
@@ -47,29 +86,34 @@ public class ProductService {
         if(editProductDTO.getDescription()!=null){
             product.setDescription(editProductDTO.getDescription());
         }
-        if(editProductDTO.getDiscount()!=null){
-            product.setDiscount(editProductDTO.getDiscount());
-            product.calculatePrice();
+        if(editProductDTO.getVariation().getDiscount()!=null){
+            productVariation.setDiscount(editProductDTO.getVariation().getDiscount());
+            calculatePrice(productVariation);
         }
-        if(editProductDTO.getBasePrice()!=null){
-            product.setBasePrice(editProductDTO.getBasePrice());
-            product.calculatePrice();
+        if(editProductDTO.getVariation().getBasePrice()!=null){
+            productVariation.setBasePrice(editProductDTO.getVariation().getBasePrice());
+            calculatePrice(productVariation);
         }
         if(editProductDTO.getCategory()!=null){
             product.setCategory(productCategoryRepository.findById(editProductDTO.getCategory()).orElseThrow(() -> new ExceptionBadRequest("Category not found")));
         }
-        if(editProductDTO.getImageUrl()!=null){
-            product.setImageUrl(editProductDTO.getImageUrl());
+        if(editProductDTO.getVariation().getImageUrl()!=null){
+            productVariation.setImageUrl(editProductDTO.getVariation().getImageUrl());
         }
-        if(editProductDTO.getSize()!=null){
-            product.setSize(editProductDTO.getSize());
+        if(editProductDTO.getVariation().getSize()!=null){
+            productVariation.setSize(editProductDTO.getVariation().getSize());
         }
 
+        productVariationRepository.save(productVariation);
         return productRepository.save(product);
 
     }
 
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new ExceptionBadRequest("Product not found"));
+    }
+
+    public void calculatePrice(ProductVariation variation) {
+        variation.setPrice(variation.getBasePrice() * (1 - variation.getDiscount()/100.0));
     }
 }

@@ -32,8 +32,10 @@ public class ProductController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam int page, @RequestParam int pageSize, @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String searchName){
-        Page<Product> products=productService.getAllProducts(page,pageSize,categoryId,searchName);
+    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam int page, @RequestParam int pageSize,
+                                                        @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String searchName,
+                                                        @RequestParam(required = false) Boolean inStock){
+        Page<Product> products=productService.getAllProducts(page,pageSize,categoryId,searchName,inStock);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 

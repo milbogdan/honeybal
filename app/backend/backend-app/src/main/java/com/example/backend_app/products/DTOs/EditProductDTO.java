@@ -1,9 +1,12 @@
 package com.example.backend_app.products.DTOs;
 
 import com.example.backend_app.products.models.ProductCategory;
+import com.example.backend_app.products.models.ProductVariation;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,14 +17,5 @@ public class EditProductDTO {
 
     private String description;
 
-    private Boolean in_stock;
-
-    private String imageUrl;
-
-    private String size;
-
-    private Double basePrice;
-
-    private Integer discount;
-
+    private EditProductVariationDTO variation;
 }
