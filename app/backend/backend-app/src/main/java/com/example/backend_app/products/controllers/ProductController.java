@@ -4,6 +4,9 @@ import com.example.backend_app.products.DTOs.CreateProductDTO;
 import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
 import com.example.backend_app.products.services.ProductService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -33,9 +36,9 @@ public class ProductController {
 
     @GetMapping("/getAll")
     public ResponseEntity<Page<Product>> getAllProducts(@RequestParam int page, @RequestParam int pageSize,
-                                                        @RequestParam(required = false) Integer categoryId,
-                                                        @RequestParam(required = false) String searchName){
-        Page<Product> products=productService.getAllProducts(page,pageSize,categoryId,searchName);
+                                                        @RequestParam(required = false) String searchName,
+                                                        @RequestParam(required = false) List<Long> categoryIds){
+        Page<Product> products=productService.getAllProducts(page,pageSize,categoryIds,searchName);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
