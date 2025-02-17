@@ -35,6 +35,7 @@ import { ProductFilterComponent } from './components/elements/product-filter/pro
 import { PanelModule } from 'primeng/panel';
 import { SearchBarComponent } from './components/elements/search-bar/search-bar.component';
 import { ViewChangeComponent } from './components/elements/view-change/view-change.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { ViewChangeComponent } from './components/elements/view-change/view-chan
     ProductComponent,
     ProductFilterComponent,
     SearchBarComponent,
-    ViewChangeComponent
+    ViewChangeComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +71,8 @@ import { ViewChangeComponent } from './components/elements/view-change/view-chan
     Ripple,
     Menubar,
     PaginatorModule,
-    PanelModule
+    PanelModule,
+    TableModule
   ],
   providers: [
     provideHttpClient(withFetch()),

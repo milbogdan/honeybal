@@ -10,7 +10,34 @@
     </ng-template>
 
     <ng-template #listTemplate>
-      <p>List prikaz</p>
+      <p-table [value]="products" [tableStyle]="{ 'min-width': '60rem' }">
+        <ng-template #header>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Size</th>
+                <th>Price</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-product>
+            <tr>
+                <td>
+                  <img
+                        [src]="'assets/products/med.png'"
+                        [alt]="product.name"
+                        class="img-of-product"
+                    />
+                  {{ product.name }}
+                  </td>
+                  <td>{{ product.category.name }}</td>
+                  <td>{{ product.in_storck ? 'In stock' : 'Out of stock' }}</td>
+                  <td></td>
+                  <td>{{ product.price }} RSD</td>
+            </tr>
+        </ng-template>
+        <!-- <ng-template #footer> In total there are {{ products ? products.length : 0 }} products. </ng-template> -->
+      </p-table>
     </ng-template>
   </div>
 </div>
