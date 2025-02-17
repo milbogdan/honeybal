@@ -23,6 +23,6 @@ export class ProductService {
             })
         }
 
-        return this.http.get<Product[]>(environment.apiUrl + 'api/products/getAll', {params});
+        return this.http.get<Product[]>(environment.apiUrl + 'products/getAll', {params});
     }
 }

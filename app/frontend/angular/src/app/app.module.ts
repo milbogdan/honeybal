@@ -36,6 +36,8 @@ import { PanelModule } from 'primeng/panel';
 import { SearchBarComponent } from './components/elements/search-bar/search-bar.component';
 import { ViewChangeComponent } from './components/elements/view-change/view-change.component';
 import { TableModule } from 'primeng/table';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { SidenavComponent } from './components/elements/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { TableModule } from 'primeng/table';
     ProductFilterComponent,
     SearchBarComponent,
     ViewChangeComponent,
+    AdminPageComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
