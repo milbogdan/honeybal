@@ -33,8 +33,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         //user endpoints
-                        .requestMatchers(HttpMethod.GET,"/api/users/get").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/users/get2").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/users/get{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/users/getAll").authenticated()
 
                         //product endpoints
                         .requestMatchers(HttpMethod.POST,"/api/products/post").authenticated()
