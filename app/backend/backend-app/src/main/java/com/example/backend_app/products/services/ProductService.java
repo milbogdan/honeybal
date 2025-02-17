@@ -53,9 +53,9 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Page<Product> getAllProducts(int page,int pageSize,Integer categoryId,String searchName,Boolean inStock) {
+    public Page<Product> getAllProducts(int page,int pageSize,Integer categoryId,String searchName) {
         Pageable pageable = PageRequest.of(page,pageSize);
-        return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName,inStock);
+        return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName);
     }
 
     public Product editProduct(Long id, EditProductDTO editProductDTO) {

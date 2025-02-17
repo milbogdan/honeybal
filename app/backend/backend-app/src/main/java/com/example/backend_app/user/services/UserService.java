@@ -26,8 +26,8 @@ public class UserService {
 
 
     public UserDTO getUserFromToken(String token) {
-        String username = jwtService.extractClaim(token,Claims::getSubject);
-        return userMapper.usertoUserDTO(userRepository.findByUsername(username).orElseThrow(() -> new ExceptionBadRequest("User not found!")));
+        String username = jwtService.extractUsername(token);
+        return userMapper.usertoUserDTO(userRepository.findByEmail(username).orElseThrow(() -> new ExceptionBadRequest("User not found!")));
     }
 
     public Page<UserDTO> getAll(int page, int pageSize,String search,Boolean isVerified) {
