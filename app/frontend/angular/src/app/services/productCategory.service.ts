@@ -11,6 +11,6 @@ export class ProductCategoryService {
     http : HttpClient = inject(HttpClient);
 
     getAllCategories() : Observable<ProductCategory[]>{
-        return this.http.get<ProductCategory[]>(environment.apiUrl + "api/productCategories/getAll");
+        return this.http.get<ProductCategory[]>(environment.apiUrl + "productCategories/getAll");
     }
 }
