@@ -1,5 +1,27 @@
-<header class="filter__content">
-    <h3>Category</h3>
-    <hr>
-    <a *ngFor="let category of categories">{{category.name}}<br></a> 
-</header>
+<div class="filter__content">
+    <p-panel header="Categories" [toggleable]="true" class="m-3">
+        <div class="stock-checkboxes">
+            <div *ngFor="let category of categories" class="checkbox-wrapper">
+                <input type="checkbox" [id]="category.id" (change)="onCategoryChange(category, $event)">
+                <label [for]="category">{{ category.name }}</label>
+            </div>
+        </div>
+    </p-panel>
+    
+    <p-panel header="In stock" [toggleable]="true" [collapsed]="true" class="m-3">
+        <div class="stock-checkboxes">
+            <div class="checkbox-wrapper">
+                <input type="radio" name="stock" id="allStock" (change)="onStockChange(null)" checked>
+                <label for="allStock">All</label>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="radio" name="stock" id="inStock" (change)="onStockChange(true)">
+                <label for="inStock">In stock</label>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="radio" name="stock" id="outStock" (change)="onStockChange(false)">
+                <label for="outStock">Out of stock</label>
+            </div>
+        </div>
+    </p-panel>
+</div>

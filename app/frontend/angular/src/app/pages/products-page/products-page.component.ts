@@ -7,10 +7,10 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './products-page.component.css'
 })
 export class ProductsPageComponent {
-  windowWidth: number = window.innerWidth;
+  // windowWidth: number = window.innerWidth;
   
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.windowWidth = window.innerWidth;
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: any) {
+  //   this.windowWidth = window.innerWidth;
+  // }
 }
