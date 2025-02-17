@@ -1,6 +1,7 @@
 package com.example.backend_app.orders.models;
 
 import com.example.backend_app.products.models.Product;
+import com.example.backend_app.products.models.ProductVariation;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,9 +18,9 @@ public class OrderProduct {
     @ManyToOne
     private Order order;
 
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="product_variation_id")
     @ManyToOne
-    private Product product;
+    private ProductVariation productVariation;
 
     @Column
     private int quantity;

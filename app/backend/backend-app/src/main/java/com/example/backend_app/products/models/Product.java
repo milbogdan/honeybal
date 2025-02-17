@@ -4,6 +4,8 @@ import com.example.backend_app.products.DTOs.CreateProductDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -24,42 +26,20 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private Boolean in_stock;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProductVariation> variations = new ArrayList<>();
 
-    @Column(nullable = false)
-    private String imageUrl;
 
-    @Column(nullable = true)
-    private String size;
-
-    @Column(nullable = false)
-    private double basePrice;
-
-    @Column(nullable = false)
-    private int discount;
-
-    @Column(nullable = false)
-    private double price;
 
     public static Product fromDTO(CreateProductDTO createProductDTO, ProductCategory productCategory) {
         Product product = new Product();
         product.setName(createProductDTO.getName());
         product.setDescription(createProductDTO.getDescription());
-        product.setImageUrl(createProductDTO.getImageUrl());
-        product.setSize(createProductDTO.getSize());
-        product.setBasePrice(createProductDTO.getBasePrice());
-        product.setDiscount(createProductDTO.getDiscount());
-        product.setIn_stock(createProductDTO.getIn_stock());
         product.setCategory(productCategory);
-
-        product.calculatePrice();
 
         return product;
     }
 
-    public void calculatePrice() {
-        this.price = this.basePrice * (1 - this.discount / 100.0);
-    }
+
 
 }
