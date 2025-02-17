@@ -1,14 +1,10 @@
 import { ProductCategory } from "./ProductCategory";
+import { VariationProducts } from "./VariationProducts";
 
 export interface Product {
     id: number,
     category : ProductCategory,
     name : string,
     description : string,
-    in_stock: boolean,
-    imageUrl: string,
-    size: string,
-    basePrice: number,
-    discount: number,
-    price : number
+    variations : VariationProducts[],
 }

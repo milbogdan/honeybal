@@ -39,8 +39,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private fetchProducts(currentPage : number, pageSize: number, filters: any){
     this.productService.getAllProducts(currentPage, pageSize, filters).subscribe({
       next: (data : any) => {
-        // console.log(data);
-        this.totalElements = data.totalElements;
+        this.totalElements = data.totalElements;  
         this.totalPages = data.totalPages;
         this.products = data.content;
       },

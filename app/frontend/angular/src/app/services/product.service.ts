@@ -23,7 +23,6 @@ export class ProductService {
                 }
             })
         }
-        console.log(params);
 
         return this.http.get<Product[]>(environment.apiUrl + 'products/getAll', {params});
     }

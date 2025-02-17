@@ -7,13 +7,10 @@
             <h2>{{ product.name || 'Naziv proizvoda nije dostupan' }}</h2>
             <div class="size">
                 <h3>Velicina :</h3>
-                <span>1000 g</span>
-                <span>500 g</span>
-            </div>
-            <div class="in_stock">
-                <h3
-                [ngStyle]="{'color': product.in_stock ? '#4caf50' : '#f44336'}"
-                >{{product.in_stock ? "In stock" : "Out of stock"}}</h3>
+                <span *ngFor="let variation of product.variations"
+                    [ngClass]="selectedVariation?.id === variation.id ? 'selected' : 'disabled'">
+                {{ variation.size }}
+                </span>
             </div>
         </div>
         <div class="buttons_details_buy">
