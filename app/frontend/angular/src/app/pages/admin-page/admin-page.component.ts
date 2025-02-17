@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 
+interface SideNavToggle{
+  screenWidth : number;
+  collapsed : boolean;
+}
+
 @Component({
   selector: 'app-admin-page',
   standalone: false,
@@ -7,5 +12,10 @@ import { Component } from '@angular/core';
   styleUrl: './admin-page.component.css'
 })
 export class AdminPageComponent {
-
+  isSideNavCollapsed = false;
+  screenWidth = 0;
+  onToggleSideNav(data : SideNavToggle) : void{
+    this.screenWidth = data.screenWidth;
+    this.isSideNavCollapsed = data.collapsed;
+  }
 }
