@@ -13,13 +13,14 @@ export class AccountService {
         return this.http.post<{name: string}>(environment.apiUrl + 'auth/register', user);
     }
 
-    login(email : string, password : string){
+    login(email : string, password : string,){
         const data = {
             email,
-            password
+            password,
         }
-        console.log(data);
 
-        return this.http.post(environment.apiUrl + 'auth/authenticate', data);
+        return this.http.post(environment.apiUrl + 'auth/authenticate', data, {
+            withCredentials: true
+        });
     }
 }

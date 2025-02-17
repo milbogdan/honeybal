@@ -9,4 +9,5 @@ import { Product } from '../../../models/Product';
 })
 export class ProductComponent {
   @Input() product! : Product;
+
 }

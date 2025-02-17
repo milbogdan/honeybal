@@ -7,8 +7,28 @@
 
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
     gap: 1rem;
     max-width: 1200px;
     width: 100%;
+    margin: auto;
+    place-items: center;
+}
+
+:host ::ng-deep .p-paginator{
+    background-color: transparent !important;
+}
+
+:host ::ng-deep .p-paginator .p-ripple{
+    color: white;
+}
+
+.img-of-product{
+    width: 30px;
+}
+
+@media (min-width: 720px) and (max-width: 992px) {
+    .products {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
 }

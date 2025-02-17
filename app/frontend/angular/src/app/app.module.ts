@@ -31,6 +31,11 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { ProductListComponent } from './components/elements/product-list/product-list.component';
 import { ProductComponent } from './components/elements/product/product.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { ProductFilterComponent } from './components/elements/product-filter/product-filter.component';
+import { PanelModule } from 'primeng/panel';
+import { SearchBarComponent } from './components/elements/search-bar/search-bar.component';
+import { ViewChangeComponent } from './components/elements/view-change/view-change.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,10 @@ import { PaginatorModule } from 'primeng/paginator';
     NavbarComponent,
     ProductsPageComponent,
     ProductListComponent,
-    ProductComponent
+    ProductComponent,
+    ProductFilterComponent,
+    SearchBarComponent,
+    ViewChangeComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +70,9 @@ import { PaginatorModule } from 'primeng/paginator';
     CommonModule,
     Ripple,
     Menubar,
-    PaginatorModule
+    PaginatorModule,
+    PanelModule,
+    TableModule
   ],
   providers: [
     provideHttpClient(withFetch()),
