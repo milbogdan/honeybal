@@ -7,6 +7,7 @@ import com.example.backend_app.exception.ExceptionBadRequest;
 import com.example.backend_app.exception.ExceptionConflict;
 import com.example.backend_app.user.models.User;
 import com.example.backend_app.user.repositories.UserRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -64,4 +65,7 @@ public class AuthService {
 
     }
 
+    public void logout(HttpServletResponse response) {
+        cookieUtil.clearJwtCookie(response);
+    }
 }

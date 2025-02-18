@@ -37,6 +37,13 @@ public class AuthController {
         return ResponseEntity.ok(new AuthenticationResponse("Successfully authenticated!"));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response){
+        authService.logout(response);
+        return ResponseEntity.ok(new AuthenticationResponse("Successfully logged out!"));
+    }
+
+
     @GetMapping("/me")
     public ResponseEntity<?> me(@CookieValue(name = "jwt", required = false) String token){
         if (token == null) {
