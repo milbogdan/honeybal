@@ -3,6 +3,7 @@ import { Product } from '../../../models/Product';
 import { ProductService } from '../../../services/product.service';
 import { FilterService } from '../../../services/filter.service';
 import { Subscription } from 'rxjs';
+import { VariationProducts } from '../../../models/VariationProducts';
 
 @Component({
   selector: 'product-list',
@@ -42,6 +43,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.totalElements = data.totalElements;  
         this.totalPages = data.totalPages;
         this.products = data.content;
+
+        if(filters.inStock != null){
+          this.products = data.content.map((product : Product) => {
+            const filteredVariations = product.variations.filter((variation : VariationProducts) => variation.in_stock === filters.inStock);
+            console.log(filteredVariations);
+            return { ...product, variations: filteredVariations };
+          }).filter((product : Product) => product.variations.length > 0);
+        } 
+
+        console.log(this.products);
       },
       error: (err : any) => {
         // console.log(err);

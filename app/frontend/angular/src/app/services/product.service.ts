@@ -17,7 +17,6 @@ export class ProductService {
 
         if(filters){
             Object.keys(filters).forEach(key => {
-                console.log(key, filters[key]);
                 if(filters[key] != undefined && filters[key] != '' && filters[key] != null){
                     params = params.set(key, filters[key]);
                 }
