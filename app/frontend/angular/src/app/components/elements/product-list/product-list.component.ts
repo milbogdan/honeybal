@@ -47,7 +47,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
         if(filters.inStock != null){
           this.products = data.content.map((product : Product) => {
             const filteredVariations = product.variations.filter((variation : VariationProducts) => variation.in_stock === filters.inStock);
-            console.log(filteredVariations);
             return { ...product, variations: filteredVariations };
           }).filter((product : Product) => product.variations.length > 0);
         } 

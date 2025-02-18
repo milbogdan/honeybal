@@ -13,12 +13,10 @@ const routes: Routes = [
   { path: 'products', component: ProductsPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
-  { path: 'admin', component: AdminPageComponent},
-  { path: 'admin', component: AdminPageComponent},
-  { path: 'admin', children: [
-      { path: 'products', component: AdminProductsPageComponent }
-    ]
-  },
+  { path: 'admin', component: AdminPageComponent, children: [
+    { path: 'products', component: AdminProductsPageComponent }
+  ]
+},
   // { path: '**', component: HomePageComponent}
 ];
 

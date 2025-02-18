@@ -34,11 +34,9 @@ export class SidenavComponent {
   }
 
   setCollapsedState() {
-    if (this.screenWidth > 960) {
-      this.collapsed = true;
-    } else {
+    if (this.screenWidth < 768) {
       this.collapsed = false;
-    }
+    } 
     this.emitToggleEvent();
   }
 

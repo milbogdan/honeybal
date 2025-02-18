@@ -47,6 +47,8 @@ import { Tag } from 'primeng/tag';
 import { Dialog } from 'primeng/dialog';
 import { ConfirmDialog } from 'primeng/confirmdialog'
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ProductsTableComponent } from './components/elements/products-table/products-table.component';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     AdminPageComponent,
     SidenavComponent,
     AdminProductsPageComponent,
+    ProductsTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,6 +97,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     Tag,
     Dialog,
     ConfirmDialog,
+    DynamicDialogModule
   ],
   providers: [
     MessageService,
