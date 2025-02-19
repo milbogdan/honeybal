@@ -1,5 +1,6 @@
 package com.example.backend_app.products.controllers;
 
+import com.example.backend_app.global.DTOs.MessageResponse;
 import com.example.backend_app.products.DTOs.CreateProductDTO;
 import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
@@ -52,6 +53,13 @@ public class ProductController {
     //@SecurityRequirement(name="bearerAuth")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody EditProductDTO editProductDTO){
         return ResponseEntity.status(HttpStatus.OK).body(productService.editProduct(id,editProductDTO));
+    }
+
+    @DeleteMapping("/delete{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<MessageResponse> delete(@PathVariable long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("Product successfully deleted!"));
     }
 
 }

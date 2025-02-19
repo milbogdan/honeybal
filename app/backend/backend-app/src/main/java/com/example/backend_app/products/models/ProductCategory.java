@@ -3,6 +3,9 @@ package com.example.backend_app.products.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name="product_categories")
@@ -14,4 +17,6 @@ public class ProductCategory {
     @Column(nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Product> products = new ArrayList<>();
 }

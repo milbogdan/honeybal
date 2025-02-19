@@ -1,6 +1,7 @@
 package com.example.backend_app.products.services;
 
 import com.example.backend_app.global.exception.ExceptionBadRequest;
+import com.example.backend_app.global.exception.ExceptionNotFound;
 import com.example.backend_app.products.DTOs.CreateProductDTO;
 import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
@@ -114,5 +115,12 @@ public class ProductService {
 
     public void calculatePrice(ProductVariation variation) {
         variation.setPrice(variation.getBasePrice() * (1 - variation.getDiscount()/100.0));
+    }
+
+    public void deleteProduct(long id) {
+        if(!productRepository.existsById(id)){
+            throw new ExceptionNotFound("Product not found");
+        }
+        productRepository.deleteById(id);
     }
 }

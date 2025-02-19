@@ -35,9 +35,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,"/api/products/getAll").permitAll()
                         .requestMatchers(HttpMethod.PUT,"/api/products/put{id}").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/products/get{id}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/api/products/delete{id}").authenticated()
 
                         //productCategory endpoints
                         .requestMatchers(HttpMethod.GET,"/api/productCategories/getAll").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/api/productCategories/delete{id}").authenticated()
 
                         //productVariation endpoints
                         .requestMatchers(HttpMethod.DELETE,"/api/productVariations/delete{id}").authenticated()
