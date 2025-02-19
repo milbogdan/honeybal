@@ -1,4 +1,4 @@
-package com.example.backend_app.config;
+package com.example.backend_app.global.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

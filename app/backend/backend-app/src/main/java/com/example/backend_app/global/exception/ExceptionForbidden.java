@@ -1,4 +1,4 @@
-package com.example.backend_app.exception;
+package com.example.backend_app.global.exception;
 
 public class ExceptionForbidden extends RuntimeException {
     public ExceptionForbidden(String message) {

@@ -1,15 +1,14 @@
 package com.example.backend_app.user.services;
 
 import com.example.backend_app.auth.services.JwtService;
-import com.example.backend_app.exception.ExceptionBadRequest;
-import com.example.backend_app.exception.ExceptionNotFound;
-import com.example.backend_app.exception.ExceptionUnauthorized;
+import com.example.backend_app.global.exception.ExceptionBadRequest;
+import com.example.backend_app.global.exception.ExceptionNotFound;
+import com.example.backend_app.global.exception.ExceptionUnauthorized;
 import com.example.backend_app.user.DTOs.EditUserDTO;
 import com.example.backend_app.user.DTOs.UserDTO;
 import com.example.backend_app.user.mappers.UserMapper;
 import com.example.backend_app.user.models.User;
 import com.example.backend_app.user.repositories.UserRepository;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

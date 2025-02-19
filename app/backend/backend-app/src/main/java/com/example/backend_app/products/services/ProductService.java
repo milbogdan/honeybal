@@ -1,6 +1,6 @@
 package com.example.backend_app.products.services;
 
-import com.example.backend_app.exception.ExceptionBadRequest;
+import com.example.backend_app.global.exception.ExceptionBadRequest;
 import com.example.backend_app.products.DTOs.CreateProductDTO;
 import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
@@ -10,7 +10,6 @@ import com.example.backend_app.products.repositories.ProductCategoryRepository;
 import com.example.backend_app.products.repositories.ProductRepository;
 import com.example.backend_app.products.repositories.ProductVariationRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
