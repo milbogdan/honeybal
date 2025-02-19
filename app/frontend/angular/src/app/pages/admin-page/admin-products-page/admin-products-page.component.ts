@@ -6,6 +6,8 @@ import { TableRowCollapseEvent, TableRowExpandEvent } from 'primeng/table';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProductDialogComponent } from '../../../components/elements/product-dialog/product-dialog.component';
 import { VariationProducts } from '../../../models/VariationProducts';
+import { ProductCategoryService } from '../../../services/productCategory.service';
+import { ProductCategory } from '../../../models/ProductCategory';
 
 
 @Component({
@@ -19,6 +21,7 @@ export class AdminProductsPageComponent {
   
   // Product
   products!: Product[];
+  categories! : ProductCategory[];
 
   // Product
   selectedProducts!: any[] | null;
@@ -37,6 +40,7 @@ export class AdminProductsPageComponent {
   expandedRows = {};
   exportColumns!: any[];
 
+  categorieService : ProductCategoryService = inject(ProductCategoryService);
   productService : ProductService = inject(ProductService);
   dialogService : DialogService = inject(DialogService);
   messageService: MessageService = inject(MessageService);
@@ -47,7 +51,6 @@ export class AdminProductsPageComponent {
   }
 
   editProduct(product : Product, variation: VariationProducts){
-    console.log(product);
     this.ref = this.dialogService.open(ProductDialogComponent, {
       header: 'Product List',
       width: '40vw',
@@ -72,6 +75,12 @@ export class AdminProductsPageComponent {
       this.productService.getAllProducts(0, 6).subscribe({
         next: (response : any) => {
             this.products = response.content;
+        }
+      })
+
+      this.categorieService.getAllCategories().subscribe({
+        next: (response : any) => {
+            this.categories = response;
         }
       })
 

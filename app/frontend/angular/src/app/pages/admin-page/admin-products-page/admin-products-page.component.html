@@ -1,23 +1,107 @@
 <div id="content">
-    <p>Category table</p>
+    <p-table [value]="categories" dataKey="id" editMode="row" [tableStyle]="{ 'width': '100%', 'min-width': '50rem' }">
+        <ng-template #caption>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="m-0">Manage Categories</h5>
+                <div>
+                    <p-button label="New" icon="pi pi-plus" class="me-2"  />
+                    <p-button severity="danger" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"/>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th style="width: 20%">
+                    <p-tableHeaderCheckbox />
+                </th>
+                <th style="width:20%">ID</th>
+                <th style="width:20%">Category name</th>
+                <th style="width:20%"></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-categorie let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="categorie">
+                <td style="width: 3rem">
+                    <p-tableCheckbox [value]="categorie" />
+                </td>
+                <td>
+                    {{categorie.id}}
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <input
+                                pInputText type="text"
+                                [(ngModel)]="categorie.name"
+                                required />
+                        </ng-template>
+                        <ng-template #output>
+                            {{categorie.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                
+                <td>
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <!-- (click)="onRowEditInit(product)" -->
+                        <button
+                            *ngIf="!editing"
+                            pButton
+                            pRipple
+                            type="button"
+                            pInitEditableRow
+                            icon="pi pi-pencil"
+                            text
+                            rounded
+                            severity="secondary"
+                        ></button>
+                        <!-- (click)="onRowEditSave(product)" -->
+                        <button
+                            *ngIf="editing"
+                            pButton
+                            pRipple
+                            type="button"
+                            pSaveEditableRow
+                            icon="pi pi-check"
+                            
+                            text
+                            rounded
+                            severity="secondary"
+                        ></button>
+                        <!-- (click)="onRowEditCancel(product, ri)" -->
+                        <button
+                            *ngIf="editing"
+                            pButton
+                            pRipple
+                            type="button"
+                            pCancelEditableRow
+                            icon="pi pi-times"
+                            
+                            text
+                            rounded
+                            severity="secondary"
+                        ></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 
     <hr>
 
     <p-toolbar styleClass="mb-6">
         <ng-template #start>
             <!-- (onClick)="openNew()" -->
-            <p-button label="New" icon="pi pi-plus" class="mr-2"  />
-            <p-button severity="danger" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length" />
+            <p-button label="New" icon="pi pi-plus" class="me-2"  />
+            <p-button severity="danger" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"/>
         </ng-template>
     
         <ng-template #end>
-            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" auto customUpload class="mr-2 inline-block" [chooseButtonProps]="{ severity: 'secondary' }" />
             <!-- (onClick)="exportCSV($event)" -->
             <p-button label="Export" icon="pi pi-upload" severity="secondary" />
         </ng-template>
     </p-toolbar>
     
-    <!--  -->
     <p-table 
         [value]="products" 
         [rows]="10"
@@ -34,20 +118,15 @@
             <div class="header-wrapper">
                 <h5 class="m-0">Manage Products</h5>
                 <div class="expand-search">
-                        <p-button label="Expand All" icon="pi pi-plus" text (onClick)="expandAll()"/>
-                        <p-button label="Collapse All" icon="pi pi-minus" text (onClick)="collapseAll()"/>
-                        
-                        <p-iconfield>
-                            <p-inputicon styleClass="pi pi-search" />
-                            <!-- (input)="dt.filterGlobal($event.target.value, 'contains')" -->
-                            <input pInputText type="text"  placeholder="Search..." />
-                        </p-iconfield>
+                    <p-button label="Expand All" icon="pi pi-plus" text (onClick)="expandAll()"/>
+                    <p-button label="Collapse All" icon="pi pi-minus" text (onClick)="collapseAll()"/>
+                    
+                    <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <!-- (input)="dt.filterGlobal($event.target.value, 'contains')" -->
+                        <input pInputText type="text"  placeholder="Search..." />
+                    </p-iconfield>
                 </div>
-            </div>
-        </ng-template>
-        <ng-template #caption>
-            <div class="flex flex-wrap justify-end gap-2">
-                
             </div>
         </ng-template>
         <ng-template #header>
@@ -81,7 +160,7 @@
         <ng-template #expandedrow let-product>
             <tr>
                 <td colspan="7">
-                    <div class="p-4">
+                    <div class="p-3">
                         <h5>Variations for {{ product.name }}</h5>
                         <p-table [value]="product.variations" dataKey="id">
                             <ng-template #header>
