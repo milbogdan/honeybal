@@ -27,6 +27,8 @@ export class ProductService {
     }
 
     editProduct(id: number, product : any){
-        return this.http.put(environment.apiUrl + `products/put/${id}`, product);
+        return this.http.put(environment.apiUrl + `products/put/${id}`, product,
+            {withCredentials:true}
+        );
     }
 }

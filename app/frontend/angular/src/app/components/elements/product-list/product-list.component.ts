@@ -50,8 +50,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
             return { ...product, variations: filteredVariations };
           }).filter((product : Product) => product.variations.length > 0);
         } 
-
-        console.log(this.products);
       },
       error: (err : any) => {
         // console.log(err);
