@@ -22,7 +22,13 @@
           </div>
         </li>
 
-        <li><a href="#" class="nav__link">Gallery</a></li>
+        <li><a (click)="logout()" class="nav__link">Gallery</a></li>
+
+        <li *ngIf="user">
+          <div class="nav__link flex items-center gap-2">
+            <p-avatar shape="circle" icon="pi pi-shopping-cart"/>
+          </div>
+        </li>
 
         <li *ngIf="user" class="dropdown__item">
           <div class="nav__link flex items-center gap-2">
@@ -40,16 +46,11 @@
               </a>
             </li>
             <li>
-              <a routerLink="/login" class="dropdown__link" (click)="logout()">
-                <i class="pi pi-lock"></i> Logout
+              <a class="dropdown__link" (click)="logout()">
+                <i class="pi pi-sign-out"></i> Logout
               </a>
             </li>
           </ul>
-        </li>
-        <li *ngIf="user">
-          <div class="nav__link flex items-center gap-2">
-            <p-avatar shape="circle" icon="pi pi-shopping-cart"/>
-          </div>
         </li>
       </ul>
     </div>

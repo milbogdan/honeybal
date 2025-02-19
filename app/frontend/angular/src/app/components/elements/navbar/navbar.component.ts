@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
 import { User } from '../../../models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -12,11 +13,12 @@ export class NavbarComponent {
   isMenuOpen: boolean = false;
   user : User | null = null;
   msgError : string | null = null;
+  router : Router = inject(Router); 
 
   constructor(private accountService : AccountService){}
 
   ngOnInit() {
-    this.accountService.checkAuthStatus().subscribe({
+    this.accountService.getUser().subscribe({
       next: (user) => {
         this.user = user;
         // console.log(this.user);
@@ -32,6 +34,10 @@ export class NavbarComponent {
   }
 
   logout(){
-    this.accountService.logout();
+    this.accountService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);        
+      }
+    });
   }
 }

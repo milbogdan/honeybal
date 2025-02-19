@@ -6,6 +6,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminProductsPageComponent } from './pages/admin-page/admin-products-page/admin-products-page.component';
+import { adminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -13,11 +14,11 @@ const routes: Routes = [
   { path: 'products', component: ProductsPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
-  { path: 'admin', component: AdminPageComponent, children: [
+  { path: 'admin', component: AdminPageComponent, canActivate: [adminGuard], children: [
     { path: 'products', component: AdminProductsPageComponent }
   ]
 },
-  // { path: '**', component: HomePageComponent}
+  { path: '**', component: HomePageComponent}
 ];
 
 @NgModule({

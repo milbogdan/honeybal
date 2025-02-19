@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, inject, HostListener } from '@angular/core';
 import { navbarData } from './nav-data';
 import { Router } from '@angular/router';
+import { AccountService } from '../../../services/account.service';
 
 interface SideNavToggle{
   screenWidth : number;
@@ -19,6 +20,7 @@ export class SidenavComponent {
   screenWidth = 0;
   navData = navbarData;
   router : Router = inject(Router);
+  accountService : AccountService = inject(AccountService);
 
   ngOnInit(){
     if (typeof window !== "undefined") {
@@ -54,6 +56,14 @@ export class SidenavComponent {
     this.onToggleSideNav.emit({
       collapsed: this.collapsed,
       screenWidth: this.screenWidth
+    });
+  }
+
+  logout(){
+    this.accountService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      }
     });
   }
 }

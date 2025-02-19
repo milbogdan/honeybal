@@ -29,7 +29,7 @@ export const navbarData = [
     },
 
     {
-        routerLink: '/login',
+        routerLink: '',
         icon: 'pi pi-sign-out',
         label: 'Logout'
     }
