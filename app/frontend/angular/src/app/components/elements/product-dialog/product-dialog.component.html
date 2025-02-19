@@ -22,8 +22,10 @@
         <label for="price" class="d-block fw-bold mb-2">Price</label>
         <p-inputnumber id="price" [(ngModel)]="variation.price" locale="en-US" class="form-control" />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mb-3">
         <label for="discount" class="d-block fw-bold mb-2">Discount (%)</label>
         <p-inputnumber id="discount" [(ngModel)]="variation.discount" locale="en-US" class="form-control" />
     </div>
 </div>
+
+<p-button label="Success" variant="outlined" severity="success" fluid (click)="onSubmitEdit()"/>

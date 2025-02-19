@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../../models/Product';
 import { VariationProducts } from '../../../models/VariationProducts';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-product-dialog',
@@ -13,12 +14,13 @@ export class ProductDialogComponent {
   ref: DynamicDialogRef | undefined;
   product: Product = { id: -1, name: '', description: '', category: {id : -1, name: ''} , variations: []};
   variation: VariationProducts = { id: -1, basePrice: 0, size: '', discount: 0, in_stock: false, imageUrl: '', price: 0};
+  submitted : boolean = false;
+  productService : ProductService = inject(ProductService);
 
   inStockOptions : any[] = [
     {label:'Yes', value:true},
     {label:'No', value:false}
   ];
-  submitted : boolean = false;
 
   constructor(
     private _modal : DynamicDialogRef,
@@ -32,5 +34,27 @@ export class ProductDialogComponent {
     if (this.variation.in_stock === null || this.variation.in_stock === undefined) {
       this.variation.in_stock = false;
     }
+  }
+
+  onSubmitEdit(){
+    const editedObject = {
+      category : this.product.category.id,
+      name: this.product.name,
+      description : this.product.description,
+      variation : {
+        id: this.variation.id,
+        size: this.variation.size,
+        imageUrl: this.variation.imageUrl,
+        basePrice: this.variation.basePrice,
+        discount: this.variation.discount,
+        in_stock: this.variation.in_stock,
+      }
+    }
+
+    this.productService.editProduct(this.product.id, editedObject).subscribe((response) => {
+      console.log(response);
+    })
+
+    // this._modal.close({ product: this.product, variation: this.variation });
   }
 }

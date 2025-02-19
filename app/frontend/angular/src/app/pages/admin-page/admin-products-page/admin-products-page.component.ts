@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, ViewChild, inject, OnInit } from '@angular/core';
+import { Component, ViewChild, inject, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Product } from '../../../models/Product';
 import { ProductService } from '../../../services/product.service';
-import { TableRowCollapseEvent, TableRowExpandEvent } from 'primeng/table';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProductDialogComponent } from '../../../components/elements/product-dialog/product-dialog.component';
 import { VariationProducts } from '../../../models/VariationProducts';
@@ -16,7 +15,7 @@ import { ProductCategory } from '../../../models/ProductCategory';
   templateUrl: './admin-products-page.component.html',
   styleUrl: './admin-products-page.component.css'
 })
-export class AdminProductsPageComponent {
+export class AdminProductsPageComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   
   // Product
@@ -119,23 +118,35 @@ export class AdminProductsPageComponent {
     // });
   }
 
-  // Product
   deleteProduct(product: any) {
-      // this.confirmationService.confirm({
-      //     message: 'Are you sure you want to delete ' + product.name + '?',
-      //     header: 'Confirm',
-      //     icon: 'pi pi-exclamation-triangle',
-      //     accept: () => {
-      //         this.products = this.products.filter((val) => val.id !== product.id);
-      //         this.product = {};
-      //         this.messageService.add({
-      //             severity: 'success',
-      //             summary: 'Successful',
-      //             detail: 'Product Deleted',
-      //             life: 3000
-      //         });
-      //     }
-      // });
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete ${product.name}?`,
+      header: 'Delete product',
+      closable: true,
+      closeOnEscape: true,
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: {
+          label: 'Cancel',
+          severity: 'secondary',
+          outlined: true,
+      },
+      acceptButtonProps: {
+          label: 'Delete',
+          severity: 'danger',
+          outlined: true,
+      },
+      accept: () => {
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You have deleted item ${product.name}` });
+      },
+      reject: () => {
+          this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected',
+              life: 3000,
+          });
+      },
+    });
   }
 
 //   findIndexById(id: string): number {

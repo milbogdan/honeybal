@@ -55,6 +55,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { RadioButton } from 'primeng/radiobutton';
 import { InputNumber } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { DropdownModule } from 'primeng/dropdown';
     RadioButton,
     TextareaModule,
     ToastModule,
-    DropdownModule
+    DropdownModule,
+    ConfirmDialogModule
   ],
   providers: [
     DialogService,

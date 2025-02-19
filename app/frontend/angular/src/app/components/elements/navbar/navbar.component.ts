@@ -9,15 +9,15 @@ import { AccountService } from '../../../services/account.service';
 })
 export class NavbarComponent {
   isMenuOpen: boolean = false;
-  // accountService : AccountService = inject(AccountService);
+  accountService : AccountService = inject(AccountService);
 
-  // ngOnInit() {
-  //   this.accountService.getUser().subscribe({
-  //     next: (user) => {
-  //       console.log(user);
-  //     }
-  //   });
-  // }
+  ngOnInit() {
+    this.accountService.getUser().subscribe({
+      next: (user) => {
+        console.log(user);
+      }
+    });
+  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

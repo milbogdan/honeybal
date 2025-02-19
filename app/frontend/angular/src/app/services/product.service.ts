@@ -25,4 +25,8 @@ export class ProductService {
 
         return this.http.get<Product[]>(environment.apiUrl + 'products/getAll', {params});
     }
+
+    editProduct(id: number, product : any){
+        return this.http.put(environment.apiUrl + `products/put/${id}`, product);
+    }
 }
