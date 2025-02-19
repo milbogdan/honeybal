@@ -3,12 +3,11 @@ package com.example.backend_app.auth.services;
 import com.example.backend_app.auth.DTOs.AuthenticationRequest;
 import com.example.backend_app.auth.DTOs.AuthenticationResponse;
 import com.example.backend_app.auth.DTOs.RegisterRequest;
-import com.example.backend_app.exception.ExceptionBadRequest;
-import com.example.backend_app.exception.ExceptionConflict;
+import com.example.backend_app.global.exception.ExceptionBadRequest;
+import com.example.backend_app.global.exception.ExceptionConflict;
 import com.example.backend_app.user.models.User;
 import com.example.backend_app.user.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -64,4 +63,7 @@ public class AuthService {
 
     }
 
+    public void logout(HttpServletResponse response) {
+        cookieUtil.clearJwtCookie(response);
+    }
 }

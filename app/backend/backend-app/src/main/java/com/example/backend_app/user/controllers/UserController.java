@@ -1,5 +1,6 @@
 package com.example.backend_app.user.controllers;
 
+import com.example.backend_app.user.DTOs.EditUserDTO;
 import com.example.backend_app.user.DTOs.UserDTO;
 import com.example.backend_app.user.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -34,5 +35,10 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDTO> getById(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getById(id));
+    }
+
+    @PutMapping("/put/{id}")
+    public ResponseEntity<UserDTO> put(@PathVariable long id, @RequestBody EditUserDTO user) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.editUser(user,id));
     }
 }
