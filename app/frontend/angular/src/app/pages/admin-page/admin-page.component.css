@@ -1,5 +1,6 @@
 #contentPage{
     display: flex;
+    overflow-y: hidden !important;
 }
 
 #content {

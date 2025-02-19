@@ -47,8 +47,14 @@ import { Tag } from 'primeng/tag';
 import { Dialog } from 'primeng/dialog';
 import { ConfirmDialog } from 'primeng/confirmdialog'
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProductsTableComponent } from './components/elements/products-table/products-table.component';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ProductDialogComponent } from './components/elements/product-dialog/product-dialog.component';
+import { ToastModule } from 'primeng/toast';
+import { TextareaModule } from 'primeng/textarea';
+import { RadioButton } from 'primeng/radiobutton';
+import { InputNumber } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -68,7 +74,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     AdminPageComponent,
     SidenavComponent,
     AdminProductsPageComponent,
-    ProductsTableComponent,
+    ProductDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -97,10 +103,17 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     Tag,
     Dialog,
     ConfirmDialog,
-    DynamicDialogModule
+    DynamicDialogModule,
+    InputNumber,
+    RadioButton,
+    TextareaModule,
+    ToastModule,
+    DropdownModule
   ],
   providers: [
+    DialogService,
     MessageService,
+    DynamicDialogRef,
     ConfirmationService,
     provideHttpClient(withFetch()),
     provideAnimationsAsync(),

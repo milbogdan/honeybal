@@ -1,0 +1,14 @@
+.header-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-wrapper .expand-search{
+    display: flex;
+    gap: 1rem;
+}
+
+.edit-btn{
+    margin-right: 10px;
+}

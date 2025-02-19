@@ -1,9 +1,9 @@
 .sidenav{
     background-color: #263238;
     transition: all .4s ease;
-    /* position: fixed; */
+    position: sticky !important;
+    top: 0 !important;
     /* z-index: 1; */
-    /* top: 0; */
     width: 5rem;
     height: 100vh;
     box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
