@@ -43,7 +43,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
-    @GetMapping("/get{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(id));
     }
@@ -55,7 +55,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productService.editProduct(id,editProductDTO));
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> delete(@PathVariable long id) {
         productService.deleteProduct(id);

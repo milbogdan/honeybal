@@ -20,7 +20,7 @@ public class ProductVariationController {
         this.productVariationService = productVariationService;
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> delete(@PathVariable long id) {
         productVariationService.deleteVariation(id);

@@ -37,7 +37,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getById(id));
     }
 
-    @PutMapping("/put{id}")
+    @PutMapping("/put/{id}")
     public ResponseEntity<UserDTO> put(@PathVariable long id, @RequestBody EditUserDTO user) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.editUser(user,id));
     }

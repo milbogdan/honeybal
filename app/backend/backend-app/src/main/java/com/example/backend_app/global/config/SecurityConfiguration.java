@@ -26,23 +26,25 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         //user endpoints
-                        .requestMatchers(HttpMethod.GET,"/api/users/get{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/users/get/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/users/getAll").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/api/users/put{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/users/put/{id}").authenticated()
 
                         //product endpoints
                         .requestMatchers(HttpMethod.POST,"/api/products/post").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/products/getAll").permitAll()
-                        .requestMatchers(HttpMethod.PUT,"/api/products/put{id}").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/api/products/get{id}").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/api/products/delete{id}").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/products/put/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/products/get/{id}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/api/products/delete/{id}").authenticated()
 
                         //productCategory endpoints
                         .requestMatchers(HttpMethod.GET,"/api/productCategories/getAll").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/api/productCategories/delete{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/productCategories/delete/{id}").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/productCategories/post").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/productCategories/put/{id}").authenticated()
 
                         //productVariation endpoints
-                        .requestMatchers(HttpMethod.DELETE,"/api/productVariations/delete{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/productVariations/delete/{id}").authenticated()
 
 
                         .requestMatchers(
