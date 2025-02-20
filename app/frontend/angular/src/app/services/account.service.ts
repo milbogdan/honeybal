@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { RegisterModel } from "../models/RegisterModel";
 import { environment } from "../../environments/environment.development";
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap, switchMap, take } from "rxjs";
 import { User } from "../models/User";
 import { Router } from "@angular/router";
 
@@ -12,49 +12,32 @@ import { Router } from "@angular/router";
 export class AccountService {
     http : HttpClient = inject(HttpClient);
     router : Router = inject(Router);
-    user : any | null = null;
-    private userSubject = new BehaviorSubject<User | null>(null); // BehaviorSubject
+    private userSubject = new BehaviorSubject<User | null>(null);
     user$ = this.userSubject.asObservable();
+
+    constructor() {
+        this.loadUserOnInit(); // Automatski učitava korisnika kada se aplikacija pokrene
+    }
 
     register(user : RegisterModel){
         return this.http.post<{name: string}>(environment.apiUrl + 'auth/register', user);
     }
 
     login(email : string, password : string) {
-        const data = {
-            email,
-            password,
-        }
+        const data = {email, password}
 
         return this.http.post(environment.apiUrl + 'auth/authenticate', data, {
             withCredentials: true
-        })
-        .pipe(
-            tap((response : any) => {
-                this.getUser().subscribe({
-                    next: (user) => {
-                        console.log(user);
-                        this.userSubject.next(user);
-
-                        if(user.role === "ROLE_ADMIN"){
-                            this.router.navigate(['/admin']);
-                        }
-                        else{
-                            this.router.navigate(['/home']);
-                        }
-                    },
-                });
-            })
-        ); 
+        }).pipe(
+            tap(() => this.getUser().subscribe())
+        );
     }
 
     getUser(): Observable<User> {
         return this.http.get<User>(`${environment.apiUrl}auth/me`, {
             withCredentials: true
         }).pipe(
-            tap((user : any) => {
-                this.userSubject.next(user);
-            })
+            tap(user => this.userSubject.next(user))
         );
     }
 
@@ -62,10 +45,14 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}auth/logout`, {}, {
             withCredentials: true
         }).pipe(
-            tap(() => {
-                this.userSubject.next(null);
-                // this.router.navigate(['/login']);
-            })
+            tap(() => this.userSubject.next(null))
         );
     }
+
+    private loadUserOnInit() {
+        this.getUser().subscribe({
+          next: (user) => this.userSubject.next(user),
+          error: () => this.userSubject.next(null) // Ako je greška, znači da korisnik nije ulogovan
+        });
+      }
 }

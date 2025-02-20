@@ -1,19 +1,21 @@
-import { CanActivateFn } from '@angular/router';
-import { AccountService } from '../services/account.service';
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { AccountService } from '../services/account.service';
+import { map } from 'rxjs/operators';
 
 export const adminGuard: CanActivateFn = (route, state) => {
-  const accountService = inject(AccountService);
+  const accountService : AccountService = inject(AccountService);
+  const router = inject(Router);
 
-  let canActivate = false;
-  accountService.user$.subscribe(user => {
-    console.log(user);
-    if (user && user.role === 'ROLE_ADMIN') {
-      canActivate = true; 
-    } else {
-      canActivate = false; 
-    }
-  });
-
-  return canActivate;
+  return accountService.user$.pipe(
+    map((user) => {
+      if(user && user.role === "ROLE_ADMIN"){
+        return true;
+      }
+      else{
+        router.navigate(['/']);
+        return false;
+      }
+    })
+  );
 };

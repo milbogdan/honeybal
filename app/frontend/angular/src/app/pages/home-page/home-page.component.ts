@@ -8,12 +8,5 @@ import { AccountService } from '../../services/account.service';
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
-  constructor(private accountService : AccountService){
-  }
-
-  ngOnInit(){
-    this.accountService.user$.subscribe((user) =>{
-      console.log("user", user)
-    });
-  }
+  
 }
