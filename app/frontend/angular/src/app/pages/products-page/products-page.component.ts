@@ -7,10 +7,20 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './products-page.component.css'
 })
 export class ProductsPageComponent {
-  // windowWidth: number = window.innerWidth;
-  
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event: any) {
-  //   this.windowWidth = window.innerWidth;
-  // }
+  isMobile = false;
+
+  constructor() {}
+
+  ngOnInit() {
+    if (typeof window !== 'undefined') {
+      this.isMobile = window.innerWidth < 768;
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if (typeof window !== 'undefined') {
+      this.isMobile = event.target.innerWidth < 768;
+    }
+  }
 }

@@ -39,7 +39,6 @@
                 
                 <td>
                     <div class="d-flex align-items-center justify-content-center gap-2">
-                        <!-- (click)="onRowEditInit(product)" -->
                         <button
                             *ngIf="!editing"
                             pButton
@@ -63,7 +62,6 @@
                             rounded
                             severity="secondary"
                         ></button>
-                        <!-- (click)="onRowEditCancel(product, ri)" -->
                         <button
                             *ngIf="editing"
                             pButton
@@ -176,8 +174,7 @@
                                     <td>{{ variation.basePrice }} RSD</td>
                                     <td>{{ variation.discount }} %</td>
                                     <td>
-                                        <!-- [severity]="getStatusSeverity(order.status)" -->
-                                        <p-tag [value]="variation.in_stock"  />
+                                        <p-tag [value]="variation.in_stock" [severity]="variation.in_stock ? 'success' : 'warn'" />
                                     </td>
                                     <td>
                                         <p-button class="edit-btn" icon="pi pi-pencil" [rounded]="true" [outlined]="true" (click)="editProduct(product, variation)" />

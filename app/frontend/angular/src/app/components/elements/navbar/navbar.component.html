@@ -27,7 +27,7 @@
 
         <li *ngIf="(user)">
           <div class="nav__link flex items-center gap-2">
-            <p-avatar shape="circle" icon="pi pi-shopping-cart"/>
+            <p-avatar shape="circle" icon="pi pi-shopping-cart" (click)="visible2 = true"/>
           </div>
         </li>
 
@@ -57,3 +57,11 @@
     </div>
   </nav>
 </header>
+
+<p-drawer header="Cart"  position="right" [(visible)]="visible2">
+  <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+      et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat.
+  </p>
+</p-drawer>

@@ -83,7 +83,16 @@ export class AddNewProductComponent {
       }
     }
     else{
-
+      data = {
+        category : this.selectedCategory.id,
+        name : this.selectedProduct.name,
+        in_stock : this.variation.in_stock,
+        imageUrl: "",
+        size: this.variation.size,
+        basePrice: this.variation.basePrice,
+        discount: this.variation.discount,
+        description: this.selectedProduct.description,
+      }
     }
 
     this.productService.addProduct(data).subscribe({

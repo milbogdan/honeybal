@@ -11,6 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  visible2 : boolean = false;
   isMenuOpen: boolean = false;
   user : User | null = null;
   msgError : string | null = null;

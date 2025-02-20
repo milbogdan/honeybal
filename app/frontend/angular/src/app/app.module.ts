@@ -60,6 +60,7 @@ import { AddCategoryComponent } from './components/elements/add-category/add-cat
 import { AddNewProductComponent } from './components/elements/add-new-product/add-new-product.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SelectButton } from 'primeng/selectbutton';
+import { DrawerModule } from 'primeng/drawer';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { SelectButton } from 'primeng/selectbutton';
     DropdownModule,
     ConfirmDialogModule,
     AutoCompleteModule,
-    SelectButton
+    SelectButton,
+    DrawerModule
   ],
   providers: [
     DialogService,

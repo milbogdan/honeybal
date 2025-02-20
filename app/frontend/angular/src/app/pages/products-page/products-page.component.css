@@ -27,3 +27,9 @@
     gap: 16px;
     flex-grow: 1; 
 }
+
+@media only screen and (max-width: 768px){
+    .content__wrapper{
+        grid-template-columns: 100%;
+    }
+}
