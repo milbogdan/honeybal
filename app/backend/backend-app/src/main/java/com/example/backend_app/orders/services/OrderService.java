@@ -8,9 +8,14 @@ import com.example.backend_app.orders.models.OrderProduct;
 import com.example.backend_app.orders.repositories.OrderRepository;
 import com.example.backend_app.products.models.ProductVariation;
 import com.example.backend_app.products.services.ProductVariationService;
+import com.example.backend_app.user.DTOs.UserDTO;
 import com.example.backend_app.user.models.User;
 import com.example.backend_app.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -54,9 +59,12 @@ public class OrderService {
 
         List<OrderProduct> orderProducts = new ArrayList<>();
         for (OrderVariationDTO variation : madeOrder.getVariations()) {
+
             OrderProduct orderProduct = new OrderProduct();
             ProductVariation productVariation = productVariationService.getById(variation.getProductVariationId());
-
+            if(!productVariation.getIn_stock()){
+                throw new ExceptionBadRequest("Product "+productVariation.getProduct().getName()+" "+ productVariation.getSize()+" is not in stock");
+            }
             orderProduct.setQuantity(variation.getQuantity());
             orderProduct.setOrder(order);
             orderProduct.setProductVariation(productVariation);
@@ -70,5 +78,10 @@ public class OrderService {
         order.setPrice(totalPrice);
         order.setOrderProducts(orderProducts);
         return orderRepository.save(order);
+    }
+
+    public Page<Order> getAll(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page,pageSize);
+        return orderRepository.findAll(pageable);
     }
 }
