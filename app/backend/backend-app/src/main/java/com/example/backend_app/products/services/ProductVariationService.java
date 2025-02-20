@@ -1,6 +1,7 @@
 package com.example.backend_app.products.services;
 
 import com.example.backend_app.global.exception.ExceptionNotFound;
+import com.example.backend_app.orders.models.DeliveryTypes;
 import com.example.backend_app.products.models.ProductVariation;
 import com.example.backend_app.products.repositories.ProductVariationRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +19,10 @@ public class ProductVariationService {
             throw new ExceptionNotFound("Variation not found");
         }
         productVariationRepository.deleteById(id);
+    }
+
+    public ProductVariation getById(Long productVariationId) {
+        return productVariationRepository.findById(productVariationId).orElseThrow(()
+                ->new ExceptionNotFound("Product variation not found!"));
     }
 }

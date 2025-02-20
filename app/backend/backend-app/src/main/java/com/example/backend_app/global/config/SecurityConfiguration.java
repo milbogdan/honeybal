@@ -46,6 +46,8 @@ public class SecurityConfiguration {
                         //productVariation endpoints
                         .requestMatchers(HttpMethod.DELETE,"/api/productVariations/delete/{id}").authenticated()
 
+                        //order endpoints
+                        .requestMatchers(HttpMethod.POST,"/api/orders/post").permitAll()
 
                         .requestMatchers(
                                 "/api/auth/**",

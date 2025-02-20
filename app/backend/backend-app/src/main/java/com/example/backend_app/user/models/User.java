@@ -1,6 +1,7 @@
 package com.example.backend_app.user.models;
 
 import com.example.backend_app.orders.models.Order;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -82,6 +83,7 @@ public class User implements UserDetails{
         return email;
     }
 
+    @JsonProperty("username")
     public String getusername() {
         return username;
     }
