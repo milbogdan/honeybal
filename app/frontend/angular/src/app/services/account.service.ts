@@ -15,10 +15,6 @@ export class AccountService {
     private userSubject = new BehaviorSubject<User | null>(null);
     user$ = this.userSubject.asObservable();
 
-    constructor() {
-        this.loadUserOnInit(); // Automatski učitava korisnika kada se aplikacija pokrene
-    }
-
     register(user : RegisterModel){
         return this.http.post<{name: string}>(environment.apiUrl + 'auth/register', user);
     }
@@ -42,17 +38,11 @@ export class AccountService {
     }
 
     logout() {
+        this.userSubject.next(null);
         return this.http.post(`${environment.apiUrl}auth/logout`, {}, {
             withCredentials: true
         }).pipe(
-            tap(() => this.userSubject.next(null))
+            tap(() => this.router.navigateByUrl('/login'))
         );
     }
-
-    private loadUserOnInit() {
-        this.getUser().subscribe({
-          next: (user) => this.userSubject.next(user),
-          error: () => this.userSubject.next(null) // Ako je greška, znači da korisnik nije ulogovan
-        });
-      }
 }

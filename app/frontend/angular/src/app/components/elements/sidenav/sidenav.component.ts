@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter, inject, HostListener } from '@angular/
 import { navbarData } from './nav-data';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
+import { Subject, takeUntil } from 'rxjs';
+import { User } from '../../../models/User';
 
 interface SideNavToggle{
   screenWidth : number;
@@ -19,6 +21,8 @@ export class SidenavComponent {
   collapsed : boolean = false;
   screenWidth = 0;
   navData = navbarData;
+  user : User | null = null;
+  private destroy$ = new Subject<void>();
   router : Router = inject(Router);
   accountService : AccountService = inject(AccountService);
 
@@ -26,7 +30,15 @@ export class SidenavComponent {
     if (typeof window !== "undefined") {
       this.screenWidth = window.innerWidth;
       this.setCollapsedState();
-   }
+    }
+
+    this.accountService.user$.pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (user) => {
+        // console.log(this.accountService.user$);
+        this.user = user;
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -60,10 +72,12 @@ export class SidenavComponent {
   }
 
   logout(){
-    this.accountService.logout().subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      }
-    });
+    this.router.navigate(['/login']);
+    this.accountService.logout().subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

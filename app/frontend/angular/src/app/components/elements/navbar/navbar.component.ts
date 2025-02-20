@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
 import { User } from '../../../models/User';
 import { Router } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -17,28 +17,25 @@ export class NavbarComponent {
   router : Router = inject(Router); 
   private destroy$ = new Subject<void>();
   accountService : AccountService = inject(AccountService);
-  user$: Observable<User | null>; 
 
-  constructor() {
-    this.user$ = this.accountService.user$;
+  ngOnInit() {
+    this.accountService.user$.pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (user) => {
+        this.user = user;
+      }
+    });
   }
-  // ngOnInit() {
-  //   this.accountService.user$.pipe(takeUntil(this.destroy$))
-  //   .subscribe({
-  //     next: (user) => {
-  //       this.user = user;
-  //     }
-  //   })
-  // }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
   logout(){
+    this.router.navigate(['/login']);
     this.accountService.logout().subscribe({
       next: () => {
-        this.router.navigate(['/login']);        
+        
       }
     });
   }
