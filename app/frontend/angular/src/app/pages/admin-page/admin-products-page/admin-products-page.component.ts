@@ -46,7 +46,8 @@ export class AdminProductsPageComponent implements OnInit {
   confirmationService : ConfirmationService = inject(ConfirmationService);
 
   ngOnInit(){
-    this.fetchData();
+    this.fetchProducts();
+    this.fetchCategories();
   }
 
   editProduct(product : Product, variation: VariationProducts){
@@ -70,18 +71,12 @@ export class AdminProductsPageComponent implements OnInit {
   }
 
 
-  fetchData() {
-      this.productService.getAllProducts(0, 6).subscribe({
-        next: (response : any) => {
-            this.products = response.content;
-        }
-      })
-
-      this.categorieService.getAllCategories().subscribe({
-        next: (response : any) => {
-            this.categories = response;
-        }
-      })
+  fetchProducts() {
+    this.productService.getAllProducts(0, 6).subscribe({
+      next: (response : any) => {
+          this.products = response.content;
+      }
+    })
 
     //   this.statuses = [
     //       { label: 'INSTOCK', value: 'instock' },
@@ -221,6 +216,36 @@ export class AdminProductsPageComponent implements OnInit {
 
   exportCSV() {
     this.dt.exportCSV();
+  }
+
+  // CATEGORIES FUNCTIONS
+
+  fetchCategories(){
+    this.categorieService.getAllCategories().subscribe({
+      next: (response : any) => {
+          this.categories = response;
+      }
+    });
+  }
+
+  onRowEditSave(id : number, name : string){
+    if(name != ''){
+      this.categorieService.editCategorieName(id, name).subscribe({
+        next: (response : any) => {
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You have edited category ${name}` });
+        }
+      });
+    }
+  }
+
+  deleteCategory(categorie : ProductCategory){
+    this.categorieService.deleteCategorie(categorie.id).subscribe({
+      next: (response : any) => {
+        this.fetchCategories();
+        this.fetchProducts();
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `${response.message}` });
+      }
+    });
   }
 
   ngOnDestroy() {

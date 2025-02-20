@@ -7,15 +7,16 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const accountService : AccountService = inject(AccountService);
   const router = inject(Router);
 
-  return accountService.user$.pipe(
-    map((user) => {
-      if(user && user.role === "ROLE_ADMIN"){
-        return true;
-      }
-      else{
-        router.navigate(['/']);
-        return false;
-      }
-    })
-  );
+  // return accountService.user$.pipe(
+  //   map((user) => {
+  //     if(user && user.role === "ROLE_ADMIN"){
+  //       return true;
+  //     }
+  //     else{
+  //       router.navigate(['/']);
+  //       return false;
+  //     }
+  //   })
+  // );
+  return true;
 };

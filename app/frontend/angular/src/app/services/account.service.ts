@@ -15,6 +15,17 @@ export class AccountService {
     private userSubject = new BehaviorSubject<User | null>(null);
     user$ = this.userSubject.asObservable();
 
+    constructor() {
+        this.getUser().subscribe({
+            next: (user) => {
+                this.userSubject.next(user);
+            },
+            error: () => {
+                this.userSubject.next(null);
+            }
+        });
+    }
+
     register(user : RegisterModel){
         return this.http.post<{name: string}>(environment.apiUrl + 'auth/register', user);
     }

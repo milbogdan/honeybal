@@ -13,4 +13,12 @@ export class ProductCategoryService {
     getAllCategories() : Observable<ProductCategory[]>{
         return this.http.get<ProductCategory[]>(environment.apiUrl + "productCategories/getAll");
     }
+
+    editCategorieName(id: number, categName : string) : Observable<string>{
+        return this.http.put<string>(environment.apiUrl + 'productCategories/put/' + id, {name : categName}, {withCredentials : true});
+    }
+
+    deleteCategorie(id : number){
+        return this.http.delete(environment.apiUrl + 'productCategories/delete/' + id, {withCredentials : true});
+    }
 }
