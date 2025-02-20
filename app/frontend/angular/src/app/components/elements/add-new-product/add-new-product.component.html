@@ -1,0 +1,119 @@
+<div id="content">
+    <div class="changeView mb-3">
+        <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedState" optionLabel="label" optionValue="value" allowEmpty="false"/>
+    </div>
+
+    <p-select 
+        [options]="categories" 
+        [(ngModel)]="selectedCategory" 
+        optionLabel="name" 
+        placeholder="Select a category" 
+        class="w-full mb-3"
+        (onChange)="onCategoryChange()"
+        showClear=true
+    />
+
+    <p-select 
+        *ngIf="selectedState == 1" 
+        class="mb-3"
+        [disabled]="!selectedCategory"
+        [options]="products" 
+        [(ngModel)]="selectedProduct" 
+        optionLabel="name" 
+        placeholder="Select a product"
+        showClear=true 
+    />
+    <div class="mb-3 select-wrapper" *ngIf="selectedState == 1">
+        <div class="single-input">
+            <label for="nameOfProduct">Size</label>
+            <input id="nameOfProduct" type="text" pInputText [(ngModel)]="variation.size" [disabled]="!selectedCategory"/>
+        </div>
+
+        <div class="single-input">
+            <label for="nameOfProduct">Base price</label>
+            <input id="nameOfProduct" type="text" pInputText [(ngModel)]="variation.basePrice" [disabled]="!selectedCategory"/>
+        </div>
+
+        <div class="single-input">
+            <label for="nameOfProduct">Discount (%)</label>
+            <input id="nameOfProduct" type="text" pInputText [(ngModel)]="variation.discount" [disabled]="!selectedCategory"/>
+        </div>  
+
+        <div class="single-input">
+            <label for="in_stock_product">In Stock</label>
+            <p-select
+                id="in_stock_product"
+                [disabled]="!selectedCategory"
+                [options]="inStockOptions" 
+                [(ngModel)]="variation.in_stock" 
+                optionLabel="label"
+                optionValue="value" 
+                placeholder="In stock" 
+                (onChange)="onCategoryChange()"
+                showClear=true
+            />
+        </div>  
+    </div>
+
+    <div class="mb-3 select-wrapper" *ngIf="selectedState == 2">
+        <div class="single-input">
+            <label for="nameOfProduct">Name of new product</label>
+            <input id="nameOfProduct" type="text" pInputText [(ngModel)]="nameNewProduct" [disabled]="!selectedCategory"/>
+        </div>
+
+        <div class="single-input">
+            <label for="nameOfProduct">Size</label>
+            <input id="nameOfProduct" type="text" pInputText [(ngModel)]="variation.size" [disabled]="!selectedCategory"/>
+        </div>
+
+        <div class="single-input">
+            <label for="nameOfProduct">Base price</label>
+            <input id="nameOfProduct" type="text" pInputText [(ngModel)]="variation.basePrice" [disabled]="!selectedCategory"/>
+        </div>
+
+        <div class="single-input">
+            <label for="nameOfProduct">Discount (%)</label>
+            <input id="nameOfProduct" type="text" pInputText [(ngModel)]="variation.discount" [disabled]="!selectedCategory"/>
+        </div> 
+
+        <div class="single-input">
+            <label for="in_stock_product">In Stock</label>
+            <p-select
+                id="in_stock_product"
+                [disabled]="!selectedCategory"
+                [options]="inStockOptions" 
+                [(ngModel)]="variation.in_stock" 
+                optionLabel="label"
+                optionValue="value" 
+                placeholder="In stock" 
+                (onChange)="onCategoryChange()"
+                showClear=true
+            />
+        </div>  
+    </div>
+
+    <div class="mb-3" *ngIf="selectedState == 2">
+        <label for="textArea">Description of product</label>
+        <textarea rows="5" cols="30" pTextarea fluid [disabled]="!selectedCategory" [(ngModel)]="descriptionNewProduct"></textarea>
+    </div>
+    
+    <div class="container text-center">
+        <div class="border border-dashed border-secondary p-3 rounded bg-light position-relative">
+          <input type="file" id="file-upload" class="position-absolute w-100 h-100 opacity-0" (change)="onFileSelected($event)" multiple accept="image/*">
+          <div class="d-flex flex-column align-items-center">
+            <i class="bi bi-upload display-4 text-secondary"></i>
+            <p class="text-muted mb-1">Click to upload or drag and drop</p>
+            <small class="text-secondary">JPG, PNG, GIF (max 10MB)</small>
+          </div>
+        </div>
+      
+        <div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+          <div *ngFor="let image of images; let i = index" class="position-relative">
+            <img [src]="image.url" class="rounded shadow-sm" style="width: 100px; height: 100px; object-fit: cover;">
+            <button class="btn btn-danger btn-sm position-absolute top-0 end-0" (click)="removeImage(i)">✕</button>
+          </div>
+        </div>
+    </div>      
+
+    <p-button label="Create New Product" variant="outlined" severity="success" fluid (click)="onSubmit()"/>
+</div>

@@ -56,6 +56,10 @@ import { RadioButton } from 'primeng/radiobutton';
 import { InputNumber } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AddCategoryComponent } from './components/elements/add-category/add-category.component';
+import { AddNewProductComponent } from './components/elements/add-new-product/add-new-product.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SelectButton } from 'primeng/selectbutton';
 
 @NgModule({
   declarations: [
@@ -75,7 +79,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     AdminPageComponent,
     SidenavComponent,
     AdminProductsPageComponent,
-    ProductDialogComponent
+    ProductDialogComponent,
+    AddCategoryComponent,
+    AddNewProductComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +116,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TextareaModule,
     ToastModule,
     DropdownModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AutoCompleteModule,
+    SelectButton
   ],
   providers: [
     DialogService,

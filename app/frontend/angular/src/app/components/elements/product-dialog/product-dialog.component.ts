@@ -11,7 +11,6 @@ import { ProductService } from '../../../services/product.service';
   styleUrl: './product-dialog.component.css'
 })
 export class ProductDialogComponent {
-  ref: DynamicDialogRef | undefined;
   product: Product = { id: -1, name: '', description: '', category: {id : -1, name: ''} , variations: []};
   variation: VariationProducts = { id: -1, basePrice: 0, size: '', discount: 0, in_stock: false, imageUrl: '', price: 0};
   submitted : boolean = false;
@@ -55,6 +54,7 @@ export class ProductDialogComponent {
       console.log(response);
     })
 
-    // this._modal.close({ product: this.product, variation: this.variation });
+    // { product: this.product, variation: this.variation }
+    this._modal.close();
   }
 }

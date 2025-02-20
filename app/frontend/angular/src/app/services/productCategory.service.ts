@@ -10,6 +10,10 @@ import { environment } from '../../environments/environment.development';
 export class ProductCategoryService {
     http : HttpClient = inject(HttpClient);
 
+    addNewProductCategory(categName : string) : Observable<string>{
+        return this.http.post<string>(environment.apiUrl + 'productCategories/post', {name : categName}, {withCredentials : true});
+    }
+
     getAllCategories() : Observable<ProductCategory[]>{
         return this.http.get<ProductCategory[]>(environment.apiUrl + "productCategories/getAll");
     }

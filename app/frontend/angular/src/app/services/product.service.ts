@@ -31,4 +31,17 @@ export class ProductService {
             {withCredentials:true}
         );
     }
+
+    deleteProduct(id: number){
+        return this.http.delete(environment.apiUrl + `products/delete/${id}`,
+            {withCredentials:true}
+        )
+    }
+
+    addProduct(product : any){
+        return this.http.post(environment.apiUrl + 'products/post',
+            product,
+            {withCredentials:true}
+        )
+    }
 }

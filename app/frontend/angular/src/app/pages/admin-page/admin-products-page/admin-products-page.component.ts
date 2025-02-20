@@ -7,6 +7,9 @@ import { ProductDialogComponent } from '../../../components/elements/product-dia
 import { VariationProducts } from '../../../models/VariationProducts';
 import { ProductCategoryService } from '../../../services/productCategory.service';
 import { ProductCategory } from '../../../models/ProductCategory';
+import { AddCategoryComponent } from '../../../components/elements/add-category/add-category.component';
+import { AddNewProductComponent } from '../../../components/elements/add-new-product/add-new-product.component';
+import { Table } from 'primeng/table';
 
 
 @Component({
@@ -20,17 +23,15 @@ export class AdminProductsPageComponent implements OnInit {
   
   // Product
   products!: Product[];
+  selectedProducts!: Product[] | null;
   categories! : ProductCategory[];
-
-  // Product
-  selectedProducts!: any[] | null;
 
   submitted: boolean = false;
 
   statuses!: any[];
 
   // Table
-  @ViewChild('dt') dt!: any;
+  @ViewChild('dt') dt!: Table;
 
   // Column
   cols!: any[];
@@ -95,22 +96,41 @@ export class AdminProductsPageComponent implements OnInit {
     //   this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
   }
 
+  addNewProduct() {
+    this.ref = this.dialogService.open(AddNewProductComponent, {
+      header: 'New Product',
+      width: '40vw',
+      modal: true,
+      closable: true,
+      closeOnEscape: true,
+      dismissableMask: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+          '960px': '50vw',
+          '640px': '75vw'
+      },
+      data : {
+        categories : this.categories,
+        products: this.products 
+      }
+    })
+  }
+
   deleteSelectedProducts() {
-    // this.confirmationService.confirm({
-    //     message: 'Are you sure you want to delete the selected products?',
-    //     header: 'Confirm',
-    //     icon: 'pi pi-exclamation-triangle',
-    //     accept: () => {
-    //         this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-    //         this.selectedProducts = null;
-    //         this.messageService.add({
-    //             severity: 'success',
-    //             summary: 'Successful',
-    //             detail: 'Products Deleted',
-    //             life: 3000
-    //         });
-    //     }
-    // });
+    this.confirmationService.confirm({
+        message: 'Are you sure you want to delete the selected products?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
+            // this.selectedProducts = null;
+            console.log(this.selectedProducts);
+            this.selectedProducts?.forEach((p) => {
+              this.productService.deleteProduct(p.id).subscribe();
+            });
+            this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+        }
+    });
   }
 
   deleteProduct(product: any) {
@@ -131,7 +151,12 @@ export class AdminProductsPageComponent implements OnInit {
           outlined: true,
       },
       accept: () => {
-          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You have deleted item ${product.name}` });
+        this.productService.deleteProduct(product.id).subscribe({
+          next: (response : any) => {
+            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You have deleted item ${product.name}` });
+            this.fetchProducts();
+          }
+        });
       },
       reject: () => {
           this.messageService.add({
@@ -155,15 +180,6 @@ export class AdminProductsPageComponent implements OnInit {
 
 //       return index;
 //   }
-
-  createId(): string {
-      let id = '';
-      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (var i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
-  }
 
   // getSeverity(status: string) {
   //     switch (status) {
@@ -214,16 +230,35 @@ export class AdminProductsPageComponent implements OnInit {
       this.expandedRows = {};
   }
 
-  exportCSV() {
-    this.dt.exportCSV();
-  }
-
   // CATEGORIES FUNCTIONS
 
   fetchCategories(){
     this.categorieService.getAllCategories().subscribe({
       next: (response : any) => {
-          this.categories = response;
+        this.categories = response;
+      }
+    });
+  }
+
+  newCategory(){
+    this.ref = this.dialogService.open(AddCategoryComponent, {
+      header: 'New Category',
+      width: '36vw',
+      modal: true,
+      closable: true,
+      closeOnEscape: true,
+      dismissableMask: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+          '960px': '50vw',
+          '640px': '75vw'
+      },
+    });
+
+    this.ref?.onClose.subscribe({
+      next: (response : any) => {
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Added new category` });
+        this.fetchCategories();
       }
     });
   }
