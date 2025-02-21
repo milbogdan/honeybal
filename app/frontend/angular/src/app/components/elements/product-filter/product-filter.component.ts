@@ -12,7 +12,7 @@ import { FilterService } from '../../../services/filter.service';
 export class ProductFilterComponent {
   categories : ProductCategory[] = [];
   inStock: boolean | null = null;
-  selectedCategories: ProductCategory[] = [];
+  categoryIds: number[] = [];
   categoryService : ProductCategoryService = inject(ProductCategoryService);
   filterService : FilterService = inject(FilterService);
   
@@ -26,9 +26,9 @@ export class ProductFilterComponent {
 
   onCategoryChange(category: ProductCategory, event: any) {
     if (event.target.checked) {
-      this.selectedCategories.push(category);
+      this.categoryIds.push(category.id);
     } else {
-      this.selectedCategories = this.selectedCategories.filter(c => c !== category);
+      this.categoryIds = this.categoryIds.filter(c => c !== category.id);
     }
     this.updateFilters();
   }
@@ -40,7 +40,7 @@ export class ProductFilterComponent {
 
   updateFilters() {
     this.filterService.updateFilters({
-      categories: this.selectedCategories,
+      categoryIds: this.categoryIds,
       inStock: this.inStock
     });
   }

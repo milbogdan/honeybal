@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../../models/Product';
 import { VariationProducts } from '../../../models/VariationProducts';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'product',
@@ -12,6 +13,7 @@ export class ProductComponent {
   @Input() product! : Product;
   selectedVariation : VariationProducts | null = null;
   quantity : number = 1;
+  cartService : CartService = inject(CartService);
 
   ngOnInit(){
     this.getInStockItem();
@@ -36,5 +38,29 @@ export class ProductComponent {
   decreaseQuantity(){
     if(this.quantity > 1)
       this.quantity--;
+  }
+
+  addToCart(product : Product, quantity : number){
+    let data = { 
+      productId : product.id,
+      productName : product.name,
+      catergyName : product.category.name,
+      variationId : this.selectedVariation?.id,
+      variationSize : this.selectedVariation?.size,
+      variationImageUrl : this.selectedVariation?.imageUrl,
+      variationBasePrice : this.selectedVariation?.basePrice,
+      variationPrice : this.selectedVariation?.price,
+      variationDiscount : this.selectedVariation?.discount,
+      variationInStock : this.selectedVariation?.in_stock,
+      variationQuantity : quantity
+    };
+
+    if(data.variationInStock === true){
+      this.cartService.updateCart(data);
+    } 
+    else{
+      alert('This item is out of stock');
+      return;
+    }
   }
 }

@@ -3,6 +3,8 @@ import { AccountService } from '../../../services/account.service';
 import { User } from '../../../models/User';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { CartService } from '../../../services/cart.service';
+import { Product } from '../../../models/Product';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +20,8 @@ export class NavbarComponent {
   router : Router = inject(Router); 
   private destroy$ = new Subject<void>();
   accountService : AccountService = inject(AccountService);
+  cartService : CartService = inject(CartService);
+  cartItems: any[] = [];
 
   ngOnInit() {
     this.accountService.user$.pipe(takeUntil(this.destroy$))
@@ -26,6 +30,12 @@ export class NavbarComponent {
         this.user = user;
       }
     });
+
+    this.cartService.cart$.subscribe({
+      next: (cartItems) => {
+        this.cartItems = cartItems;
+      }
+    })
   }
 
   toggleMenu(): void {

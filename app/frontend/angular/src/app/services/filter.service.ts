@@ -8,7 +8,7 @@ export class FilterService {
     data = {
         viewMode: 0,
         searchName: '',
-        categories: [],
+        categoryIds: [],
         inStock: null
     }
 
@@ -27,5 +27,4 @@ export class FilterService {
     getFilters() {
         return this.filterState.getValue();
     }
-
 }

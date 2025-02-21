@@ -301,3 +301,22 @@ a {
     transition: top .3s;
   }
 }
+
+/* CART */
+.cartItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 2;
+  border-radius: 6px;
+
+}
+
+.productDetails{
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}

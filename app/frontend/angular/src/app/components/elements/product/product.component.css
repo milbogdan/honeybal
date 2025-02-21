@@ -98,6 +98,7 @@ body{
   letter-spacing: 1.5px;
   color: #fff;
   margin: 0;
+  font-size: 28px;
 }
 
 .container .card .contentBx .in_stock,
@@ -165,7 +166,7 @@ body{
   display: inline-block;
   color: #111;
   background: #fff;
-  margin: 0 5px;
+  margin: 0 8px;
   transition: 0.5s;
   border-radius: 6px;
   cursor: pointer;
