@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+public class UserServiceUT {
     @Mock
     private UserRepository userRepository;
 
@@ -64,5 +64,31 @@ public class UserServiceTest {
         assertEquals("User not found!", exception.getMessage());
 
         verify(userRepository).findById(1L);
+    }
+
+    @Test
+    void isUsernameTaken_true(){
+        User user = new User();
+        user.setUsername("test");
+
+        String usernameToTest = "test";
+
+        when(userRepository.findByUsername(usernameToTest)).thenReturn(Optional.of(user));
+        boolean result = userService.isUsernameTaken(usernameToTest);
+
+        assertTrue(result);
+        verify(userRepository).findByUsername(usernameToTest);
+    }
+
+    @Test
+    void isUsernameTaken_false(){
+
+        String usernameToTest = "test";
+
+        when(userRepository.findByUsername(usernameToTest)).thenReturn(Optional.empty());
+        boolean result = userService.isUsernameTaken(usernameToTest);
+
+        assertFalse(result);
+        verify(userRepository).findByUsername(usernameToTest);
     }
 }
