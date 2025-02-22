@@ -27,7 +27,7 @@
 
         <li *ngIf="(user)">
           <div class="nav__link flex items-center gap-2">
-            <p-avatar shape="circle" icon="pi pi-shopping-cart" (click)="visible2 = true"/>
+            <p-avatar shape="circle" icon="pi pi-shopping-cart" (click)="openCart()"/>
           </div>
         </li>
 
@@ -58,30 +58,7 @@
   </nav>
 </header>
 
-<p-drawer [(visible)]="visible2" position="right">
-    <ng-template #headless>
-        <div class="d-flex flex-column h-100">
-            <div class="d-flex align-items-center justify-content-between px-3 pt-3">
-                <h3>Korpa</h3>
-            </div>
-
-          <div class="overflow-auto" *ngFor="let item of cartItems">
-              <div class="cartItem mb-3">
-                  <img src='assets/products/med.png' style="width: 40px;" alt="">
-                  <div class="productDetails">
-                    <span class="fw-medium">{{item.productName}}</span>
-                    <span>Velicina proizvoda: {{item.variationSize}}</span>
-                    <span class="fw-medium">{{item.variationQuantity}} x {{item.variationPrice}}.00 RSD</span>
-                  </div>
-                  <!-- (click)="deleteProduct(product) -->
-                  <i class="pi pi-trash"></i>
-              </div>
-          </div>
-
-          <div class="mt-auto">
-              <hr class="mb-4 mx-3 border-top border-0 border-secondary">
-              <h3>Ukupno za placanje: </h3>
-          </div>
-        </div>
-    </ng-template>
-</p-drawer>
+<div class="backdrop" [ngClass]="{show : visible$ | async}" (click)="closeCart()"></div>
+<cart-sidebar 
+(closeEmitter)="closeCart()"
+[visible]="(visible$ | async) ?? false"></cart-sidebar>

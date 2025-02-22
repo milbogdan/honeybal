@@ -302,21 +302,20 @@ a {
   }
 }
 
-/* CART */
-.cartItem{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 2;
-  border-radius: 6px;
-
+/* backdrop */
+.backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 100;
+  display: none;
+  opacity: 0;
 }
 
-.productDetails{
-  display: flex;
-  flex-direction: column;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  justify-content: center;
+.backdrop.show {
+  display: block;
+  opacity: 1;
 }

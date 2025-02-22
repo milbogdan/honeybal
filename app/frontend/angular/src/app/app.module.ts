@@ -61,6 +61,7 @@ import { AddNewProductComponent } from './components/elements/add-new-product/ad
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SelectButton } from 'primeng/selectbutton';
 import { DrawerModule } from 'primeng/drawer';
+import { CartSidebarComponent } from './components/elements/cart-sidebar/cart-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { DrawerModule } from 'primeng/drawer';
     AdminProductsPageComponent,
     ProductDialogComponent,
     AddCategoryComponent,
-    AddNewProductComponent
+    AddNewProductComponent,
+    CartSidebarComponent
   ],
   imports: [
     BrowserModule,

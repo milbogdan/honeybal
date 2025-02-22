@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
 import { User } from '../../../models/User';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { CartService } from '../../../services/cart.service';
 import { Product } from '../../../models/Product';
 
@@ -13,16 +13,14 @@ import { Product } from '../../../models/Product';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  visible2 : boolean = false;
+  visible$ = new BehaviorSubject<boolean>(false);
   isMenuOpen: boolean = false;
   user : User | null = null;
   msgError : string | null = null;
   router : Router = inject(Router); 
   private destroy$ = new Subject<void>();
   accountService : AccountService = inject(AccountService);
-  cartService : CartService = inject(CartService);
-  cartItems: any[] = [];
-
+  
   ngOnInit() {
     this.accountService.user$.pipe(takeUntil(this.destroy$))
     .subscribe({
@@ -30,12 +28,6 @@ export class NavbarComponent {
         this.user = user;
       }
     });
-
-    this.cartService.cart$.subscribe({
-      next: (cartItems) => {
-        this.cartItems = cartItems;
-      }
-    })
   }
 
   toggleMenu(): void {
@@ -49,6 +41,19 @@ export class NavbarComponent {
         
       }
     });
+  }
+
+  openCart() {
+    this.visible$.next(true);
+  }
+
+  closeCart() {
+    this.visible$.next(false);
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscape(event: KeyboardEvent) {
+    this.closeCart();
   }
 
   ngOnDestroy() {
