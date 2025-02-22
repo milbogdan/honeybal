@@ -10,7 +10,7 @@
         </div>
         <div class="cart-items">
             <div class="cart-item" *ngFor="let item of cartItems;">
-                <div class="remove-item">
+                <div class="remove-item" (click)="removeItem(item.variationId)">
                     <i class="pi pi-times"></i>
                 </div>
                 <div class="item-img">

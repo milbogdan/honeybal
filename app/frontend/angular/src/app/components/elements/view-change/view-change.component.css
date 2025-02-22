@@ -6,7 +6,10 @@
 
 .grid-view,
 .list-view{
-    border: 1px solid white;
+    border: 1px solid #dfe7ef;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(221, 224, 255, .54);
     margin-right: 8px;
     padding: 3px;
     border-radius: 4px;
@@ -17,6 +20,6 @@
 
 .grid-view i,
 .list-view i{
-    color: white;
+    color: #485467;
     font-size: 1.2rem;
 }

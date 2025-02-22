@@ -1,5 +1,5 @@
 <div class="filter__content">
-    <p-panel header="Categories" [toggleable]="true" class="m-3">
+    <p-panel header="Categories" [toggleable]="true" class="m-3 categories">
         <div class="stock-checkboxes">
             <div *ngFor="let category of categories" class="checkbox-wrapper">
                 <input type="checkbox" [id]="category.id" (change)="onCategoryChange(category, $event)">

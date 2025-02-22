@@ -21,8 +21,11 @@ body{
   position: relative;
   width: 320px;
   height: 450px;
-  background: #232323;
-  border-radius: 20px;
+  /* background: #1C1C1C; */
+  background-color: #F3F4F6;
+  box-shadow: 0px 4px 30px rgba(221, 224, 255, .54);
+  border-radius: 12px;
+  border: 1px solid #dfe7ef;
   overflow: hidden;
 }
 
@@ -96,7 +99,7 @@ body{
   position: relative;
   font-weight: 600;
   letter-spacing: 1.5px;
-  color: #fff;
+  color: #485467;
   margin: 0;
   font-size: 28px;
 }
@@ -149,7 +152,7 @@ body{
 .container .card .contentBx .in_stock h3,
 .container .card .contentBx .price h3,
 .container .card .contentBx .size h3 {
-  color: #fff;
+  color: #485467;
   font-weight: 300;
   font-size: 14px;
   text-transform: uppercase;
@@ -164,7 +167,7 @@ body{
   line-height: 26px;
   font-size: 14px;
   display: inline-block;
-  color: #111;
+  color: #485467;
   background: #fff;
   margin: 0 8px;
   transition: 0.5s;
@@ -212,7 +215,7 @@ body{
   border-radius: 24px;
   text-decoration: none;
   font-weight: 600;
-  color: #111;
+  color: #485467;
   margin: 0 10px;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -295,14 +298,14 @@ body{
     position: relative;
     font-weight: 600; 
     letter-spacing: 1.5px;  
-    color: #fff;
+    color: #1C1C1C;
     margin: 0;
     font-size: 16px;
   }
 
   .container .card .contentBx .in_stock h3,
   .container .card .contentBx .size h3 {
-    color: #fff;
+    color: #1C1C1C;
     font-weight: 300;
     font-size: 8px;
     text-transform: uppercase;

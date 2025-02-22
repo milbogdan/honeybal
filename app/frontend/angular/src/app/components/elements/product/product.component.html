@@ -22,7 +22,7 @@
 
             <div class="price" *ngIf="selectedVariation?.in_stock">
                 <h3>Cena :</h3>
-                <span style="color: #fff">
+                <span>
                     {{ selectedVariation?.price }} RSD
                 </span>
             </div>
@@ -32,7 +32,7 @@
                     -
                 </span>
 
-                <span style="color: #fff; width: 36px;">{{quantity}}</span>
+                <span style="width: 36px;">{{quantity}}</span>
 
                 <span class="btn-num-order" (click)="increaseQuantity()">
                     +

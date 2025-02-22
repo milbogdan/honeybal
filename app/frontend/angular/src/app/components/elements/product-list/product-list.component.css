@@ -7,12 +7,17 @@
 
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
     max-width: 1200px;
     width: 100%;
     margin: auto;
     place-items: center;
+    border: 1px solid #dfe7ef;
+    border-radius: 12px;
+    box-shadow: 0px 4px 30px rgba(221, 224, 255, .54);
+    padding: 2rem;
+    background-color: #FFFFFF;
 }
 
 :host ::ng-deep .p-paginator{
@@ -20,7 +25,7 @@
 }
 
 :host ::ng-deep .p-paginator .p-ripple{
-    color: white;
+    color: #485467;
 }
 
 .img-of-product{

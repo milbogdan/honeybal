@@ -26,4 +26,7 @@ export class CartSidebarComponent {
     this.closeEmitter.emit(false);
   }
   
+  removeItem(variationId : number){
+    this.cartService.removeCartItem(variationId);
+  }
 }
