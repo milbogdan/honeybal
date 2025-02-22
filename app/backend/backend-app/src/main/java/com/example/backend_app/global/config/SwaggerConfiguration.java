@@ -1,4 +1,4 @@
-package com.example.backend_app.config;
+package com.example.backend_app.global.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

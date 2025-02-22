@@ -36,6 +36,17 @@ import { PanelModule } from 'primeng/panel';
 import { SearchBarComponent } from './components/elements/search-bar/search-bar.component';
 import { ViewChangeComponent } from './components/elements/view-change/view-change.component';
 import { TableModule } from 'primeng/table';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { SidenavComponent } from './components/elements/sidenav/sidenav.component';
+import { AdminProductsPageComponent } from './pages/admin-page/admin-products-page/admin-products-page.component';
+import { FileUpload } from 'primeng/fileupload';
+import { IconFieldModule } from 'primeng/iconfield';
+import { ToolbarModule } from 'primeng/toolbar';
+import { InputIconModule } from 'primeng/inputicon';
+import { Tag } from 'primeng/tag';
+import { Dialog } from 'primeng/dialog';
+import { ConfirmDialog } from 'primeng/confirmdialog'
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -52,6 +63,9 @@ import { TableModule } from 'primeng/table';
     ProductFilterComponent,
     SearchBarComponent,
     ViewChangeComponent,
+    AdminPageComponent,
+    SidenavComponent,
+    AdminProductsPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,9 +86,18 @@ import { TableModule } from 'primeng/table';
     Menubar,
     PaginatorModule,
     PanelModule,
-    TableModule
+    TableModule,
+    FileUpload,
+    IconFieldModule,
+    ToolbarModule,
+    InputIconModule,
+    Tag,
+    Dialog,
+    ConfirmDialog,
   ],
   providers: [
+    MessageService,
+    ConfirmationService,
     provideHttpClient(withFetch()),
     provideAnimationsAsync(),
     provideClientHydration(withEventReplay()),

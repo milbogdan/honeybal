@@ -25,7 +25,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit(){
     this.filterSubscription = this.filterService.filter$.subscribe((filters) => {
       this.currentFillters = filters;
-      console.log(this.currentFillters);
       this.fetchProducts(this.currentPage, this.rows, this.currentFillters);
     })
   }

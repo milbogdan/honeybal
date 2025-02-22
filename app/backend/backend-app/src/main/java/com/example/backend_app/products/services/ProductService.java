@@ -1,6 +1,7 @@
 package com.example.backend_app.products.services;
 
-import com.example.backend_app.exception.ExceptionBadRequest;
+import com.example.backend_app.global.exception.ExceptionBadRequest;
+import com.example.backend_app.global.exception.ExceptionNotFound;
 import com.example.backend_app.products.DTOs.CreateProductDTO;
 import com.example.backend_app.products.DTOs.EditProductDTO;
 import com.example.backend_app.products.models.Product;
@@ -10,7 +11,6 @@ import com.example.backend_app.products.repositories.ProductCategoryRepository;
 import com.example.backend_app.products.repositories.ProductRepository;
 import com.example.backend_app.products.repositories.ProductVariationRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -53,9 +53,9 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Page<Product> getAllProducts(int page,int pageSize,Integer categoryId,String searchName,Boolean inStock) {
+    public Page<Product> getAllProducts(int page,int pageSize,List<Long> categoryId,String searchName) {
         Pageable pageable = PageRequest.of(page,pageSize);
-        return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName,inStock);
+        return productRepository.findAllWithSearchAndPagination(pageable,categoryId,searchName);
     }
 
     public Product editProduct(Long id, EditProductDTO editProductDTO) {
@@ -115,5 +115,12 @@ public class ProductService {
 
     public void calculatePrice(ProductVariation variation) {
         variation.setPrice(variation.getBasePrice() * (1 - variation.getDiscount()/100.0));
+    }
+
+    public void deleteProduct(long id) {
+        if(!productRepository.existsById(id)){
+            throw new ExceptionNotFound("Product not found");
+        }
+        productRepository.deleteById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.backend_app.user.models;
 
 import com.example.backend_app.orders.models.Order;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -75,6 +76,16 @@ public class User implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @JsonProperty("username")
+    public String getusername() {
+        return username;
     }
 
     @Override

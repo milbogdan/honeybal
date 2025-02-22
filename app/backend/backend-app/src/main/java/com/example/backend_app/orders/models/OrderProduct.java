@@ -2,6 +2,7 @@ package com.example.backend_app.orders.models;
 
 import com.example.backend_app.products.models.Product;
 import com.example.backend_app.products.models.ProductVariation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class OrderProduct {
 
     @JoinColumn(name="order_id")
     @ManyToOne
+    @JsonIgnore
     private Order order;
 
     @JoinColumn(name="product_variation_id")
@@ -26,6 +28,6 @@ public class OrderProduct {
     private int quantity;
 
     @Column
-    private int price;
+    private double price;
 
 }

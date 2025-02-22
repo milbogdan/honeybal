@@ -17,12 +17,14 @@ export class ProductService {
 
         if(filters){
             Object.keys(filters).forEach(key => {
-                if(filters[key] != undefined || filters[key] != '' || filters[key] != null){
+                console.log(key, filters[key]);
+                if(filters[key] != undefined && filters[key] != '' && filters[key] != null){
                     params = params.set(key, filters[key]);
                 }
             })
         }
+        console.log(params);
 
-        return this.http.get<Product[]>(environment.apiUrl + 'api/products/getAll', {params});
+        return this.http.get<Product[]>(environment.apiUrl + 'products/getAll', {params});
     }
 }

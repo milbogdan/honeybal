@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { RegisterModel } from "../models/RegisterModel";
 import { environment } from "../../environments/environment.development";
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: "root"
@@ -22,5 +23,11 @@ export class AccountService {
         return this.http.post(environment.apiUrl + 'auth/authenticate', data, {
             withCredentials: true
         });
+    }
+
+    getUser(){
+        return this.http.get(environment.apiUrl + 'auth/me',
+            {withCredentials: true}
+        )
     }
 }

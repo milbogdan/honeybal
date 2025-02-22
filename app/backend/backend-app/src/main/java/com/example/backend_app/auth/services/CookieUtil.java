@@ -22,4 +22,13 @@ public class CookieUtil {
         cookie.setMaxAge(cookieProperties.getExpiration());
         response.addCookie(cookie);
     }
+
+    public void clearJwtCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwt", "");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
 }
