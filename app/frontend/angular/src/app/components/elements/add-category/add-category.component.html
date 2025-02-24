@@ -1,7 +1,0 @@
-<div class="mb-3">
-    <label for="name" class="d-block fw-bold mb-2">Category name</label>
-    <input type="text" pInputText id="name" [(ngModel)]="categoryName" required autofocus class="form-control" />
-    <small class="text-danger" *ngIf="submitted && !categoryName">Category name is required.</small>
-</div>
-
-<p-button label="Success" variant="outlined" severity="success" fluid (click)="onSubmit()"/>
