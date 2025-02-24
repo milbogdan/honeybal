@@ -28,12 +28,8 @@ export class ViewCartPageComponent {
           command: (event: any) => this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label})
       },
       {
-          label: 'Informacije o korisniku',
+          label: 'Informacije o korisniku i nacin dostave',
           command: (event: any) => this.messageService.add({severity:'info', summary:'Second Step', detail: event.item.label})
-      },
-      {
-          label: 'Adresa i nacin dostave',
-          command: (event: any) => this.messageService.add({severity:'info', summary:'Third Step', detail: event.item.label})
       },
       {
           label: 'Pregled korpe',

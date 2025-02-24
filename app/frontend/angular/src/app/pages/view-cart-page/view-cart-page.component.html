@@ -51,5 +51,54 @@
                 <button  class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
             </div>
         </div>
+
+        <div class="userInfo" *ngIf="activeIndex === 1">
+            <div class="title">
+                <span>Podaci kupca</span>
+            </div>
+
+            <div class="info">
+                <div class="inps">
+                    <div class="inp">
+                        <label for="name">*Ime</label>
+                        <input type="text" pInputText>
+                    </div>
+                    <div class="inp">
+                        <label for="name">*Prezime</label>
+                        <input type="text" pInputText>
+                    </div>
+                    <div class="inp">
+                        <label for="name">*Email</label>
+                        <input type="text" pInputText>
+                    </div>
+                    <div class="inp">
+                        <label for="name">*Telefon</label>
+                        <input type="text" pInputText>
+                    </div>
+                    <div class="inp">
+                        <label for="name">*Grad</label>
+                        <input type="text" pInputText>
+                    </div>
+                    <div class="inp">
+                        <label for="name">*Postanski broj</label>
+                        <input type="text" pInputText>
+                    </div>
+                    <div class="inp">
+                        <label for="name">*Adresa</label>
+                        <input type="text" pInputText>
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+                <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
+            </div>
+
+            <div class="navigator">
+                <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
+                <button  class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
+            </div>
+        </div>
     </div>
 </div>
