@@ -3,8 +3,6 @@ import { AccountService } from '../../../services/account.service';
 import { User } from '../../../models/User';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { CartService } from '../../../services/cart.service';
-import { Product } from '../../../models/Product';
 
 @Component({
   selector: 'app-navbar',

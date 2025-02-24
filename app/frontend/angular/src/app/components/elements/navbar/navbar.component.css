@@ -19,8 +19,8 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgb(244,179,21);
-  background: linear-gradient(0deg, rgba(244,179,21,1) 0%, rgba(229,147,18,1) 100%);
+  background: rgb(235,197,81);
+background: linear-gradient(90deg, rgba(235,197,81,1) 0%, rgba(237,163,64,1) 100%);
   box-shadow: 0 2px 16px hsla(220, 32%, 8%, .3);
   z-index: 100;
 }

@@ -1,5 +1,6 @@
 import { Component, inject, Input, EventEmitter, Output } from '@angular/core';
 import { CartService } from '../../../services/cart.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,9 +11,10 @@ import { CartService } from '../../../services/cart.service';
 })
 export class CartSidebarComponent {
   @Input() visible! : boolean;
+  @Output() closeEmitter : EventEmitter<boolean> = new EventEmitter<boolean>();
   cartItems: any[] = [];
   cartService : CartService = inject(CartService);
-  @Output() closeEmitter : EventEmitter<boolean> = new EventEmitter<boolean>();
+  router : Router = inject(Router);
 
   ngOnInit() {
     this.cartService.cart$.subscribe({
@@ -28,5 +30,15 @@ export class CartSidebarComponent {
   
   removeItem(variationId : number){
     this.cartService.removeCartItem(variationId);
+  }
+
+  totalPrice() : number{
+    return this.cartItems.reduce((totalPrice, item)=>{
+      return totalPrice + item.variationPrice * item.variationQuantity;
+    },0);
+  }
+
+  viewCart(){
+    this.router.navigate(['/cart']);
   }
 }

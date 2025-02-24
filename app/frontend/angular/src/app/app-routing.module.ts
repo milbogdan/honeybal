@@ -7,6 +7,7 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminProductsPageComponent } from './pages/admin-page/admin-products-page/admin-products-page.component';
 import { adminGuard } from './guards/admin.guard';
+import { ViewCartPageComponent } from './pages/view-cart-page/view-cart-page.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'products', component: ProductsPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent }, 
+  { path: 'cart', component: ViewCartPageComponent }, 
   { path: 'admin', component: AdminPageComponent, canActivate: [adminGuard], children: [
       { path: 'products', component: AdminProductsPageComponent }
     ]

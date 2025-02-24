@@ -1,0 +1,55 @@
+<div id="page-wrapper">
+    <app-navbar></app-navbar>
+
+    <div id="steps" class="container mx-auto">
+        <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)" />
+    </div>
+    
+    <div id="content" class="container mx-auto">
+
+        <div class="tableResponsive" *ngIf="activeIndex === 0">
+            <div class="title">
+                <span>Moja korpa</span>
+            </div>
+            <table>
+                <th></th>
+                <th>Proizod</th>
+                <th>Cena</th>
+                <th>Popust</th>
+                <th>Cena sa popustom</th>
+                <th>Kolicina</th>
+                <th>Ukupno</th>
+                <th></th>
+                <tr *ngFor="let product of cartItems">
+                    <td><img src="{{product.variationImageUrl}}" alt="asd" width="100px"></td>
+                    <td class="productDetails">
+                        <span>{{product.catergyName | uppercase}}</span>
+                        <span>{{product.productName}}</span>
+                        <span>Velicina: {{product.variationSize}}</span>
+                    </td>
+                    <td>{{product.variationBasePrice}}.00 RSD</td>
+                    <td>{{product.variationDiscount}}</td>
+                    <td>{{product.variationPrice}}.00 RSD</td>
+                    <td class="quantity">
+                        <div class="qty">
+                            <span>-</span>
+                            <strong>{{product.variationQuantity}}</strong>
+                            <span>+</span>
+                        </div>
+                    </td>
+                    <td>123</td>
+                    <!-- (click)="deleteProduct(product)" -->
+                    <td>Uklonite</td>
+                </tr>
+            </table>
+            <div>
+                <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
+            </div>
+
+            <div class="navigator">
+                <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
+                <button  class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
+            </div>
+        </div>
+    </div>
+</div>

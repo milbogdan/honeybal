@@ -23,21 +23,16 @@
                     <p>Kolicina: {{item.variationQuantity}}</p>
                     
                     <strong>{{item.variationPrice}} RSD</strong>
-                    <!-- <div class="qty">
-                        <span>-</span>
-                        <strong>{{item.variationQuantity}}</strong>
-                        <span>+</span>
-                    </div> -->
                 </div>
             </div>
         </div>
         <div class="cart-actions">
             <div class="subtotal">
                 <p>Ukupno: </p>
-                <p><span id="subtotal-price"></span>RSD</p>
+                <p><span id="subtotal-price">{{totalPrice()}}</span>.00  RSD</p>
             </div>
             <div class="btns">
-                <button>View Cart</button>
+                <button (click)="viewCart()">View Cart</button>
                 <button>Checkout</button>
             </div>
         </div>
