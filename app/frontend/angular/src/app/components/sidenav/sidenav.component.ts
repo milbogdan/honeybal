@@ -12,7 +12,7 @@ interface SideNavToggle{
 }
 
 @Component({
-  selector: 'app-sidenav',
+  selector: 'sidenav',
   imports: [ NgIf, NgFor, NgClass, RouterModule ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css'

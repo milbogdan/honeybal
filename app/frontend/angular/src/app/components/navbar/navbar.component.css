@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 /*=============== BASE ===============*/
 * {
     box-sizing: border-box;
@@ -7,6 +9,10 @@
 
 ul {
     list-style: none;
+}
+
+li{
+    font-family: "Montserrat", serif;
 }
 
 a {
@@ -112,7 +118,8 @@ a {
         width: 0;
     }
     .nav__list {
-        background: rgb(244,179,21);
+        background: rgb(235,197,81);
+        background: linear-gradient(90deg, rgba(235,197,81,1) 0%, rgba(237,163,64,1) 100%);
         padding-top: 1rem;
     }
 }
@@ -122,14 +129,14 @@ a {
     font-weight: 600;
     padding: 1.25rem 1.5rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     transition: background-color .3s;
 }
 
 .nav__link:hover {
-    background: rgb(244,179,21);
-    background: linear-gradient(0deg, rgba(244,179,21,1) 0%, rgba(229,147,18,1) 100%);
+    /* background: rgb(244,179,21);
+    background: linear-gradient(0deg, rgba(244,179,21,1) 0%, rgba(229,147,18,1) 100%); */
 }
 
 /* Show menu */
@@ -164,7 +171,8 @@ a {
 .dropdown__sublink {
     padding: 1.25rem 1.25rem 1.25rem 2.5rem;
     color: black;
-    background: #f4b315;
+    background: rgb(235,197,81);
+    background: linear-gradient(90deg, rgba(235,197,81,1) 0%, rgba(237,163,64,1) 100%);
     display: flex;
     align-items: center;
     column-gap: .5rem;
@@ -180,7 +188,7 @@ a {
 
 .dropdown__link:hover, 
 .dropdown__sublink:hover {
-    background: #f4b315;
+    /* background: #f4b315; */
 }
 
 .dropdown__menu, 
@@ -301,6 +309,8 @@ a {
         transition: top .3s;
     }
 }
+
+/* ------------------------------------------------------------------------------------------- */
 
 /* backdrop */
 .backdrop{
