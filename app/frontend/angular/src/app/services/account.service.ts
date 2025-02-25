@@ -12,19 +12,19 @@ import { Router } from "@angular/router";
 export class AccountService {
     http : HttpClient = inject(HttpClient);
     router : Router = inject(Router);
-    private userSubject = new BehaviorSubject<User | null>(null);
+    private userSubject = new BehaviorSubject<any | null>(null);
     user$ = this.userSubject.asObservable();
 
-    constructor() {
-        this.getUser().subscribe({
-            next: (user) => {
-                this.userSubject.next(user);
-            },
-            error: () => {
-                this.userSubject.next(null);
-            }
-        });
-    }
+    // constructor() {
+    //     this.getUser().subscribe({
+    //         next: (user) => {
+    //             this.userSubject.next(user);
+    //         },
+    //         error: () => {
+    //             this.userSubject.next(null);
+    //         }
+    //     });
+    // }
 
     register(user : RegisterModel){
         return this.http.post<{name: string}>(environment.apiUrl + 'auth/register', user);
@@ -36,7 +36,7 @@ export class AccountService {
         return this.http.post(environment.apiUrl + 'auth/authenticate', data, {
             withCredentials: true
         }).pipe(
-            tap(() => this.getUser().subscribe())
+            tap((user) => this.userSubject.next(user))
         );
     }
 
@@ -53,7 +53,7 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}auth/logout`, {}, {
             withCredentials: true
         }).pipe(
-            tap(() => this.router.navigateByUrl('/login'))
+            tap(() => this.userSubject.next(null))
         );
     }
 }

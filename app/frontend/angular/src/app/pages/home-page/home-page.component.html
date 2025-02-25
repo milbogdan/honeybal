@@ -1,1 +1,6 @@
-<p>home-page works!</p>
+<div *ngIf="loading" class="loader">
+    <loader></loader>
+</div>
+<div *ngIf="!loading" id="page-wrapper">
+    <app-navbar></app-navbar>
+</div>

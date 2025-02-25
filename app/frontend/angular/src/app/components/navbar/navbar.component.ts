@@ -10,7 +10,7 @@ import { CartSidebarComponent } from '../cart-sidebar/cart-sidebar.component';
 
 @Component({
   selector: 'app-navbar',
-  imports: [ AvatarModule, AvatarGroupModule, NgIf, NgClass, CartSidebarComponent, AsyncPipe ],
+  imports: [ AvatarModule, AvatarGroupModule, NgIf, NgClass, CartSidebarComponent, AsyncPipe, RouterModule ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })

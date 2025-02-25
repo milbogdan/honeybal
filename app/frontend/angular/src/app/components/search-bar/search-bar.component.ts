@@ -9,8 +9,16 @@ import { FilterService } from '../../services/filter.service';
 })
 export class SearchBarComponent {
   filterService : FilterService = inject(FilterService);
+  okiniFilter : number = 0;
 
   onSearchProducts(search : string){
-    this.filterService.updateFilters({searchName : search})
+    this.okiniFilter++;
+    if(this.okiniFilter === 3){
+      this.okiniFilter = 0;
+      this.filterService.updateFilters({searchName : search})
+    }
+    else if(search === ''){
+      this.filterService.updateFilters({searchName : ''})
+    }
   }
 }

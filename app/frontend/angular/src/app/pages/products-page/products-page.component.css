@@ -1,6 +1,10 @@
+.loader{
+    width: 100vw;
+    height: 100vh;
+    background-color: #f2f4fc;
+}
+
 #page-wrapper{
-    
-    /* background-color: #FAF3E0; */
     background-color: #f2f4fc;
     height: 100vh;
     margin:0px;

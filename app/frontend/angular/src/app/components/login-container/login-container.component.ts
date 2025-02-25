@@ -27,17 +27,17 @@ export class LoginContainerComponent {
   accountService : AccountService = inject(AccountService);
   router : Router = inject(Router);
 
-  // onSubmit(loginForm: NgForm) {
-  //   this.accountService.login(
-  //     loginForm.value.email,
-  //     loginForm.value.password
-  //   ).subscribe({
-  //     next: (user) => {
-  //       // this.router.navigate(['/home']);
-  //     },  
-  //     error: (err) => {
-  //       console.log(err);
-  //     }
-  //   });
-  // }
+  onSubmit(loginForm: NgForm) {
+    this.accountService.login(
+      loginForm.value.email,
+      loginForm.value.password
+    ).subscribe({
+      next: (user) => {
+        this.router.navigate(['/home']);
+      },  
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
 }
