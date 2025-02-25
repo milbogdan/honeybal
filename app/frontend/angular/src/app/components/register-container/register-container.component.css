@@ -1,0 +1,38 @@
+.signUpContent {
+    background: rgba(185, 139, 99, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    /* border: 2px solid #b98b63; */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.wrapper{
+    width: 100%;
+}
+
+.btnSubmitForm {
+    display: block;
+}
+
+:host ::ng-deep .btnSubmitForm button{
+    background-color: #f4b315 !important;
+    border: none;
+}
+
+:host ::ng-deep .btnSubmitForm button:hover{
+    background-color: #f7c23d !important;
+    border: none;
+}
+
+.wrapper .noAcc{
+    font-weight: 400;
+    color: white;
+}
+
+.wrapper .noAcc a{
+    list-style: none;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+}

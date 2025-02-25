@@ -1,0 +1,40 @@
+<div class="sidebar" [ngClass]="{open : visible}">
+    <div class="cart-content">
+        <div class="cart-header">
+            <i class="pi pi-shopping-cart"></i>
+            <div class="header-title">
+                <h2>Your Cart</h2>
+                <span id="items_num">4</span>
+            </div>
+            <i class="pi pi-times close-btn" (click)="closeSidebar()"></i>
+        </div>
+        <div class="cart-items">
+            <div class="cart-item" *ngFor="let item of cartItems;">
+                <div class="remove-item" (click)="removeItem(item.variationId)">
+                    <i class="pi pi-times"></i>
+                </div>
+                <div class="item-img">
+                    <img src="assets/products/med.png" alt="med">
+                </div>
+            
+                <div class="item-details">
+                    <p><strong>{{item.productName}}</strong></p>
+                    <p>Velicina: {{item.variationSize}}</p>
+                    <p>Kolicina: {{item.variationQuantity}}</p>
+                    
+                    <strong>{{item.variationPrice}} RSD</strong>
+                </div>
+            </div>
+        </div>
+        <div class="cart-actions">
+            <div class="subtotal">
+                <p>Ukupno: </p>
+                <p><span id="subtotal-price">{{totalPrice()}}</span>.00  RSD</p>
+            </div>
+            <div class="btns">
+                <button (click)="viewCart()">View Cart</button>
+                <button>Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
