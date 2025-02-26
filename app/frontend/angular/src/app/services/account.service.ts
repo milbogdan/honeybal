@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { RegisterModel } from "../models/registerModel.interface";
 import { environment } from "../../environments/environment.development";
-import { BehaviorSubject, Observable, tap, switchMap, take } from "rxjs";
+import { BehaviorSubject, Observable, tap, catchError, of, throwError } from "rxjs";
 import { User } from "../models/user.interface";
 import { Router } from "@angular/router";
 
@@ -12,19 +12,8 @@ import { Router } from "@angular/router";
 export class AccountService {
     http : HttpClient = inject(HttpClient);
     router : Router = inject(Router);
-    private userSubject = new BehaviorSubject<any | null>(null);
+    private userSubject = new BehaviorSubject<User | null>(null);
     user$ = this.userSubject.asObservable();
-
-    // constructor() {
-    //     this.getUser().subscribe({
-    //         next: (user) => {
-    //             this.userSubject.next(user);
-    //         },
-    //         error: () => {
-    //             this.userSubject.next(null);
-    //         }
-    //     });
-    // }
 
     register(user : RegisterModel){
         return this.http.post<{name: string}>(environment.apiUrl + 'auth/register', user);
@@ -33,18 +22,25 @@ export class AccountService {
     login(email : string, password : string) {
         const data = {email, password}
 
-        return this.http.post(environment.apiUrl + 'auth/authenticate', data, {
+        return this.http.post<User>(environment.apiUrl + 'auth/authenticate', data, {
             withCredentials: true
         }).pipe(
-            tap((user) => this.userSubject.next(user))
+            tap((user: User) => this.userSubject.next(user))
         );
     }
 
-    getUser(): Observable<User> {
+    getUser(): Observable<User | null> {
         return this.http.get<User>(`${environment.apiUrl}auth/me`, {
             withCredentials: true
         }).pipe(
-            tap(user => this.userSubject.next(user))
+            tap((user : User) => this.userSubject.next(user)),
+            catchError(error => {
+                if (error.status === 401) {
+                    this.userSubject.next(null);
+                    return of(null);
+                }
+                return throwError(() => error); 
+            })
         );
     }
 

@@ -1,4 +1,8 @@
-<div id="page-wrapper">
+<div *ngIf="loading" class="loader">
+    <loader></loader>
+</div>
+
+<div id="page-wrapper" *ngIf="!loading">
     <app-navbar></app-navbar>
 
     <div id="steps" class="container mx-auto">
@@ -56,42 +60,55 @@
             <div class="title">
                 <span>Podaci kupca</span>
             </div>
+            <form #userInfoForm="ngForm" (ngSubmit)="onSubmit(userInfoForm)"></form>
 
-            <div class="info">
+            <div class="info" [ngClass]="{'separate': user === null}">
                 <div class="inps">
                     <div class="inp">
                         <label for="name">*Ime</label>
-                        <input type="text" pInputText>
+                        <input type="text">
                     </div>
                     <div class="inp">
                         <label for="name">*Prezime</label>
-                        <input type="text" pInputText>
+                        <input type="text">
                     </div>
                     <div class="inp">
                         <label for="name">*Email</label>
-                        <input type="text" pInputText>
+                        <input type="text">
                     </div>
                     <div class="inp">
                         <label for="name">*Telefon</label>
-                        <input type="text" pInputText>
+                        <input type="text" >
                     </div>
                     <div class="inp">
                         <label for="name">*Grad</label>
-                        <input type="text" pInputText>
+                        <input type="text" >
                     </div>
                     <div class="inp">
                         <label for="name">*Postanski broj</label>
-                        <input type="text" pInputText>
+                        <input type="text" >
                     </div>
                     <div class="inp">
                         <label for="name">*Adresa</label>
-                        <input type="text" pInputText>
+                        <input type="text" >
                     </div>
                 </div>
                 
+                <div *ngIf="user === null" class="userNotLogged">
+                    <span class="title">Dodatne pogodnosti za registrovane kupce</span>
+                    <ul>
+                        <li><i class="pi pi-check"></i> Obavestenja o proizvodima</li>
+                        <li><i class="pi pi-check"></i> Lakse online narucivanje</li>
+                        <li><i class="pi pi-check"></i> Odabir omiljenih proizvoda</li>
+                    </ul>
+                    <div class="btns">
+                        <button routerLink="/register">Registruj se</button>
+                        <button routerLink="/login">Prijavi se</button>
+                    </div>
+                </div>
             </div>
 
-            <div>
+            <div class="total">
                 <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
             </div>
 

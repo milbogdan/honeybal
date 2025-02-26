@@ -1,15 +1,29 @@
 import { Component, inject } from '@angular/core';
-import { NgIf, NgFor, UpperCasePipe } from '@angular/common';
+import { NgIf, NgFor, UpperCasePipe, NgClass } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { MessageService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { StepsModule } from 'primeng/steps';
 import { AccountService } from '../../services/account.service';
+import { User } from '../../models/user.interface';
+import { RouterModule } from '@angular/router';
+import { LoaderComponent } from '../../components/loader/loader.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-view-cart-page',
-  imports: [ NavbarComponent, NgIf, NgFor, StepsModule, UpperCasePipe ],
+  imports: [ 
+    NavbarComponent,
+    NgIf,
+    NgClass, 
+    NgFor, 
+    StepsModule, 
+    UpperCasePipe, 
+    RouterModule,
+    FormsModule,
+    LoaderComponent
+  ],
   providers: [ CartService, MessageService ],
   templateUrl: './view-cart-page.component.html',
   styleUrl: './view-cart-page.component.css'
@@ -22,7 +36,19 @@ export class ViewCartPageComponent {
   messageService : MessageService = inject(MessageService);
   accountService : AccountService = inject(AccountService);
 
+  user : User | null = null;
+  loading : boolean = true;
+
   ngOnInit(){
+    this.accountService.getUser().subscribe({
+      next: (user) => {
+        this.loading = false
+        this.user = user;
+        console.log(this.user);
+      },
+      error: () => this.loading = false
+    });
+
     this.cartService.cart$.subscribe({
       next:(data)=>{
         this.cartItems = data;
@@ -59,5 +85,9 @@ export class ViewCartPageComponent {
     if (this.activeIndex < this.items!.length - 1) {
       this.activeIndex++;
     }
+  }
+
+  onSubmit(userInfoForm : any) {
+    console.log(userInfoForm);   
   }
 }

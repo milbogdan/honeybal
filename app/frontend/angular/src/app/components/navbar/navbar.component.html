@@ -23,13 +23,14 @@
             </li>
 
             <li><a class="nav__link">Gallery</a></li>
-            <li *ngIf="user == null"><a routerLink="/login" class="nav__link">Login</a></li>
 
-            <li *ngIf="(user)">
-            <div class="nav__link flex items-center gap-2">
-                <p-avatar shape="circle" icon="pi pi-shopping-cart" (click)="openCart()"/>
-            </div>
+            <li>
+                <div class="nav__link flex items-center gap-2">
+                    <p-avatar shape="circle" icon="pi pi-shopping-cart" (click)="openCart()"/>
+                </div>
             </li>
+
+            <li *ngIf="user == null"><a routerLink="/login" class="nav__link">Login</a></li>
 
             <li *ngIf="(user)" class="dropdown__item">
             <div class="nav__link flex items-center gap-2">
