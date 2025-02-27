@@ -30,6 +30,11 @@ export class AccountService {
     }
 
     getUser(): Observable<User | null> {
+        const currentUser = this.userSubject.value;
+        if (currentUser) {
+            return of(currentUser);
+        }
+
         return this.http.get<User>(`${environment.apiUrl}auth/me`, {
             withCredentials: true
         }).pipe(

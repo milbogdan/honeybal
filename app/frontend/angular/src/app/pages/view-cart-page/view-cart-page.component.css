@@ -177,6 +177,21 @@ table .qty{
     outline: none;
 }
 
+.userInfo .info .inps .inp select {
+    cursor: pointer;
+    padding: 12px;
+    border: 1px solid #dfe7ef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.userInfo .info .inps .inp select:focus {
+    border-color: rgb(244,179,21);
+    box-shadow: 0 0 5px rgba(255, 208, 0, 0.705);
+    outline: none;
+}
+
 .info .userNotLogged {
     padding: 10px;
     margin-top: 20px;
@@ -241,6 +256,83 @@ table .qty{
 
 /* ------------------------------------------------------------ */
 
+.summary {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #dfe7ef;
+    border-radius: 12px;
+    box-shadow: 0px 4px 30px rgba(221, 224, 255, .54);
+    background-color: #fff;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.summary-left, .summary-right {
+    flex: 1;
+}
+
+.summary .title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.summary table {
+    margin-top: 15px;
+    width: 100%;
+    border-top: 1px solid #dfe7ef;
+    overflow-x: auto;
+    min-width: 600px;
+    white-space: nowrap;
+}
+
+.summary table th, .summary table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #dfe7ef;
+}
+
+.summary table th {
+    background-color: #f2f4fc;
+    font-weight: 500;
+}
+
+.summary table td {
+    background-color: #fff;
+}
+
+.summary .info p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+    .summary-container {
+        flex-direction: row;
+    }
+
+    .summary-left, .summary-right {
+        padding: 1rem;
+    }
+
+    .summary table th, .summary table td {
+        text-align: center;
+    }
+
+    .summary .info p {
+        font-size: 1.1rem;
+    }
+}
+
+/* ------------------------------------------------------------ */
+
 .navigator{
     display: flex;
     justify-content: space-between;
@@ -264,6 +356,45 @@ table .qty{
 
 .navigator button:nth-of-type(1){
     background: rgb(244,179,21);
+}
+
+.navigator .navigateBtns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.navigator .navigateBtns button:nth-of-type(1){
+    background-color: white;
+    border: 1px solid #333;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .navigator {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .navigator button{
+        width: 100%;
+    }
+
+    .navigator .navigateBtns{
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .navigator .navigateBtns button {
+        width: 100%;
+    }
+
+    .navigator .navigateBtns button:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .total, .totalPrice {

@@ -10,7 +10,6 @@
     </div>
     
     <div id="content" class="container mx-auto">
-
         <div class="tableResponsive" *ngIf="activeIndex === 0">
             <div class="title">
                 <span>Moja korpa</span>
@@ -25,7 +24,7 @@
                 <th>Ukupno</th>
                 <th></th>
                 <tr *ngFor="let product of cartItems">
-                    <td><img src="{{product.variationImageUrl}}" alt="asd" width="100px"></td>
+                    <td><img src="assets/products/med.png" alt="asd" width="70px"></td>
                     <td class="productDetails">
                         <span>{{product.catergyName | uppercase}}</span>
                         <span>{{product.productName}}</span>
@@ -49,48 +48,49 @@
             <div>
                 <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
             </div>
-
-            <div class="navigator">
-                <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
-                <button  class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
-            </div>
         </div>
 
         <div class="userInfo" *ngIf="activeIndex === 1">
             <div class="title">
                 <span>Podaci kupca</span>
             </div>
-            <form #userInfoForm="ngForm" (ngSubmit)="onSubmit(userInfoForm)"></form>
 
             <div class="info" [ngClass]="{'separate': user === null}">
                 <div class="inps">
                     <div class="inp">
                         <label for="name">*Ime</label>
-                        <input type="text">
+                        <input type="text" [(ngModel)]="userFirstName">
                     </div>
                     <div class="inp">
                         <label for="name">*Prezime</label>
-                        <input type="text">
+                        <input type="text" [(ngModel)]="userLastName">
                     </div>
                     <div class="inp">
                         <label for="name">*Email</label>
-                        <input type="text">
+                        <input type="text" [(ngModel)]="userEmail">
                     </div>
                     <div class="inp">
                         <label for="name">*Telefon</label>
-                        <input type="text" >
+                        <input type="text" [(ngModel)]="userPhone">
                     </div>
                     <div class="inp">
                         <label for="name">*Grad</label>
-                        <input type="text" >
+                        <input type="text" [(ngModel)]="userCity">
                     </div>
                     <div class="inp">
                         <label for="name">*Postanski broj</label>
-                        <input type="text" >
+                        <input type="text" [(ngModel)]="userPostalCode">
                     </div>
                     <div class="inp">
                         <label for="name">*Adresa</label>
-                        <input type="text" >
+                        <input type="text" [(ngModel)]="userAddress">
+                    </div>
+
+                    <div class="inp">
+                        <label for="deliveryMethod">*Metod dostave</label>
+                        <select [(ngModel)]="deliveryMethod" id="deliveryMethod">
+                            <option *ngFor="let option of deliveryOptions" [value]="option.id">{{option.name}}</option>
+                        </select>
                     </div>
                 </div>
                 
@@ -111,10 +111,55 @@
             <div class="total">
                 <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
             </div>
-
-            <div class="navigator">
-                <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
-                <button  class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
+        </div>
+        <div class="summary" *ngIf="activeIndex === 2">
+            <div class="summary-container">
+                <div class="summary-left">
+                    <div class="title">
+                        <span>Pregled kupovine</span>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Proizvod</th>
+                                <th>Kolicina</th>
+                                <th>Cena</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of cartItems">
+                                <td>{{product.productName}}</td>
+                                <td>{{product.variationQuantity}}</td>
+                                <td>{{product.variationPrice}}.00 RSD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="summary-right">
+                    <div class="title">
+                        <span>Informacije o kupcu</span>
+                    </div>
+                    <div class="info">
+                        <p><strong>Ime:</strong> {{userFirstName}}</p>
+                        <p><strong>Prezime:</strong> {{userLastName}}</p>
+                        <p><strong>Email:</strong> {{userEmail}}</p>
+                        <p><strong>Telefon:</strong> {{userPhone}}</p>
+                        <p><strong>Grad:</strong> {{userCity}}</p>
+                        <p><strong>Postanski broj:</strong> {{userPostalCode}}</p>
+                        <p><strong>Adresa:</strong> {{userAddress}}</p>
+                        <!-- <p><strong>Metod dostave:</strong> {{deliveryMethod | deliveryMethodName}}</p> -->
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
+            </div>
+        </div>
+        <div class="navigator">
+            <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
+            <div class="navigateBtns">
+                <button *ngIf="activeIndex !== 0" class="btn btn-primary" (click)="goToPrevStep()">Prethodni korak</button>
+                <button *ngIf="activeIndex !== 2" class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
             </div>
         </div>
     </div>

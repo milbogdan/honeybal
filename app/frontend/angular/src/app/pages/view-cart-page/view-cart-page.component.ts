@@ -11,6 +11,11 @@ import { RouterModule } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
 
+interface DeliveryMethod {
+  id: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-view-cart-page',
   imports: [ 
@@ -39,12 +44,31 @@ export class ViewCartPageComponent {
   user : User | null = null;
   loading : boolean = true;
 
+  userFirstName: string = '';
+  userLastName: string = '';
+  userEmail: string = '';
+  userPhone: string = '';
+  userCity: string = '';
+  userPostalCode: string = '';
+  userAddress: string = '';
+  deliveryMethod : number | null = null;
+  deliveryOptions : DeliveryMethod[] = [
+    { id: 1, name: 'Post Express' },
+    { id: 2, name: 'Dostava na teritoriji Kragujevca' },
+  ]
+  
   ngOnInit(){
     this.accountService.getUser().subscribe({
       next: (user) => {
         this.loading = false
         this.user = user;
-        console.log(this.user);
+        
+        if (user) {
+          this.userFirstName = user.firstName || '';
+          this.userLastName = user.lastName || '';
+          this.userEmail = user.email || '';
+          this.userAddress = user.address || '';
+        }
       },
       error: () => this.loading = false
     });
@@ -84,6 +108,12 @@ export class ViewCartPageComponent {
   goToNextStep(){
     if (this.activeIndex < this.items!.length - 1) {
       this.activeIndex++;
+    }
+  }
+
+  goToPrevStep(){
+    if(this.activeIndex > 0){
+      this.activeIndex--;
     }
   }
 
