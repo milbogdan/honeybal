@@ -1,8 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { LoginContainerComponent } from '../../components/login-container/login-container.component';
 
 @Component({
   selector: 'app-login-page',
-  standalone: false,
+  imports: [LoginContainerComponent],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })

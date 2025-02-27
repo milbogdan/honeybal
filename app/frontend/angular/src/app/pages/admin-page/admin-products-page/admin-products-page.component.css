@@ -1,12 +1,14 @@
-#contentPage{
+.header-wrapper{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#content {
-    margin-top: 10px;
-    margin-left: 1%;
-    padding-right: 1%;
-    height: 100vh;
-    width: 100%;
-    overflow-y: auto;
+.header-wrapper .expand-search{
+    display: flex;
+    gap: 1rem;
+}
+
+.edit-btn{
+    margin-right: 10px;
 }

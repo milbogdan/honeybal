@@ -1,167 +1,191 @@
-<div id="contentPage">
-    <div id="sideNavBar">
-        <sidenav></sidenav>
-    </div>
+<div id="content">
+    <p-toast></p-toast>
+    <p-confirmDialog></p-confirmDialog>
 
-    <div id="content">
-        <p-toolbar styleClass="mb-6">
-            <ng-template #start>
-                <p-button label="New" icon="pi pi-plus" class="mr-2" (onClick)="openNew()" />
-                <p-button severity="danger" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length" />
-            </ng-template>
-        
-            <ng-template #end>
-                <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" auto customUpload class="mr-2 inline-block" [chooseButtonProps]="{ severity: 'secondary' }" />
-                <!-- (onClick)="exportCSV($event)"  -->
-                <p-button label="Export" icon="pi pi-upload" severity="secondary" />
-            </ng-template>
-        </p-toolbar>
-        
-        <p-table
-            #dt
-            [value]="products"
-            [rows]="10"
-            [columns]="cols"
-            [paginator]="true"
-            [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-            [tableStyle]="{ 'min-width': '75rem' }"
-            [(selection)]="selectedProducts"
-            [rowHover]="true"
-            dataKey="id"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [showCurrentPageReport]="true"
+    <p-table [value]="categories" dataKey="id" editMode="row" [tableStyle]="{ 'width': '100%', 'min-width': '50rem' }">
+        <ng-template #caption>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="m-0">Manage Categories</h5>
+                <div>
+                    <p-button label="New" icon="pi pi-plus" class="me-2" (click)="newCategory()"/>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th style="width:20%">ID</th>
+                <th style="width:20%">Category name</th>
+                <th style="width:20%"></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-categorie let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="categorie">
+                <td>
+                    {{categorie.id}}
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <input
+                                pInputText type="text"
+                                [(ngModel)]="categorie.name"
+                                required />
+                        </ng-template>
+                        <ng-template #output>
+                            {{categorie.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                
+                <td>
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <button
+                            *ngIf="!editing"
+                            pButton
+                            pRipple
+                            type="button"
+                            pInitEditableRow
+                            icon="pi pi-pencil"
+                            text
+                            rounded
+                            severity="secondary"
+                        ></button>
+                        <button
+                            *ngIf="editing"
+                            pButton
+                            pRipple
+                            type="button"
+                            pSaveEditableRow
+                            icon="pi pi-check"
+                            (click)="onRowEditSave(categorie.id, categorie.name)"
+                            text
+                            rounded
+                            severity="secondary"
+                        ></button>
+                        <button
+                            *ngIf="editing"
+                            pButton
+                            pRipple
+                            type="button"
+                            pCancelEditableRow
+                            icon="pi pi-times"
+                            text
+                            rounded
+                            severity="secondary"
+                        ></button>
+                        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="deleteCategory(categorie)"/>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <hr>
+
+    <p-toolbar styleClass="mb-6">
+        <ng-template #start>
+            <p-button label="New" icon="pi pi-plus" class="me-2" (click)="addNewProduct()"/>
+            <p-button severity="danger" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"/>
+        </ng-template>
+    
+        <ng-template #end>
+            
+        </ng-template>
+    </p-toolbar>
+    
+    <p-table 
+        #dt
+        [value]="products" 
+        [rows]="10"
+        [columns]="cols"
+        [paginator]="true"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts"
+        dataKey="id" 
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+        [expandedRowKeys]="expandedRows" 
         >
-            <ng-template #caption>
-                <div class="flex items-center justify-between">
-                    <h5 class="m-0">Manage Products</h5>
+        <ng-template #caption>
+            <div class="header-wrapper">
+                <h5 class="m-0">Manage Products</h5>
+                <div class="expand-search">
+                    <p-button label="Expand All" icon="pi pi-plus" text (onClick)="expandAll()"/>
+                    <p-button label="Collapse All" icon="pi pi-minus" text (onClick)="collapseAll()"/>
+                    
                     <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />
                         <!-- (input)="dt.filterGlobal($event.target.value, 'contains')" -->
                         <input pInputText type="text"  placeholder="Search..." />
                     </p-iconfield>
                 </div>
-            </ng-template>
-            <ng-template #header>
-                <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
-                    <th style="min-width: 16rem">Code</th>
-                    <th pSortableColumn="name" style="min-width:16rem">
-                        Name
-                        <p-sortIcon field="name" />
-                    </th>
-                    <th>Image</th>
-                    <th pSortableColumn="price" style="min-width: 8rem">
-                        Price
-                        <p-sortIcon field="price" />
-                    </th>
-                    <th pSortableColumn="category" style="min-width:10rem">
-                        Category
-                        <p-sortIcon field="category" />
-                    </th>
-                    <th pSortableColumn="rating" style="min-width: 12rem">
-                        Reviews
-                        <p-sortIcon field="rating" />
-                    </th>
-                    <th pSortableColumn="inventoryStatus" style="min-width: 12rem">
-                        Status
-                        <p-sortIcon field="inventoryStatus" />
-                    </th>
-                    <th style="min-width: 12rem"></th>
-                </tr>
-            </ng-template>
-            <ng-template #body let-product>
-                <tr>
-                    <td style="width: 3rem">
-                        <p-tableCheckbox [value]="product" />
-                    </td>
-                    <td style="min-width: 12rem">{{ product.code }}</td>
-                    <td style="min-width: 16rem">{{ product.name }}</td>
-                    <td>
-                        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 64px" class="rounded" />
-                    </td>
-                    <td>{{ product.price | currency: 'USD' }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>
-                        <!-- [readonly]="true" [cancel]="false" -->
-                        <p-rating [(ngModel)]="product.rating"  />
-                    </td>
-                    <td>
-                        <!-- [severity]="getSeverity(product.inventoryStatus)" -->
-                        <p-tag [value]="product.inventoryStatus"  />
-                    </td>
-                    <td>
-                        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct(product)" />
-                        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct(product)" />
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template #summary>
-                <div class="flex items-center justify-between">In total there are {{ products ? products.length : 0 }} products.</div>
-            </ng-template>
-        </p-table>
-        
-        <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
-            <ng-template #content>
-                <div class="flex flex-col gap-6">
-                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
-                    <div>
-                        <label for="name" class="block font-bold mb-3">Name</label>
-                        <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
-                        <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th style="width: 5rem"></th>
+                <th>ID</th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+                <th pSortableColumn="name">Description <p-sortIcon field="name" /></th>
+                <th pSortableColumn="category">Category id <p-sortIcon field="category" /></th>
+                <th pSortableColumn="category">Category name <p-sortIcon field="category" /></th>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox />
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-product let-expanded="expanded">
+            <tr>
+                <td>
+                    <p-button type="button" pRipple [pRowToggler]="product" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                </td>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.category.id }}</td>
+                <td>{{ product.category.name }}</td>
+                <td style="width: 3rem">
+                    <p-tableCheckbox [value]="product" />
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #expandedrow let-product>
+            <tr>
+                <td colspan="7">
+                    <div class="p-3">
+                        <h5>Variations for {{ product.name }}</h5>
+                        <p-table [value]="product.variations" dataKey="id">
+                            <ng-template #header>
+                                <tr>
+                                    <th>ID</th>
+                                    <th pSortableColumn="customer">Size <p-sortIcon field="customer" /></th>
+                                    <th pSortableColumn="date">Image <p-sortIcon field="date" /></th>
+                                    <th pSortableColumn="amount">Price <p-sortIcon field="amount" /></th>
+                                    <th pSortableColumn="status">Discount <p-sortIcon field="status" /></th>
+                                    <th pSortableColumn="status">In Stock <p-sortIcon field="status" /></th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template #body let-variation>
+                                <tr>
+                                    <td>{{ variation.id }}</td>
+                                    <td>{{ variation.size }}</td>
+                                    <td><img src="assets/products/med.png" style="width: 44px;" alt=""></td>
+                                    <td>{{ variation.basePrice }} RSD</td>
+                                    <td>{{ variation.discount }} %</td>
+                                    <td>
+                                        <p-tag [value]="variation.in_stock" [severity]="variation.in_stock ? 'success' : 'warn'" />
+                                    </td>
+                                    <td>
+                                        <p-button class="edit-btn" icon="pi pi-pencil" [rounded]="true" [outlined]="true" (click)="editProduct(product, variation)" />
+                                        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct(product)" />
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
-                    <div>
-                        <label for="description" class="block font-bold mb-3">Description</label>
-                        <textarea id="description" pTextarea [(ngModel)]="product.description" required rows="3" cols="20" fluid></textarea>
-                    </div>
-        
-                    <div>
-                        <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-                        <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" placeholder="Select a Status" fluid />
-                    </div>
-        
-                    <div>
-                        <span class="block font-bold mb-4">Category</span>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="product.category" />
-                                <label for="category1">Accessories</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
-                                <label for="category2">Clothing</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="product.category" />
-                                <label for="category3">Electronics</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="product.category" />
-                                <label for="category4">Fitness</label>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-6">
-                            <label for="price" class="block font-bold mb-3">Price</label>
-                            <p-inputnumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" fluid />
-                        </div>
-                        <div class="col-span-6">
-                            <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                            <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
-                        </div>
-                    </div>
-                </div>
-            </ng-template>
-        
-            <ng-template #footer>
-                <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
-                <p-button label="Save" icon="pi pi-check" (click)="saveProduct()" />
-            </ng-template>
-        </p-dialog>
-        
-        <p-confirmDialog [style]="{ width: '450px' }" />
-    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

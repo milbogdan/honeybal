@@ -1,184 +1,262 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { ProductCategoryService } from '../../../services/productCategory.service';
+import { Product } from '../../../models/product.interface';
+import { ProductCategory } from '../../../models/productCategory.interface';
+import { VariationProducts } from '../../../models/variationProducts.interface';
+import { AddNewProdcutComponent } from '../../../components/add-new-prodcut/add-new-prodcut.component';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddCategoryComponent } from '../../../components/add-category/add-category.component';
 import { ProductService } from '../../../services/product.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ProductDialogComponent } from '../../../components/product-dialog/product-dialog.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { Table } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
+import { IconFieldModule } from 'primeng/iconfield';
+import { TagModule } from 'primeng/tag';
+import { InputIconModule } from 'primeng/inputicon';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'admin-products-page',
-  standalone: false,
+  imports: [ ButtonModule, ConfirmDialogModule, ToastModule, TableModule, FormsModule, ToolbarModule, IconFieldModule, InputIconModule, TagModule, DynamicDialogModule, NgIf ],
+  providers: [ DialogService, MessageService, ConfirmationService ],
   templateUrl: './admin-products-page.component.html',
   styleUrl: './admin-products-page.component.css'
 })
 export class AdminProductsPageComponent {
-  productDialog: boolean = false;
-
+  ref: DynamicDialogRef | undefined;
+  
   // Product
-  products!: any[];
-
-  // Product
-  product!: any;
-
-  // Product
-  selectedProducts!: any[] | null;
+  products!: Product[];
+  selectedProducts!: Product[] | null;
+  categories! : ProductCategory[];
 
   submitted: boolean = false;
 
   statuses!: any[];
 
   // Table
-  @ViewChild('dt') dt!: any;
-
-  // Column
+  @ViewChild('dt') dt!: Table;
   cols!: any[];
 
   // ExportColumn
+  expandedRows = {};
   exportColumns!: any[];
 
-  exportCSV() {
-      this.dt.exportCSV();
+  categorieService : ProductCategoryService = inject(ProductCategoryService);
+  productService : ProductService = inject(ProductService);
+  dialogService : DialogService = inject(DialogService);
+  messageService: MessageService = inject(MessageService);
+  confirmationService : ConfirmationService = inject(ConfirmationService);
+
+  ngOnInit(){
+    this.fetchProducts();
+    this.fetchCategories();
   }
 
-  constructor(
-    private productService: ProductService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private cd: ChangeDetectorRef
-  ) {}
+  editProduct(product : Product, variation: VariationProducts){
+    this.ref = this.dialogService.open(ProductDialogComponent, {
+      header: 'Product List',
+      width: '40vw',
+      modal: true,
+      closable: true,
+      closeOnEscape: true,
+      dismissableMask: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+          '960px': '50vw',
+          '640px': '75vw'
+      },
+      data : {
+        product : product,
+        variation: variation
+      }
+    });
 
-  loadDemoData() {
-      // this.productService.getProducts().then((data) => {
-      //     this.products = data;
-      //     this.cd.markForCheck();
-      // });
-
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
-
-      this.cols = [
-          { field: 'code', header: 'Code', customExportHeader: 'Product Code' },
-          { field: 'name', header: 'Name' },
-          { field: 'image', header: 'Image' },
-          { field: 'price', header: 'Price' },
-          { field: 'category', header: 'Category' }
-      ];
-
-      this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
+    this.ref?.onClose.subscribe({
+      next: (response : any) => {
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Successfully updated product` });
+      }
+    });
   }
 
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
+
+  fetchProducts() {
+    this.productService.getAllProducts(0, 6).subscribe({
+      next: (response : any) => {
+          this.products = response.content;
+      }
+    })
+
+    //   this.statuses = [
+    //       { label: 'INSTOCK', value: 'instock' },
+    //       { label: 'LOWSTOCK', value: 'lowstock' },
+    //       { label: 'OUTOFSTOCK', value: 'outofstock' }
+    //   ];
+
+    //   this.cols = [
+    //       { field: 'code', header: 'Code', customExportHeader: 'Product Code' },
+    //       { field: 'name', header: 'Name' },
+    //       { field: 'image', header: 'Image' },
+    //       { field: 'price', header: 'Price' },
+    //       { field: 'category', header: 'Category' }
+    //   ];
+
+    //   this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
   }
 
-  editProduct(product: any) {
-      this.product = { ...product };
-      this.productDialog = true;
+  addNewProduct() {
+    this.ref = this.dialogService.open(AddNewProdcutComponent, {
+      header: 'New Product',
+      width: '40vw',
+      modal: true,
+      closable: true,
+      closeOnEscape: true,
+      dismissableMask: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+          '960px': '50vw',
+          '640px': '75vw'
+      },
+      data : {
+        categories : this.categories,
+        products: this.products 
+      }
+    });
+
+    this.ref?.onClose.subscribe({
+      next: (response : any) => {
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Added new category` });
+        this.fetchProducts();
+      }
+    });
   }
 
   deleteSelectedProducts() {
-    // this.confirmationService.confirm({
-    //     message: 'Are you sure you want to delete the selected products?',
-    //     header: 'Confirm',
-    //     icon: 'pi pi-exclamation-triangle',
-    //     accept: () => {
-    //         this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-    //         this.selectedProducts = null;
-    //         this.messageService.add({
-    //             severity: 'success',
-    //             summary: 'Successful',
-    //             detail: 'Products Deleted',
-    //             life: 3000
-    //         });
-    //     }
-    // });
+    this.confirmationService.confirm({
+        message: 'Are you sure you want to delete the selected products?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
+            // this.selectedProducts = null;
+            console.log(this.selectedProducts);
+            this.selectedProducts?.forEach((p) => {
+              this.productService.deleteProduct(p.id).subscribe();
+            });
+            this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+        }
+    });
   }
 
-  hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
-  }
-
-  // Product
   deleteProduct(product: any) {
-      // this.confirmationService.confirm({
-      //     message: 'Are you sure you want to delete ' + product.name + '?',
-      //     header: 'Confirm',
-      //     icon: 'pi pi-exclamation-triangle',
-      //     accept: () => {
-      //         this.products = this.products.filter((val) => val.id !== product.id);
-      //         this.product = {};
-      //         this.messageService.add({
-      //             severity: 'success',
-      //             summary: 'Successful',
-      //             detail: 'Product Deleted',
-      //             life: 3000
-      //         });
-      //     }
-      // });
-  }
-
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete ${product.name}?`,
+      header: 'Delete product',
+      closable: true,
+      closeOnEscape: true,
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: {
+          label: 'Cancel',
+          severity: 'secondary',
+          outlined: true,
+      },
+      acceptButtonProps: {
+          label: 'Delete',
+          severity: 'danger',
+          outlined: true,
+      },
+      accept: () => {
+        this.productService.deleteProduct(product.id).subscribe({
+          next: (response : any) => {
+            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You have deleted item ${product.name}` });
+            this.fetchProducts();
           }
-      }
-
-      return index;
+        });
+      },
+      reject: () => {
+          this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected',
+              life: 3000,
+          });
+      },
+    });
   }
 
-  createId(): string {
-      let id = '';
-      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (var i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
+  expandAll() {
+    this.expandedRows = this.products.reduce((acc : any, p) => (acc[p.id] = true) && acc, {});
   }
 
-  // getSeverity(status: string) {
-  //     switch (status) {
-  //         case 'INSTOCK':
-  //             return 'success';
-  //         case 'LOWSTOCK':
-  //             return 'warning';
-  //         case 'OUTOFSTOCK':
-  //             return 'danger';
-  //     }
-  // }
+  collapseAll() {
+      this.expandedRows = {};
+  }
 
-  saveProduct() {
-    // this.submitted = true;
+  // CATEGORIES FUNCTIONS
 
-    // if (this.product.name?.trim()) {
-    //     if (this.product.id) {
-    //         this.products[this.findIndexById(this.product.id)] = this.product;
-    //         this.messageService.add({
-    //             severity: 'success',
-    //             summary: 'Successful',
-    //             detail: 'Product Updated',
-    //             life: 3000
-    //         });
-    //     } else {
-    //         this.product.id = this.createId();
-    //         this.product.image = 'product-placeholder.svg';
-    //         this.products.push(this.product);
-    //         this.messageService.add({
-    //             severity: 'success',
-    //             summary: 'Successful',
-    //             detail: 'Product Created',
-    //             life: 3000
-    //         });
-    //     }
+  fetchCategories(){
+    this.categorieService.getAllCategories().subscribe({
+      next: (response : any) => {
+        this.categories = response;
+      }
+    });
+  }
 
-    //     this.products = [...this.products];
-    //     this.productDialog = false;
-    //     this.product = {};
-    // }
+  newCategory(){
+    this.ref = this.dialogService.open(AddCategoryComponent, {
+      header: 'New Category',
+      width: '36vw',
+      modal: true,
+      closable: true,
+      closeOnEscape: true,
+      dismissableMask: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+          '960px': '50vw',
+          '640px': '75vw'
+      },
+    });
+
+    this.ref?.onClose.subscribe({
+      next: (response : any) => {
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Added new category` });
+        this.fetchCategories();
+      }
+    });
+  }
+
+  onRowEditSave(id : number, name : string){
+    if(name != ''){
+      this.categorieService.editCategorieName(id, name).subscribe({
+        next: (response : any) => {
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You have edited category ${name}` });
+        }
+      });
+    }
+  }
+
+  deleteCategory(categorie : ProductCategory){
+    this.categorieService.deleteCategorie(categorie.id).subscribe({
+      next: (response : any) => {
+        this.fetchCategories();
+        this.fetchProducts();
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `${response.message}` });
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.ref) {
+        this.ref.close();
+    }
   }
 }
