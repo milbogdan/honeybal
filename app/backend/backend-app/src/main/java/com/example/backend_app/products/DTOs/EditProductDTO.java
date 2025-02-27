@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class EditProductDTO {
-    private Integer category;
+    private Long category;
 
     private String name;
 

@@ -1,6 +1,7 @@
 package com.example.backend_app.orders.models;
 
 import com.example.backend_app.user.models.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +17,8 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id",nullable = false)
+    @JoinColumn(name="user_id",nullable = true)
+    @JsonIgnore
     private User user;
 
     @ManyToOne
@@ -24,7 +26,19 @@ public class Order {
     private DeliveryTypes delivery_type;
 
     @Column(nullable = false)
-    private int price;
+    private double price;
+
+    @Column(nullable = true)
+    private String comment;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = true)
+    private String email;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderProduct> orderProducts;
