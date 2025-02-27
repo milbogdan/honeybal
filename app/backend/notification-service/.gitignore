@@ -19,9 +19,6 @@ target/
 *.iml
 *.ipr
 
-#Ignoring environment variables
-a
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
