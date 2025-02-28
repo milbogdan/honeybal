@@ -8,10 +8,11 @@ import { LoaderComponent } from '../../components/loader/loader.component';
 import { NgIf } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { BehaviorSubject } from 'rxjs';
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-products-page',
-  imports: [ NavbarComponent, ProductListComponent, ViewChangeComponent, ProductFilterComponent, SearchBarComponent, LoaderComponent, NgIf ],
+  imports: [ NavbarComponent, ProductListComponent, ViewChangeComponent, ProductFilterComponent, SearchBarComponent, LoaderComponent, NgIf, FooterComponent ],
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.css'
 })
