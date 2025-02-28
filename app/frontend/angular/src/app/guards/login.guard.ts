@@ -1,18 +1,18 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
-import { map } from 'rxjs';
+import { CanActivateFn, Router } from '@angular/router';
+import { map, tap } from 'rxjs';
 import { AccountService } from '../services/account.service';
 
 export const loginGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountService);
-  return accountService.user$.pipe(
-    map(user => {
-      if (user === null) {
-        return true;
-      } else {
-        return false;
+  const router = inject(Router);
+
+  return accountService.getUser().pipe(
+    map(user => user === null),
+    tap(isLoggedOut => {
+      if (!isLoggedOut) {
+        router.navigate(['/home']);
       }
     })
   );
-
 };

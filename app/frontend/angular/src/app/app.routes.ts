@@ -9,15 +9,15 @@ import { ViewCartPageComponent } from './pages/view-cart-page/view-cart-page.com
 import { loginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
-    { path: '', component: HomePageComponent },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomePageComponent },
     { path: 'products', component: ProductsPageComponent },
     { path: 'login', component: LoginPageComponent, canActivate: [loginGuard] },
-    { path: 'register', component: RegisterPageComponent }, 
+    { path: 'register', component: RegisterPageComponent, canActivate: [loginGuard] }, 
     { path: 'cart', component: ViewCartPageComponent }, 
     { path: 'admin', component: AdminPageComponent, children: [
             { path: 'products', component: AdminProductsPageComponent }
         ]
     },
-    { path: '**', component: HomePageComponent}
+    { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

@@ -3,10 +3,11 @@ import { NgIf } from '@angular/common';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { AccountService } from '../../services/account.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [NavbarComponent, NgIf, LoaderComponent],
+  imports: [NavbarComponent, NgIf, LoaderComponent, FooterComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
