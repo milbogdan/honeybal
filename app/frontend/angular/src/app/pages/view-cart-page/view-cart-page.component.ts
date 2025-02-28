@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NgIf, NgFor, UpperCasePipe, NgClass } from '@angular/common';
 import { CartService } from '../../services/cart.service';
-import { MessageService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { StepsModule } from 'primeng/steps';
@@ -10,6 +9,12 @@ import { User } from '../../models/user.interface';
 import { RouterModule } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { Order } from '../../models/order.interface';
+import { OrderService } from '../../services/order.service';
 
 interface DeliveryMethod {
   id: number;
@@ -19,6 +24,8 @@ interface DeliveryMethod {
 @Component({
   selector: 'app-view-cart-page',
   imports: [ 
+    ConfirmDialog,
+    ToastModule,
     NavbarComponent,
     NgIf,
     NgClass, 
@@ -27,9 +34,10 @@ interface DeliveryMethod {
     UpperCasePipe, 
     RouterModule,
     FormsModule,
-    LoaderComponent
+    LoaderComponent,
+    ButtonModule
   ],
-  providers: [ CartService, MessageService ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './view-cart-page.component.html',
   styleUrl: './view-cart-page.component.css'
 })
@@ -40,6 +48,8 @@ export class ViewCartPageComponent {
   cartService : CartService = inject(CartService);
   messageService : MessageService = inject(MessageService);
   accountService : AccountService = inject(AccountService);
+  confirmationService : ConfirmationService = inject(ConfirmationService);
+  orderService : OrderService = inject(OrderService);
 
   user : User | null = null;
   loading : boolean = true;
@@ -52,6 +62,7 @@ export class ViewCartPageComponent {
   userPostalCode: string = '';
   userAddress: string = '';
   deliveryMethod : number | null = null;
+  deliveryComment : string = '';
   deliveryOptions : DeliveryMethod[] = [
     { id: 1, name: 'Post Express' },
     { id: 2, name: 'Dostava na teritoriji Kragujevca' },
@@ -82,15 +93,15 @@ export class ViewCartPageComponent {
     this.items = [
       {
           label: 'Sadrzaj korpe',
-          command: (event: any) => this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label})
+          // command: (event: any) => this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label})
       },
       {
           label: 'Informacije o korisniku i nacin dostave',
-          command: (event: any) => this.messageService.add({severity:'info', summary:'Second Step', detail: event.item.label})
+          // command: (event: any) => this.messageService.add({severity:'info', summary:'Second Step', detail: event.item.label})
       },
       {
           label: 'Pregled korpe',
-          command: (event: any) => this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label})
+          // command: (event: any) => this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label})
       }
     ];
   }
@@ -117,7 +128,37 @@ export class ViewCartPageComponent {
     }
   }
 
-  onSubmit(userInfoForm : any) {
-    console.log(userInfoForm);   
+  private makeOrder(){
+    const order : Order = {
+      deliveryTypeId: +this.deliveryMethod!,
+      comment: this.deliveryComment,
+      phoneNumber: this.userPhone,
+      address: this.userAddress + " " + this.userCity + " " + this.userPostalCode,  
+      email: this.userEmail,
+      variations: [
+        ...this.cartItems.map(item=>{
+          return {
+            quantity: item.variationQuantity,
+            productVariationId: item.variationId
+          };
+        })
+      ]
+    };
+
+    this.orderService.makeOrder(order).subscribe();
+  }
+
+  buy() : void {
+    this.confirmationService.confirm({
+        header: 'Zavrsi narudzbinu',
+        message: 'Molimo potvrdite da zelite zakljuciti narudzbinu.',
+        accept: () => {
+            this.makeOrder();
+            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'Narudzbina je uspesno zakljucena!' });
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'info', summary: 'Rejected', detail: 'Narudzbina nije zakljucena!' });
+        },
+    });
   }
 }

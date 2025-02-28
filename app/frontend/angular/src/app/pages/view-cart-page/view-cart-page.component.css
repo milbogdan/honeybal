@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+.loader{
+    width: 100vw;
+    height: 100vh;
+    background-color: #f2f4fc;
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -134,8 +140,8 @@ table .qty{
     gap: 18px;
 }
 
-.separate{
-    grid-template-columns: 60% 40%;
+.separate {
+    grid-template-columns: 1fr;
 }
 
 .userInfo .info .inps {
@@ -146,7 +152,11 @@ table .qty{
     max-width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
+    .separate {
+        grid-template-columns: 60% 40%;
+    }
+
     .userInfo .info .inps {
         grid-template-columns: 1fr 1fr;
     }
@@ -160,7 +170,6 @@ table .qty{
 .userInfo .info .inps .inp label {
     font-size: 1rem;
     color: #333;
-    /* margin-bottom: 5px; */
 }
 
 .userInfo .info .inps .inp input {
@@ -169,6 +178,21 @@ table .qty{
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.userInfo .info .inps .inp textarea {
+    padding: 10px;
+    border: 1px solid #dfe7ef;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    resize: vertical;
+}
+
+.userInfo .info .inps .inp textarea:focus {
+    border-color: rgb(244,179,21);
+    box-shadow: 0 0 5px rgba(255, 208, 0, 0.705);
+    outline: none;
 }
 
 .userInfo .info .inps .inp input:focus {
@@ -184,12 +208,18 @@ table .qty{
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
 }
 
 .userInfo .info .inps .inp select:focus {
     border-color: rgb(244,179,21);
     box-shadow: 0 0 5px rgba(255, 208, 0, 0.705);
     outline: none;
+}
+
+.userInfo .info .inps .inp select option {
+    padding: 10px;
+    font-size: 1rem;
 }
 
 .info .userNotLogged {
@@ -199,7 +229,7 @@ table .qty{
     box-sizing: border-box;
 }
 
-.info .userNotLogged .title{
+.info .userNotLogged .title {
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -340,6 +370,7 @@ table .qty{
     margin: 10px 20px;
     border-bottom: 1px solid #dfe7ef;
     padding: 10px 0;
+    gap: 1rem;
 }
 
 .navigator button{
@@ -376,6 +407,7 @@ table .qty{
         flex-direction: column;
         width: 100%;
         gap: 10px;
+        margin: auto;
     }
 
     .navigator button{

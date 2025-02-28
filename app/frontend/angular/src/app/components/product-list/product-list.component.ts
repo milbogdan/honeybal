@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { NgFor, NgTemplateOutlet } from '@angular/common';
 import { Product } from '../../models/product.interface';
 import { VariationProducts } from '../../models/variationProducts.interface';
@@ -6,7 +6,7 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProductService } from '../../services/product.service';
 import { FilterService } from '../../services/filter.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProductComponent } from '../product/product.component';
 
 @Component({
@@ -26,12 +26,13 @@ export class ProductListComponent {
   currentFillters: any = {};
   filterService : FilterService = inject(FilterService);
   filterSubscription!: Subscription;
+  @Input() loadingSubject!: BehaviorSubject<boolean>;
 
   ngOnInit(){
     this.filterSubscription = this.filterService.filter$.subscribe((filters) => {
       this.currentFillters = filters;
       this.fetchProducts(this.currentPage, this.rows, this.currentFillters);
-    })
+    });
   }
 
   onPageChange(event: any) {
@@ -42,6 +43,8 @@ export class ProductListComponent {
   }
 
   private fetchProducts(currentPage : number, pageSize: number, filters: any){
+    this.loadingSubject.next(true);
+
     this.productService.getAllProducts(currentPage, pageSize, filters).subscribe({
       next: (data : any) => {
         this.totalElements = data.totalElements;  
@@ -53,10 +56,13 @@ export class ProductListComponent {
             const filteredVariations = product.variations.filter((variation : VariationProducts) => variation.in_stock === filters.inStock);
             return { ...product, variations: filteredVariations };
           }).filter((product : Product) => product.variations.length > 0);
-        } 
+        }
+
+        this.loadingSubject.next(false);
       },
       error: (err : any) => {
         // console.log(err);
+        this.loadingSubject.next(false);
       }
     });
   }

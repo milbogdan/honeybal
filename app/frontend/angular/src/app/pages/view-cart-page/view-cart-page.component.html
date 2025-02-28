@@ -2,6 +2,7 @@
     <loader></loader>
 </div>
 
+<p-toast />
 <div id="page-wrapper" *ngIf="!loading">
     <app-navbar></app-navbar>
 
@@ -92,6 +93,11 @@
                             <option *ngFor="let option of deliveryOptions" [value]="option.id">{{option.name}}</option>
                         </select>
                     </div>
+                    
+                    <div class="inp">
+                        <label for="deliveryComment">Komentar za dostavu</label>
+                        <textarea id="deliveryComment" [(ngModel)]="deliveryComment"></textarea>
+                    </div>
                 </div>
                 
                 <div *ngIf="user === null" class="userNotLogged">
@@ -154,12 +160,26 @@
             <div class="total">
                 <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
             </div>
+
+            <p-confirmdialog #cd>
+                <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+                  <div class="d-flex flex-column align-items-center p-4 bg-white dark:bg-dark rounded">
+                    <span class="fw-bold fs-4 mt-3 mb-2">{{ message.header }}</span>
+                    <p class="mb-0">{{ message.message }}</p>
+                    <div class="navigator">
+                      <button (click)="onAccept()">Naruci</button>
+                      <button (click)="onReject()">Otkazi</button>
+                    </div>
+                  </div>
+                </ng-template>
+            </p-confirmdialog>
         </div>
         <div class="navigator">
             <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
             <div class="navigateBtns">
                 <button *ngIf="activeIndex !== 0" class="btn btn-primary" (click)="goToPrevStep()">Prethodni korak</button>
                 <button *ngIf="activeIndex !== 2" class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
+                <button *ngIf="activeIndex == 2" class="btn btn-primary" (click)="buy()">Zavrsi narudzbinu</button>
             </div>
         </div>
     </div>

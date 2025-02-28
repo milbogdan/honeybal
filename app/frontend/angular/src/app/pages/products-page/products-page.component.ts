@@ -7,6 +7,7 @@ import { SearchBarComponent } from '../../components/search-bar/search-bar.compo
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { NgIf } from '@angular/common';
 import { AccountService } from '../../services/account.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-products-page',
@@ -17,6 +18,7 @@ import { AccountService } from '../../services/account.service';
 export class ProductsPageComponent {
   isMobile = false;
   loading : boolean = true;
+  loadingSubject = new BehaviorSubject<boolean>(true);
   accountService : AccountService = inject(AccountService);
 
   ngOnInit() {
