@@ -3,10 +3,11 @@ import { Product } from '../../models/product.interface';
 import { VariationProducts } from '../../models/variationProducts.interface';
 import { CartService } from '../../services/cart.service';
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'product',
-  imports: [ NgClass, NgFor, NgStyle, NgIf ],
+  imports: [ NgClass, NgFor, NgStyle, NgIf, RouterModule ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -15,6 +16,7 @@ export class ProductComponent {
   selectedVariation : VariationProducts | null = null;
   quantity : number = 1;
   cartService : CartService = inject(CartService);
+  router : Router = inject(Router);
 
   ngOnInit(){
     this.getInStockItem();
@@ -63,5 +65,9 @@ export class ProductComponent {
       alert('This item is out of stock');
       return;
     }
+  }
+
+  showProductDetail(product : Product) {
+    this.router.navigate(['/product', product.id], { state: { product } });
   }
 }

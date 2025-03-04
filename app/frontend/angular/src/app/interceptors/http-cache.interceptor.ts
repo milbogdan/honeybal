@@ -20,15 +20,12 @@ export const CacheInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next:
 
   const cached = cache.get(cacheKey);
   if (cached && now < cached.expiry) {
-    console.log(`Returning cached response for: ${req.url}`);
-    console.log(cached.response.body);
     return of(new HttpResponse({ body: cached.response.body, status: 200 }));
   }
 
   return next(req).pipe(
     tap(response => {
       if (response instanceof HttpResponse) {
-        console.log(`Caching response for: ${req.url}`);
         cache.set(cacheKey, { response, expiry: now + defaultCacheTime });
       }
     })
