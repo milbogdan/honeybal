@@ -9,14 +9,17 @@
             </div>
             <div class="col-md-6">
                 <div class="product-details">
-                    <h1 class="product-title">{{ product.name }}</h1>
+                    <h1 class="product-title">{{selectedVariation.catergyName}} - {{ selectedVariation.productName }} - {{selectedVariation.variationSize}}</h1>
                     <p class="product-description">{{ product.description }}</p>
+                    <div class="sizes">
+                        
+                    </div>
                     <div class="product-price">
-                        <!-- <span>{{ product.price | currency }}</span> -->
+                        <span>{{ selectedVariation.variationPrice }} RSD</span>
                     </div>
                     <div class="product-actions">
-                        <button class="btn btn-primary">Add to Cart</button>
-                        <button class="btn btn-secondary">Buy Now</button>
+                        <button class="btn btn-primary">Sacuvaj <i class="pi pi-heart"></i></button>
+                        <button class="btn btn-secondary">Dodaj u korpu</button>
                     </div>
                 </div>
             </div>

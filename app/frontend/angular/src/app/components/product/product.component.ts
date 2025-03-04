@@ -68,6 +68,24 @@ export class ProductComponent {
   }
 
   showProductDetail(product : Product) {
-    this.router.navigate(['/product', product.id], { state: { product } });
+    let selectedVariation = {
+      productId : product.id,
+      productName : product.name,
+      catergyName : product.category.name,
+      variationId : this.selectedVariation?.id,
+      variationSize : this.selectedVariation?.size,
+      variationImageUrl : this.selectedVariation?.imageUrl,
+      variationBasePrice : this.selectedVariation?.basePrice,
+      variationPrice : this.selectedVariation?.price,
+      variationDiscount : this.selectedVariation?.discount,
+      variationInStock : this.selectedVariation?.in_stock,
+    };
+
+    let data = {
+      selectedVariation,
+      product 
+    };
+    
+    this.router.navigate(['/product', this.selectedVariation!.id], { state: data });
   }
 }

@@ -13,21 +13,17 @@ import { ProductService } from '../../services/product.service';
 })
 export class ProductDetailPageComponent {
   product! : Product;
+  selectedVariation! : any;
   router : Router = inject(Router);
   activeRoute : ActivatedRoute = inject(ActivatedRoute);
   productService : ProductService = inject(ProductService);
-  
+
+  constructor() {
+    // console.log(this.router.getCurrentNavigation()!.extras.state);
+  }
+
   ngOnInit() {
-    const productId = this.activeRoute.snapshot.paramMap.get('id');
-    if (productId) {
-      this.productService.getProductById(+productId).subscribe({
-        next: (data) => {
-          this.product = data;
-        },
-        error: (err) => {
-          console.error('Greška prilikom dohvatanja proizvoda:', err);
-        }
-      });
-    }
+    this.product = history.state.product;
+    this.selectedVariation = history.state.selectedVariation;
   }
 }
