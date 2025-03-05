@@ -67,6 +67,8 @@ export class ViewCartPageComponent {
     { id: 1, name: 'Post Express' },
     { id: 2, name: 'Dostava na teritoriji Kragujevca' },
   ]
+
+  submitted : boolean = false;
   
   ngOnInit(){
     this.accountService.getUser().subscribe({
@@ -107,6 +109,10 @@ export class ViewCartPageComponent {
   }
 
   onActiveIndexChange(event: number) {
+    if (event > this.activeIndex && !this.isStepValid()) {
+      this.messageService.add({ severity: 'error', summary: 'Greška', detail: 'Molimo popunite sva obavezna polja pre nastavka.' });
+      return;
+    }
     this.activeIndex = event;
   }
 
@@ -117,9 +123,42 @@ export class ViewCartPageComponent {
   }
 
   goToNextStep(){
+    if (this.activeIndex === 1 && !this.isFormValid()) {
+      this.messageService.add({ severity: 'error', summary: 'Greška', detail: 'Molimo popunite sva obavezna polja pre nastavka.' });
+      return;
+    }
+
     if (this.activeIndex < this.items!.length - 1) {
       this.activeIndex++;
     }
+  }
+
+  isFormValid(): boolean {
+    return this.userFirstName.trim() !== '' &&
+           this.userLastName.trim() !== '' &&
+           this.userEmail.trim() !== '' &&
+           this.userPhone.trim() !== '' &&
+           this.userCity.trim() !== '' &&
+           this.userPostalCode.trim() !== '' &&
+           this.userAddress.trim() !== '' &&
+           this.deliveryMethod !== null &&
+           /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.userEmail);
+  }
+
+  isStepValid(): boolean {
+    if (this.activeIndex === 1) {
+      return (
+        this.userFirstName.trim() !== '' &&
+        this.userLastName.trim() !== '' &&
+        this.userEmail.trim() !== '' &&
+        this.userPhone.trim() !== '' &&
+        this.userCity.trim() !== '' &&
+        this.userPostalCode.trim() !== '' &&
+        this.userAddress.trim() !== '' &&
+        !!this.deliveryMethod
+      );
+    }
+    return true;
   }
 
   goToPrevStep(){

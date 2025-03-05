@@ -12,22 +12,48 @@
                     <h1 class="product-title">{{selectedVariation.catergyName}} - {{ selectedVariation.productName }} - {{selectedVariation.variationSize}}</h1>
                     <p class="product-description">{{ product.description }}</p>
                     <div class="sizes">
-                        
+                        <ng-container *ngFor="let variation of product.variations">
+                            <button 
+                                class="variationBtn" 
+                                (click)="changeVariation(variation)" 
+                                [ngClass]="{active: variation.id === selectedVariation.variationId}"
+                                >
+                                {{variation.size}}
+                            </button>
+                        </ng-container>
                     </div>
                     <div class="product-price">
-                        <span>{{ selectedVariation.variationPrice }} RSD</span>
+                        <span>Cena: {{ selectedVariation.variationPrice }} RSD</span>
                     </div>
                     <div class="product-actions">
                         <button class="btn btn-primary">Sacuvaj <i class="pi pi-heart"></i></button>
                         <button class="btn btn-secondary">Dodaj u korpu</button>
                     </div>
+                    <div class="delivery">
+                        <div class="postExpress">
+                            <div class="deliveryPostExpress">
+                                <i class="pi pi-truck"></i>
+                                <span class="msg">Isporuka kurirskom sluzbom</span>
+                            </div>
+                            <div class="in_stock">
+                                <div id="dot" [ngClass]="{not_in_stock : selectedVariation.variationInStock === false}"></div>
+                                <span>{{selectedVariation.variationInStock ? "Dostupno na stanju" : "Nije dostupno na stanju"}}</span>
+                            </div>
+                        </div>
+
+                        <div class="home">
+                            <i class="pi pi-home"></i>
+                            <span>Dostava na teritoriji Kragujevca</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-12">
-                <div class="product-reviews">
-                    <h2>Customer Reviews</h2>
+        <div class="row">
+            <div class="recommended">
+                <span>Preporuceni proizvodi</span>
+                <div class="card">
+                    
                 </div>
             </div>
         </div>

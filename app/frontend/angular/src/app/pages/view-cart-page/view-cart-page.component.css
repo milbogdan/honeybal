@@ -18,6 +18,23 @@ i.pi {
     font-style: normal;  
 }
 
+:host ::ng-deep .p-steps-item-number{
+    color: rgb(244,179,21);
+}
+
+:host ::ng-deep .p-steps-item-label span {
+    color: red;
+}
+
+@media (max-width: 768px) {
+    :host ::ng-deep .p-steps-item {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+
+/* ------------------------------------------------------------ */
+
 #page-wrapper{
     overflow-y: auto;
     overflow-x: hidden;
