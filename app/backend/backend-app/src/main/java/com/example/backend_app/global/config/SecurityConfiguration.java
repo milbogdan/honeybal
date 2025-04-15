@@ -50,6 +50,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"/api/orders/post").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/orders/getAll").authenticated()
 
+                        //rabbitmq endpoints
+                        .requestMatchers(HttpMethod.GET,"/api/rabbit/publish").permitAll()
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/swagger-ui/**",
