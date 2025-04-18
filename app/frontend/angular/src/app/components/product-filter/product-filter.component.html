@@ -1,27 +1,61 @@
-<div class="filter__content">
-    <p-panel header="Categories" [toggleable]="true" class="m-3 categories">
-        <div class="stock-checkboxes">
-            <div *ngFor="let category of categories" class="checkbox-wrapper">
-                <input type="checkbox" [id]="category.id" (change)="onCategoryChange(category, $event)">
-                <label [for]="category">{{ category.name }}</label>
-            </div>
-        </div>
-    </p-panel>
-    
-    <p-panel header="In stock" [toggleable]="true" [collapsed]="true" class="m-3">
-        <div class="stock-checkboxes">
-            <div class="checkbox-wrapper">
-                <input type="radio" name="stock" id="allStock" (change)="onStockChange(null)" checked>
-                <label for="allStock">All</label>
-            </div>
-            <div class="checkbox-wrapper">
-                <input type="radio" name="stock" id="inStock" (change)="onStockChange(true)">
-                <label for="inStock">In stock</label>
-            </div>
-            <div class="checkbox-wrapper">
-                <input type="radio" name="stock" id="outStock" (change)="onStockChange(false)">
-                <label for="outStock">Out of stock</label>
-            </div>
-        </div>
-    </p-panel>
+<div class="space-y-6 p-4">
+  <!-- Categories Panel -->
+  <div class="border rounded-xl shadow-sm">
+    <div class="bg-gray-100 px-4 py-2 rounded-t-xl font-semibold text-gray-800">
+      Categories
+    </div>
+    <div class="p-4 space-y-2">
+      <div *ngFor="let category of categories" class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          [id]="category.id"
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          (change)="onCategoryChange(category, $event)"
+        />
+        <label [for]="category" class="text-sm text-gray-700">
+          {{ category.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Panel -->
+  <div class="border rounded-xl shadow-sm">
+    <div class="bg-gray-100 px-4 py-2 rounded-t-xl font-semibold text-gray-800">
+      In stock
+    </div>
+    <div class="p-4 space-y-2">
+      <div class="flex items-center gap-2">
+        <input
+          type="radio"
+          name="stock"
+          id="allStock"
+          class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+          (change)="onStockChange(null)"
+          checked
+        />
+        <label for="allStock" class="text-sm text-gray-700">All</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input
+          type="radio"
+          name="stock"
+          id="inStock"
+          class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+          (change)="onStockChange(true)"
+        />
+        <label for="inStock" class="text-sm text-gray-700">In stock</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input
+          type="radio"
+          name="stock"
+          id="outStock"
+          class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+          (change)="onStockChange(false)"
+        />
+        <label for="outStock" class="text-sm text-gray-700">Out of stock</label>
+      </div>
+    </div>
+  </div>
 </div>

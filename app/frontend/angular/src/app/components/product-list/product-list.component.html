@@ -1,51 +1,93 @@
-<div class="product__container">
-    <div class="products">
-  
-      <ng-container *ngTemplateOutlet="currentFillters.viewMode === 0 ? gridTemplate : listTemplate"></ng-container>
-  
-      <ng-template #gridTemplate >
-        <product *ngFor="let product of products"
-          [product]="product">
-        </product>
-      </ng-template>
-  
-      <ng-template #listTemplate>
-        <p-table [value]="products" class="tableView" [tableStyle]="{ 'min-width': '60rem' }">
-          <ng-template #header>
-              <tr>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Status</th>
-                  <th>Size</th>
-                  <th>Price</th>
-              </tr>
-          </ng-template>
-          <ng-template #body let-product>
-              <tr>
-                  <td>
-                    <img
-                          [src]="'assets/products/med.png'"
-                          [alt]="product.name"
-                          class="img-of-product"
-                      />
-                    {{ product.name }}
-                    </td>
-                    <td>{{ product.category.name }}</td>
-                    <td>{{ product.in_storck ? 'In stock' : 'Out of stock' }}</td>
-                    <td></td>
-                    <td>{{ product.price }} RSD</td>
-              </tr>
-          </ng-template>
-          <!-- <ng-template #footer> In total there are {{ products ? products.length : 0 }} products. </ng-template> -->
-        </p-table>
-      </ng-template>
+<div class="flex justify-center w-full my-5">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl w-full mx-auto p-6 bg-white border border-[#dfe7ef] rounded-xl shadow-[0_4px_30px_rgba(221,224,255,0.54)]"
+    *ngIf="currentFillters.viewMode === 0"
+  >
+    <product *ngFor="let product of products" [product]="product"></product>
+  </div>
+
+  <div *ngIf="currentFillters.viewMode === 1" class="w-full px-4">
+    <div class="overflow-x-auto mt-4">
+      <table
+        class="min-w-[600px] w-full border-t border-[#dfe7ef] text-left text-sm"
+      >
+        <thead class="bg-gray-100 text-[#485467]">
+          <tr>
+            <th class="p-4">Name</th>
+            <th class="p-4">Category</th>
+            <th class="p-4">Size</th>
+            <th class="p-4">Status</th>
+            <th class="p-4">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let product of products"
+            class="border-b hover:bg-gray-50"
+          >
+            <td class="p-4 flex items-center gap-2">
+              <img
+                [src]="'assets/products/med.png'"
+                [alt]="product.name"
+                class="w-[30px] h-aut"
+              />
+              <span class="text-zinc-500">{{ product.name }}</span>
+            </td>
+            <td class="p-4 text-zinc-500">{{ product.category.name }}</td>
+            <td>
+              <button
+                (click)="selectVariation(product, variation)"
+                *ngFor="let variation of product.variations"
+                class="text-zinc-500 font-medium rounded-md bg-linear-to-r mx-1 py-0.5 px-1 cursor-pointer hover:from-amber-300 hover:to-yellow-300 transition-all"
+              >
+                {{ variation.size }}
+              </button>
+            </td>
+            <td class="p-4">
+              <ng-container
+                *ngIf="getSelectedVariation(product.id) as selected"
+              >
+                <span class="text-zinc-600 font-medium">
+                  {{ selected.in_stock ? "In stock" : "Out of stock" }}
+                </span>
+              </ng-container>
+
+              <ng-container *ngIf="!getSelectedVariation(product.id)">
+                <span class="text-zinc-600 font-medium">
+                  Odaberite veličinu proizvoda.
+                </span>
+              </ng-container>
+            </td>
+            <ng-container
+              *ngIf="getSelectedVariation(product.id) as selected"
+              class="flex items-center justify-center"
+            >
+              <td class="p-4">
+                <span class="text-zinc-600 font-medium">
+                  {{ selected.price }}.00 RSD
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container *ngIf="!getSelectedVariation(product.id)">
+              <span class="text-zinc-600 font-medium">
+                Odaberite veličinu proizvoda.
+              </span>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
-<p-paginator
+</div>
+
+<!-- Paginator -->
+<div class="flex justify-center mt-6">
+  <p-paginator
     (onPageChange)="onPageChange($event)"
-    [first]="first" 
-    [rows]="rows" 
-    [totalRecords]="totalElements" 
-    [rowsPerPageOptions]="[6, 12, 15, 30]" />
-  
+    [first]="first"
+    [rows]="rows"
+    [totalRecords]="totalElements"
+    [rowsPerPageOptions]="[6, 12, 15, 30]"
+  ></p-paginator>
+</div>

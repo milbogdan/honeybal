@@ -1,17 +1,17 @@
-import { Component, inject, Input } from '@angular/core';
-import { NgFor, NgTemplateOutlet } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { CommonModule, NgFor } from '@angular/common';
 import { Product } from '../../models/product.interface';
 import { VariationProducts } from '../../models/variationProducts.interface';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProductService } from '../../services/product.service';
 import { FilterService } from '../../services/filter.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ProductComponent } from '../product/product.component';
 
 @Component({
   selector: 'product-list',
-  imports: [ TableModule, NgFor, PaginatorModule, ProductComponent, NgTemplateOutlet ],
+  imports: [ TableModule, NgFor, PaginatorModule, ProductComponent, CommonModule ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })
@@ -22,10 +22,12 @@ export class ProductListComponent {
   products : Product[] = [];
   totalElements : number = 0;
   totalPages : number = 0;  
-  productService: ProductService = inject(ProductService);
   currentFillters: any = {};
-  filterService : FilterService = inject(FilterService);
   filterSubscription!: Subscription;
+  selectedVariations: Map<number, VariationProducts> = new Map();
+
+  productService: ProductService = inject(ProductService);
+  filterService : FilterService = inject(FilterService);
 
   ngOnInit(){
     this.filterSubscription = this.filterService.filter$.subscribe((filters) => {
@@ -49,6 +51,7 @@ export class ProductListComponent {
         this.totalElements = data.totalElements;  
         this.totalPages = data.totalPages;
         this.products = data.content;
+        console.log(this.products);
 
         if(filters.inStock != null){
           this.products = data.content.map((product : Product) => {
@@ -66,6 +69,14 @@ export class ProductListComponent {
         this.productService.loading = false;
       }
     });
+  }
+
+  selectVariation(product: Product, variation : VariationProducts) {
+    this.selectedVariations.set(product.id, variation);
+  }
+
+  getSelectedVariation(productId: number): VariationProducts | null {
+    return this.selectedVariations.get(productId) ?? null;
   }
 
   ngOnDestroy(): void {
