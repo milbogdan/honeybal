@@ -48,9 +48,13 @@ public class ProductServiceIT {
 
     @Test
     void testCreateProduct() throws ExceptionBadRequest {
+        ProductCategory testCategory = new ProductCategory();
+        testCategory.setName("Test Category");
+        testCategory = productCategoryRepository.save(testCategory);
+
         CreateProductDTO productDTO = new CreateProductDTO();
         productDTO.setName("honey");
-        productDTO.setCategory(1L);
+        productDTO.setCategory(testCategory.getId());
         productDTO.setDescription("description");
         productDTO.setImageUrl("test-image.jpg");
         productDTO.setSize("1000g");

@@ -1,4 +1,4 @@
-package com.example.backend_app.global.config.rabbitmq;
+package com.example.backend_app.global.rabbitmq;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.LoggerFactory;
@@ -18,11 +18,19 @@ public class RabbitMQProducer {
     @Value("${rabbitmq.routingKey}")
     private String routingKey;
 
+    @Value("${rabbitmq.email.routingKey}")
+    private String emailRoutingKey;
+
+
     private final RabbitTemplate rabbitTemplate;
 
     //sending the message
-    public void send(String message) {
+    public void send(NotificationDTO message) {
         rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
         System.out.println("Sent message " + message);
+    }
+    public void sendEmail(EmailDTO message) {
+        rabbitTemplate.convertAndSend(exchangeName, emailRoutingKey, message);
+        System.out.println("Email sent "+message);
     }
 }
