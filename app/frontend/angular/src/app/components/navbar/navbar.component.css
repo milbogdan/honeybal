@@ -19,6 +19,12 @@ a {
     text-decoration: none;
 }
 
+.loader{
+    width: 100vw;
+    height: 100vh;
+    background-color: #f2f4fc;
+}
+
 /*=============== HEADER ===============*/
 .header {
     position: sticky;

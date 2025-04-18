@@ -6,11 +6,14 @@ import { routes } from './app.routes';
 import {  provideHttpClient, withInterceptors } from '@angular/common/http';
 import Aura from '@primeng/themes/aura';
 import { CacheInterceptor } from './interceptors/http-cache.interceptor';
+import { httpRequestInterceptor } from './interceptors/http.interceptors';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-
-    provideHttpClient(withInterceptors([CacheInterceptor])),
+    provideHttpClient(withInterceptors([
+      httpRequestInterceptor,
+      CacheInterceptor
+    ])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),

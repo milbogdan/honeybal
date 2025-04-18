@@ -1,3 +1,8 @@
+<div *ngIf="(isLoading$ | async)" class="loader">
+    <loader></loader>
+</div>
+
+
 <header class="header">
     <nav class="nav">
         <div class="nav__data">
@@ -39,11 +44,11 @@
                     </div>
                 </li>
 
-                <li *ngIf="user == null">
+                <li *ngIf="loggedUser == null">
                     <a routerLink="/login" routerLinkActive="active-link" class="nav__link">Login</a>
                 </li>
 
-                <li *ngIf="(user)" class="dropdown__item avatar__item">
+                <li *ngIf="loggedUser" class="dropdown__item avatar__item">
                     <div class="nav__link flex items-center gap-2">
                         <p-avatar class="avatar__item" shape="circle" icon="pi pi-user"/>
                     </div>

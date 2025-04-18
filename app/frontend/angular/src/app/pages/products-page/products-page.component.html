@@ -1,4 +1,4 @@
-<div *ngIf="loading" class="loader">
+<div *ngIf="this.productService.loading" class="loader">
     <loader></loader>
 </div>
 
@@ -14,7 +14,7 @@
         <!-- *ngIf="!isMobile" -->
         <product-filter></product-filter>
 
-        <product-list [loadingSubject]="loadingSubject"></product-list>
+        <product-list></product-list>
     </div>
 
     <app-footer></app-footer>

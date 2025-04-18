@@ -26,7 +26,6 @@ export class ProductListComponent {
   currentFillters: any = {};
   filterService : FilterService = inject(FilterService);
   filterSubscription!: Subscription;
-  @Input() loadingSubject!: BehaviorSubject<boolean>;
 
   ngOnInit(){
     this.filterSubscription = this.filterService.filter$.subscribe((filters) => {
@@ -43,7 +42,7 @@ export class ProductListComponent {
   }
 
   private fetchProducts(currentPage : number, pageSize: number, filters: any){
-    this.loadingSubject.next(true);
+    this.productService.loading = true;
 
     this.productService.getAllProducts(currentPage, pageSize, filters).subscribe({
       next: (data : any) => {
@@ -58,11 +57,13 @@ export class ProductListComponent {
           }).filter((product : Product) => product.variations.length > 0);
         }
 
-        this.loadingSubject.next(false);
+        // this.loadingSubject.next(false);
+        this.productService.loading = false;
       },
       error: (err : any) => {
         // console.log(err);
-        this.loadingSubject.next(false);
+        // this.loadingSubject.next(false);
+        this.productService.loading = false;
       }
     });
   }

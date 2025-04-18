@@ -7,42 +7,47 @@ import { AccountService } from '../../services/account.service';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { CartSidebarComponent } from '../cart-sidebar/cart-sidebar.component';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-navbar',
-  imports: [ AvatarModule, AvatarGroupModule, NgIf, NgClass, CartSidebarComponent, AsyncPipe, RouterModule ],
+  imports: [
+    AvatarModule,
+    AvatarGroupModule,
+    NgIf,
+    NgClass,
+    CartSidebarComponent,
+    AsyncPipe,
+    RouterModule,
+    LoaderComponent,
+  ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   visible$ = new BehaviorSubject<boolean>(false);
   isMenuOpen: boolean = false;
-  user : User | null = null;
-  msgError : string | null = null;
-  router : Router = inject(Router); 
+  loggedUser: User | null | undefined = undefined;
+  msgError: string | null = null;
+  router: Router = inject(Router);
   private destroy$ = new Subject<void>();
-  accountService : AccountService = inject(AccountService);
-  
+  accountService: AccountService = inject(AccountService);
+  isLoading$ = this.accountService.loading$;
+
   ngOnInit() {
-    this.accountService.user$.pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next: (user) => {
-        this.user = user;
-      }
-    });
+    this.accountService.currentUser
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => {
+        this.loggedUser = user;
+      });
   }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  logout(){
-    this.router.navigate(['/login']);
-    this.accountService.logout().subscribe({
-      next: () => {
-        
-      }
-    });
+  logout() {
+    this.accountService.logout().subscribe();
   }
 
   openCart() {

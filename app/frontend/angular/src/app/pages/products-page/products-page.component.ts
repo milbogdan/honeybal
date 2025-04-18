@@ -9,6 +9,7 @@ import { NgIf } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { BehaviorSubject } from 'rxjs';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-products-page',
@@ -18,19 +19,14 @@ import { FooterComponent } from '../../components/footer/footer.component';
 })
 export class ProductsPageComponent {
   isMobile = false;
-  loading : boolean = true;
-  loadingSubject = new BehaviorSubject<boolean>(true);
+
   accountService : AccountService = inject(AccountService);
+  productService : ProductService = inject(ProductService);
 
   ngOnInit() {
     if (typeof window !== 'undefined') {
       this.isMobile = window.innerWidth < 768;
     }
-
-    this.accountService.getUser().subscribe({
-      next: () => this.loading = false,
-      error: () => this.loading = false
-    });
   }
 
   @HostListener('window:resize', ['$event'])

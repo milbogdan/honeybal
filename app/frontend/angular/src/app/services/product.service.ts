@@ -9,6 +9,7 @@ import { Product } from '../models/product.interface';
 })
 export class ProductService {
     private http : HttpClient = inject(HttpClient);
+    loading : boolean = false;
     
     getAllProducts(pageNumber : number, pageSize : number, filters? : any) : Observable<Product[]>{
         let params = new HttpParams();
