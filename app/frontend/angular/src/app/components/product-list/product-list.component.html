@@ -1,6 +1,7 @@
 <div class="flex justify-center w-full my-5">
+  <!-- Border aound product view -->
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl w-full mx-auto p-6 bg-white border border-[#dfe7ef] rounded-xl shadow-[0_4px_30px_rgba(221,224,255,0.54)]"
+    class="grid grid-cols-1 place-items-center center sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 max-w-6xl w-full mx-auto p-6 bg-white border border-[#dfe7ef] rounded-xl shadow-[0_4px_30px_rgba(221,224,255,0.54)]"
     *ngIf="currentFillters.viewMode === 0"
   >
     <product *ngFor="let product of products" [product]="product"></product>

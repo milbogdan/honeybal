@@ -3,10 +3,11 @@ import { NgFor } from '@angular/common';
 import { ProductCategory } from '../../models/productCategory.interface';
 import { ProductCategoryService } from '../../services/productCategory.service';
 import { FilterService } from '../../services/filter.service';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'product-filter',
-  imports: [ NgFor ],
+  imports: [ NgFor, PanelModule ],
   templateUrl: './product-filter.component.html',
   styleUrl: './product-filter.component.css'
 })

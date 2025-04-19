@@ -1,30 +1,26 @@
 <div class="space-y-6 p-4">
-  <!-- Categories Panel -->
-  <div class="border rounded-xl shadow-sm">
-    <div class="bg-gray-100 px-4 py-2 rounded-t-xl font-semibold text-gray-800">
-      Categories
-    </div>
-    <div class="p-4 space-y-2">
-      <div *ngFor="let category of categories" class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          [id]="category.id"
-          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-          (change)="onCategoryChange(category, $event)"
-        />
-        <label [for]="category" class="text-sm text-gray-700">
-          {{ category.name }}
-        </label>
+  <!-- Categories Panel using p-panel -->
+   <div class="mb-4">
+    <p-panel header="Categories" [toggleable]="true" styleClass="rounded-xl shadow-sm">
+      <div class="space-y-2">
+        <div *ngFor="let category of categories" class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            [id]="'category-' + category.id"
+            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            (change)="onCategoryChange(category, $event)"
+          />
+          <label [for]="'category-' + category.id" class="text-sm text-gray-700">
+            {{ category.name }}
+          </label>
+        </div>
       </div>
-    </div>
+    </p-panel>
   </div>
 
-  <!-- Stock Panel -->
-  <div class="border rounded-xl shadow-sm">
-    <div class="bg-gray-100 px-4 py-2 rounded-t-xl font-semibold text-gray-800">
-      In stock
-    </div>
-    <div class="p-4 space-y-2">
+  <!-- Stock Panel using p-panel -->
+  <p-panel header="In stock" [toggleable]="true" styleClass="rounded-xl shadow-sm">
+    <div class="space-y-2">
       <div class="flex items-center gap-2">
         <input
           type="radio"
@@ -57,5 +53,5 @@
         <label for="outStock" class="text-sm text-gray-700">Out of stock</label>
       </div>
     </div>
-  </div>
+  </p-panel>
 </div>
