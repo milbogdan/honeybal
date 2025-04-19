@@ -7,11 +7,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.wrapper{
-    width: 100%;
-    display: block;
-}
-
 .btnSubmitForm {
     display: block;
 }
@@ -24,18 +19,6 @@
 :host ::ng-deep .btnSubmitForm button:hover{
     background-color: #f7c23d !important;
     border: none;
-}
-
-.row-wrapper{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.row-wrapper .reset-password span{
-    font-weight: 400;
-    color: white;
-    cursor: pointer;
 }
 
 .checkbox-wrapper-4 * {
@@ -111,21 +94,6 @@
     height: 0;
     pointer-events: none;
     user-select: none;
-}
-.rmText{
-    font-weight: 400;
-    color: white;
-}
-.wrapper .noAcc{
-    font-weight: 400;
-    color: white;
-}
-
-.wrapper .noAcc a{
-    list-style: none;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
 }
 
 .logo-wrapper {
