@@ -51,8 +51,7 @@ export class ProductListComponent {
         this.totalElements = data.totalElements;  
         this.totalPages = data.totalPages;
         this.products = data.content;
-        console.log(this.products);
-
+        
         if(filters.inStock != null){
           this.products = data.content.map((product : Product) => {
             const filteredVariations = product.variations.filter((variation : VariationProducts) => variation.in_stock === filters.inStock);

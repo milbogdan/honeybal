@@ -2,12 +2,12 @@ import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../models/product.interface';
 import { VariationProducts } from '../../models/variationProducts.interface';
 import { CartService } from '../../services/cart.service';
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'product',
-  imports: [ NgClass, NgFor, NgStyle, NgIf, RouterModule ],
+  imports: [ CommonModule, RouterModule ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })

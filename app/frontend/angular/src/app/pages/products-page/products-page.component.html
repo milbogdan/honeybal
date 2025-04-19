@@ -1,8 +1,5 @@
 <!-- Loader -->
-<div
-  *ngIf="this.productService.loading"
-  class="w-screen h-screen bg-[#f2f4fc] flex items-center justify-center"
->
+<div *ngIf="this.productService.loading" class="w-screen h-screen bg-[#f2f4fc] flex items-center justify-center">
   <loader></loader>
 </div>
 
@@ -11,19 +8,22 @@
   <app-navbar></app-navbar>
 
   <!-- Search Bar + View Toggle -->
-  <div
-    class="container mx-auto flex flex-col md:flex-row justify-between items-center mt-8 gap-4"
-  >
+  <div class="container mx-auto flex flex-col md:flex-row justify-between items-center mt-8 gap-4 px-4">
     <search-bar></search-bar>
     <view-change></view-change>
   </div>
 
   <!-- Content: Filter + Product List -->
-  <div
-    class="container mx-auto grid grid-cols-1 md:grid-cols-[20%_1fr] gap-4 my-8"
-  >
-    <product-filter></product-filter>
-    <product-list></product-list>
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-[20%_1fr] gap-3 my-8 ">
+    <!-- Product Filter -->
+    <div class="flex justify-center md:justify-start w-full">
+      <product-filter></product-filter>
+    </div>
+
+    <!-- Product List -->
+    <div class="flex justify-center md:justify-start">
+      <product-list></product-list>
+    </div>
   </div>
 
   <app-footer></app-footer>

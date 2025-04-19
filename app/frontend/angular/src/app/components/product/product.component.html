@@ -1,47 +1,49 @@
-<div class="container">
-    <div class="card">
-        <div class="imgBx">
-            <img src="assets/products/med.png" alt="med">
-        </div>
-        <div class="contentBx">
-            <h2>{{ product.name || 'Naziv proizvoda nije dostupan' }}</h2>
-            <div class="size">
-                <h3>Velicina :</h3>
-                <span *ngFor="let variation of product.variations" (click)="onSelectVariation(variation)"
-                [ngClass]="{selected: variation.id === selectedVariation?.id}">
-                {{ variation.size }}
-                </span>
-            </div>
-
-            <div class="in_stock">
-                <h3>Na stanju :</h3>
-                <span [ngStyle]="{'color': selectedVariation?.in_stock ? '#008000' : '#ff4d4d'}">
-                {{ selectedVariation?.in_stock ? "In stock" : "Out of Stock" }}
-                </span>
-            </div>
-
-            <div class="price" *ngIf="selectedVariation?.in_stock">
-                <h3>Cena :</h3>
-                <span>
-                    {{ selectedVariation?.price }} RSD
-                </span>
-            </div>
-
-            <div class="num_of_item" *ngIf="selectedVariation?.in_stock">
-                <span class="btn-num-order" (click)="decreaseQuantity()">
-                    -
-                </span>
-
-                <span style="width: 36px;">{{quantity}}</span>
-
-                <span class="btn-num-order" (click)="increaseQuantity()">
-                    +
-                </span>
-            </div>
-        </div>
-        <div class="buttons_details_buy">
-            <a (click)="showProductDetail(product)" class="details-btn">Details</a>
-            <a class="buy-btn" (click)="addToCart(product, quantity)">Buy</a>
-        </div>
+<div class="flex justify-center">
+  <div class="card relative w-[320px] sm:w-[280px] md:w-[300px] lg:w-[320px] h-[450px] sm:h-[400px] md:h-[420px] lg:h-[450px] bg-[#FAF3E0] shadow-[0px_4px_30px_rgba(221,224,255,0.54)] rounded-xl border border-[#dfe7ef] overflow-hidden flex justify-center items-center group">
+  
+    <!-- Slika -->
+    <div class="imgBx absolute top-1/2 transform -translate-y-1/2 w-full h-[260px] transition-all duration-500 z-10 group-hover:top-[3%] group-hover:translate-y-0 group-hover:scale-75">
+      <img src="assets/products/med.png" alt="Product" class="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[180px] sm:w-[150px] md:w-[170px]" />
     </div>
+  
+    <!-- Content -->
+    <div class="absolute bottom-0 w-full h-[120px] text-center transition-all duration-1000 z-10 group-hover:h-[220px]">
+      <h2 class="font-semibold tracking-wide text-[#485467] text-[28px] sm:text-[24px] m-0">{{ product.name || 'Naziv proizvoda nije dostupan' }}</h2>
+  
+      <!-- In stock -->
+      <div class="flex justify-center items-center mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all delay-500">
+        <h3 class="text-[#485467] font-light text-sm uppercase tracking-widest mr-2 m-0">Na stanju</h3>
+        <span class="text-[#485467] text-sm">{{ selectedVariation?.in_stock ? "In stock" : "Out of Stock" }}</span>
+      </div>
+  
+      <!-- Cena -->
+      <div class="flex justify-center items-center mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all delay-500">
+        <h3 class="text-[#485467] font-light text-sm uppercase tracking-widest mr-2 m-0">Cena</h3>
+        <span class="text-[#485467] text-sm">{{ selectedVariation?.price }} RSD</span>
+      </div>
+  
+      <!-- Veličine -->
+      <div class="flex justify-center items-center mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all delay-500">
+        <h3 class="text-[#485467] font-light text-sm uppercase tracking-widest mr-2 m-0">Veličine</h3>
+        <span *ngFor="let variation of product.variations" (click)="onSelectVariation(variation)"
+            class="px-2 bg-white rounded-md text-[#485467] text-sm mx-1"
+            [ngClass]="{selected: variation.id === selectedVariation?.id}">
+            {{ variation.size }}
+        </span>
+      </div>
+  
+      <!-- Broj komada -->
+      <div class="flex justify-center items-center gap-4 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all delay-500">
+        <button class="bg-[#f4b315] px-2 py-1 rounded-md font-medium text-lg">-</button>
+        <span class="text-[#485467]">1</span>
+        <button class="bg-[#f4b315] px-2 py-1 rounded-md font-medium text-lg">+</button>
+      </div>
+  
+      <!-- Dugmad -->
+      <div class="flex justify-between px-4 mt-2 absolute bottom-2 w-full z-10">
+        <a href="#" class="bg-white px-4 py-1 rounded-full font-semibold text-[#485467] hover:bg-[#f4b315] transition-all">Detalji</a>
+        <a href="#" class="bg-white px-4 py-1 rounded-full font-semibold text-[#485467] hover:bg-[#f4b315] transition-all">Kupi</a>
+      </div>
+    </div>
+  </div>
 </div>

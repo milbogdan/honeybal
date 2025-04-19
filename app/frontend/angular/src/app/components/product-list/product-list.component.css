@@ -1,0 +1,29 @@
+:host ::ng-deep .p-paginator {
+  --p-paginator-background: transparent; /* Postavlja pozadinsku boju na crveno */
+}
+
+:host ::ng-deep .p-paginator-page {
+  --p-paginator-nav-button-hover-background: #d9901d; /* Postavlja pozadinsku boju na hover za dugmadi */
+  --p-paginator-nav-button-selected-background: #ff9900; /* Pozadina za selektovanu stranicu */
+  --p-paginator-nav-button-color: black; /* Postavlja boju teksta na belu */
+}
+
+:host ::ng-deep .p-paginator-nav-button {
+  background-color: var(--p-paginator-nav-button-background);
+  color: var(--p-paginator-nav-button-color);
+  border-radius: 50%;
+  padding: 10px;
+  transition: background-color var(--p-paginator-transition-duration) ease;
+}
+
+:host ::ng-deep .p-paginator-nav-button:hover {
+  background-color: var(--p-paginator-nav-button-hover-background);
+}
+
+:host ::ng-deep .p-paginator-nav-button.p-highlight {
+  background-color: var(--p-paginator-nav-button-selected-background);
+}
+
+:host ::ng-deep .p-paginator-current-page-report {
+  color: var(--p-paginator-current-page-report-color);
+}

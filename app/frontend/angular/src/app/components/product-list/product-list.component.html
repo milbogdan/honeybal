@@ -70,9 +70,11 @@
             </ng-container>
 
             <ng-container *ngIf="!getSelectedVariation(product.id)">
-              <span class="text-zinc-600 font-medium">
-                Odaberite veličinu proizvoda.
-              </span>
+              <td class="p-4">
+                <span class="text-zinc-600 font-medium">
+                  Odaberite veličinu proizvoda.
+                </span>
+              </td>
             </ng-container>
           </tr>
         </tbody>
@@ -84,6 +86,7 @@
 <!-- Paginator -->
 <div class="flex justify-center mt-6">
   <p-paginator
+    
     (onPageChange)="onPageChange($event)"
     [first]="first"
     [rows]="rows"
