@@ -6,7 +6,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class NotificationDTO {
-    private String receiver;
-    private String subject;
+    private String userEmail;
+    private String title;
     private String body;
 }

@@ -23,5 +23,5 @@ public class Notification {
     private String body;
 
     @Column(nullable = false)
-    private Long userId;
+    private String userEmail;
 }
