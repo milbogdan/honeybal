@@ -1,19 +1,22 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { filter, map, tap } from 'rxjs';
 import { AccountService } from '../services/account.service';
+import { filter, map, tap } from 'rxjs';
 
-export const loginGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountService);
   const router = inject(Router);
-
+  
   return accountService.currentUser.pipe(
     filter(user => user !== undefined),
+    tap(user => console.log(user)),
     map(user => {
-      if (user) {
+      if(user === null){
         return router.createUrlTree(['/home']);
       }
-      return true;
+      else {
+        return true;
+      }
     })
-  );
+  )
 };
