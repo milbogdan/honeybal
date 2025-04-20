@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NgIf, NgFor, UpperCasePipe, NgClass } from '@angular/common';
+import { NgIf, NgFor, UpperCasePipe, NgClass, CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { MenuItem } from 'primeng/api';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -28,11 +28,8 @@ interface DeliveryMethod {
     ConfirmDialog,
     ToastModule,
     NavbarComponent,
-    NgIf,
-    NgClass,
-    NgFor,
     StepsModule,
-    UpperCasePipe,
+    CommonModule,
     RouterModule,
     FormsModule,
     LoaderComponent,
