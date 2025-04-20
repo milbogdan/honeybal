@@ -2,6 +2,7 @@ package com.example.backend_app.user.services;
 
 import com.example.backend_app.auth.services.JwtService;
 import com.example.backend_app.global.exception.ExceptionBadRequest;
+import com.example.backend_app.global.exception.ExceptionForbidden;
 import com.example.backend_app.global.exception.ExceptionNotFound;
 import com.example.backend_app.global.exception.ExceptionUnauthorized;
 import com.example.backend_app.user.DTOs.EditUserDTO;
@@ -54,7 +55,7 @@ public class UserService {
         UserDetails currentUserDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser=userRepository.findByEmail(currentUserDetails.getUsername()).orElseThrow(() -> new ExceptionUnauthorized("Not authorized!"));
         if(!user.getId().equals(currentUser.getId())){
-            throw new ExceptionUnauthorized("You are not allowed to edit this User!");
+            throw new ExceptionForbidden("You are not allowed to edit this User!");
         }
         if(editUserDTO.getUsername()!=null){
             if(!isUsernameTaken(editUserDTO.getUsername())){

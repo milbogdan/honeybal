@@ -1,5 +1,6 @@
 package com.example.backend_app.global.config;
 
+import com.example.backend_app.global.exception.CustomExceptionHandlers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +20,12 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final CustomExceptionHandlers customExceptionHandlers;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       http
+
+        http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         //user endpoints
@@ -62,11 +65,16 @@ public class SecurityConfiguration {
                 .formLogin(form -> form.disable())
                 .logout(logout -> logout.permitAll());
 
-       http.authenticationProvider(authenticationProvider);
-       http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authenticationProvider(authenticationProvider);
 
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling(ex -> ex
+                .authenticationEntryPoint(customExceptionHandlers.customAuthenticationEntryPoint())
+                .accessDeniedHandler(customExceptionHandlers.customAccessDeniedHandler())
+        );
 
-       http.cors();
+        http.cors();
+
 
        return http.build();
     }
