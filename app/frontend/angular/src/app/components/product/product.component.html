@@ -33,15 +33,15 @@
 
     <!-- Broj komada -->
     <div class="flex justify-center items-center gap-4 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all delay-500">
-      <button class="bg-[#f4b315] px-2 py-1 rounded-md font-medium text-lg">-</button>
-      <span class="text-[#485467]">1</span>
-      <button class="bg-[#f4b315] px-2 py-1 rounded-md font-medium text-lg">+</button>
+      <button (click)="decreaseQuantity()" class="bg-[#f4b315] px-2 py-1 rounded-md font-medium text-lg">-</button>
+      <span class="text-[#485467]">{{quantity}}</span>
+      <button (click)="increaseQuantity()" class="bg-[#f4b315] px-2 py-1 rounded-md font-medium text-lg">+</button>
     </div>
 
     <!-- Dugmad -->
     <div class="flex justify-between px-4 mt-2 absolute bottom-2 w-full z-10">
       <a href="#" class="bg-white px-4 py-1 rounded-full font-semibold text-[#485467] hover:bg-[#f4b315] transition-all">Detalji</a>
-      <a href="#" class="bg-white px-4 py-1 rounded-full font-semibold text-[#485467] hover:bg-[#f4b315] transition-all">Kupi</a>
+      <a (click)="addToCart(product, quantity)" class="bg-white px-4 py-1 rounded-full font-semibold text-[#485467] hover:bg-[#f4b315] transition-all">Kupi</a>
     </div>
   </div>
 </div>
