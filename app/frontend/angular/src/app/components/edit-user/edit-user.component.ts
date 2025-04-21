@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { User } from '../../models/user.interface';
 
 @Component({
   selector: 'edit-user',
@@ -15,6 +16,8 @@ export class EditUserComponent {
   private destroy$ = new Subject<void>();
   accountService = inject(AccountService);
   router = inject(Router);
+  user : User | null | undefined = undefined;
+  editUserForm!: FormGroup;
 
   ngOnInit(){
     this.accountService.currentUser.pipe(takeUntil(this.destroy$)).subscribe({
@@ -22,15 +25,16 @@ export class EditUserComponent {
         if(!user){
           this.router.navigate(['/home']);
         }
+        this.user = user;
+
+        this.editUserForm = new FormGroup({
+          firstName: new FormControl(`${this.user?.firstName}`),
+          lastName: new FormControl(this.user?.lastName),
+          address: new FormControl(this.user?.address),
+        })
       }
     })
   }
-
-  editUserForm = new FormGroup({
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    address: new FormControl(),
-  })
 
   onSubmit() : void {
     console.log(this.editUserForm);
