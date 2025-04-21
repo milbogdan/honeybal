@@ -1,5 +1,5 @@
 import { Component, inject, HostListener } from '@angular/core';
-import { NgIf, NgClass, AsyncPipe } from '@angular/common';
+import { NgIf, NgClass, AsyncPipe, CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { takeUntil, Subject, BehaviorSubject } from 'rxjs';
 import { User } from '../../models/user.interface';
@@ -14,8 +14,7 @@ import { LoaderComponent } from '../loader/loader.component';
   imports: [
     AvatarModule,
     AvatarGroupModule,
-    NgIf,
-    NgClass,
+    CommonModule,
     CartSidebarComponent,
     AsyncPipe,
     RouterModule,
@@ -46,11 +45,24 @@ export class NavbarComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  @HostListener('document:click', ['$event'])
+  closeMenuOnClick(event: MouseEvent){
+    const menuElement = document.querySelector('.navbar__menu');
+    const toggleButton = document.querySelector('.navbar__toggle');
+    const isClickInsideMenu = menuElement?.contains(event.target as Node);
+    const isClickOnToggle = toggleButton?.contains(event.target as Node);
+
+    if (!isClickInsideMenu && !isClickOnToggle) {
+      this.isMenuOpen = false;
+    }
+  }
+
   logout() {
     this.accountService.logout().subscribe();
   }
 
   openCart() {
+    console.log('10');
     this.visible$.next(true);
   }
 

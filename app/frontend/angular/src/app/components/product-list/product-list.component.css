@@ -4,7 +4,7 @@
 
 :host ::ng-deep .p-paginator-page {
   --p-paginator-nav-button-hover-background: #d9901d; /* Postavlja pozadinsku boju na hover za dugmadi */
-  --p-paginator-nav-button-selected-background: #ff9900; /* Pozadina za selektovanu stranicu */
+  --p-paginator-nav-button-selected-background: #f7d794; /* Pozadina za selektovanu stranicu */
   --p-paginator-nav-button-color: black; /* Postavlja boju teksta na belu */
 }
 
