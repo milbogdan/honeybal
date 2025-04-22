@@ -74,6 +74,12 @@ public class UserService {
         if(editUserDTO.getLastName()!=null){
             user.setLastName(editUserDTO.getLastName());
         }
+        if(editUserDTO.getAllowEmailNotifications()!=null){
+            user.setAllowEmailNotifications(editUserDTO.getAllowEmailNotifications());
+        }
+        if(editUserDTO.getAllowPushNotifications()!=null){
+            user.setAllowPushNotifications(editUserDTO.getAllowPushNotifications());
+        }
         userRepository.save(user);
         return userMapper.usertoUserDTO(user);
     }

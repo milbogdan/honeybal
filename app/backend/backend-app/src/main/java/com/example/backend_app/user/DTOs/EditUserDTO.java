@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Data
 public class EditUserDTO {
+
     private String username;
 
     private String firstName;
@@ -14,4 +15,8 @@ public class EditUserDTO {
     private String lastName;
 
     private String address;
+
+    private Boolean allowEmailNotifications;
+
+    private Boolean allowPushNotifications;
 }

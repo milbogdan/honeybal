@@ -60,6 +60,12 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Order> orders;
 
+    @Column(nullable = false)
+    private Boolean allowEmailNotifications = true;
+
+    @Column(nullable = false)
+    private Boolean allowPushNotifications = true;
+
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();
