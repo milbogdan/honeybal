@@ -28,7 +28,7 @@ public class ProductService {
 
     public Product createProduct(CreateProductDTO productDTO) throws ExceptionBadRequest {
         ProductCategory productCategory = productCategoryRepository.findById(productDTO.getCategory())
-                .orElseThrow(() -> new ExceptionBadRequest("Category not found!"));
+                .orElseThrow(() -> new ExceptionNotFound("Category not found!"));
 
 
         Product product = productRepository.findByNameCategoryAndDescription(productDTO.getName(),productCategory,productDTO.getDescription());

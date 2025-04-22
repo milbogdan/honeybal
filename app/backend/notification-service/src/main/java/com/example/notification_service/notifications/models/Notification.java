@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name="notifications")
@@ -23,5 +26,13 @@ public class Notification {
     private String body;
 
     @Column(nullable = false)
-    private Long userId;
+    private String userEmail;
+
+    @Column(nullable = false, updatable = false)
+    private Date createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
 }

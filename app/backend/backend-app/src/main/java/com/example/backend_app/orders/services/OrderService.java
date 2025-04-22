@@ -1,4 +1,5 @@
 package com.example.backend_app.orders.services;
+import com.example.backend_app.auth.services.CurrentUserUtil;
 import com.example.backend_app.global.exception.ExceptionBadRequest;
 import com.example.backend_app.global.exception.ExceptionUnauthorized;
 import com.example.backend_app.orders.DTOs.MakeOrderDTO;
@@ -31,7 +32,6 @@ public class OrderService {
     private final ProductVariationService productVariationService;
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
-
 
     public Order makeOrder(MakeOrderDTO madeOrder) {
         if(!StringUtils.hasText(madeOrder.getAddress())) throw new ExceptionBadRequest("Address is empty");
@@ -83,5 +83,13 @@ public class OrderService {
     public Page<Order> getAll(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page,pageSize);
         return orderRepository.findAll(pageable);
+    }
+
+    public Page<Order> getAllForUser(int page, int pageSize) {
+        String username = CurrentUserUtil.getCurrentUsername();
+        User user = userRepository.findByEmail(username).orElse(null);
+        if(user==null) throw new ExceptionUnauthorized("You are not logged in");
+        Pageable pageable = PageRequest.of(page,pageSize);
+        return orderRepository.findAllByUserId(pageable,user.getId());
     }
 }
