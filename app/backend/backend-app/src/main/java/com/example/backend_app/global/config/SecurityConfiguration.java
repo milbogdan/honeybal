@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                         //order endpoints
                         .requestMatchers(HttpMethod.POST,"/api/orders/post").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/orders/getAll").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/orders/getAllForUser").authenticated()
 
                         //rabbitmq endpoints
                         .requestMatchers(HttpMethod.POST,"/api/rabbit/publish").permitAll()

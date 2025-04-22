@@ -29,4 +29,9 @@ public class OrderController {
     public ResponseEntity<Page<Order>> getAllOrders(@RequestParam int page, @RequestParam int pageSize) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.getAll(page,pageSize));
     }
+
+    @GetMapping("/getAllForUser")
+    public ResponseEntity<Page<Order>> getAllOrdersForUser(@RequestParam int page, @RequestParam int pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.getAllForUser(page,pageSize));
+    }
 }
