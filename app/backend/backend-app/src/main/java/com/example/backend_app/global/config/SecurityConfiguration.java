@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         //user endpoints
                         .requestMatchers(HttpMethod.GET,"/api/users/get/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/users/getAll").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/api/users/put/{id}").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/users/put").authenticated()
 
                         //product endpoints
                         .requestMatchers(HttpMethod.POST,"/api/products/post").authenticated()
@@ -45,6 +45,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE,"/api/productCategories/delete/{id}").authenticated()
                         .requestMatchers(HttpMethod.POST,"/api/productCategories/post").authenticated()
                         .requestMatchers(HttpMethod.PUT,"/api/productCategories/put/{id}").authenticated()
+
+                        //wishlist endpoints
+                        .requestMatchers(HttpMethod.POST,"/api/wishlist/post").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/wishlist/get/getAll").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/wishlist/get/delete").authenticated()
 
                         //productVariation endpoints
                         .requestMatchers(HttpMethod.DELETE,"/api/productVariations/delete/{id}").authenticated()

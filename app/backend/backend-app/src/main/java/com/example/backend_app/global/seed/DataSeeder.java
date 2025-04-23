@@ -2,9 +2,11 @@ package com.example.backend_app.global.seed;
 
 import com.example.backend_app.orders.repositories.DeliveryTypesRepository;
 import com.example.backend_app.orders.repositories.OrderRepository;
+import com.example.backend_app.products.models.Wishlist;
 import com.example.backend_app.products.repositories.ProductCategoryRepository;
 import com.example.backend_app.products.repositories.ProductRepository;
 import com.example.backend_app.products.repositories.ProductVariationRepository;
+import com.example.backend_app.products.repositories.WishlistRepository;
 import com.example.backend_app.user.models.User;
 import com.example.backend_app.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,7 @@ public class DataSeeder {
     private final ProductVariationRepository productVariationRepository;
     private final OrderRepository orderRepository;
     private final DeliveryTypesRepository deliveryTypesRepository;
+    private final WishlistRepository wishlistRepository;
 
     @Bean
     public CommandLineRunner seedData(PasswordEncoder passwordEncoder) {
@@ -124,15 +127,15 @@ public class DataSeeder {
                 propolis.setProduct(drops1);
                 productVariationRepository.save(propolis);
 
-                ProductVariation sinusi = new ProductVariation();
-                sinusi.setSize("20ml");
-                sinusi.setImageUrl("/images/kapi_za_sinuse.png");
-                sinusi.setBasePrice(800.0);
-                sinusi.setPrice(720.0);
-                sinusi.setDiscount(10);
-                sinusi.setIn_stock(true);
-                sinusi.setProduct(drops2);
-                productVariationRepository.save(sinusi);
+                ProductVariation sinus = new ProductVariation();
+                sinus.setSize("20ml");
+                sinus.setImageUrl("/images/kapi_za_sinuse.png");
+                sinus.setBasePrice(800.0);
+                sinus.setPrice(720.0);
+                sinus.setDiscount(10);
+                sinus.setIn_stock(true);
+                sinus.setProduct(drops2);
+                productVariationRepository.save(sinus);
 
                 ProductVariation sprej = new ProductVariation();
                 sprej.setSize("20ml");
@@ -166,7 +169,7 @@ public class DataSeeder {
                 admin.setFirstName("Admin");
                 admin.setLastName("User");
                 admin.setAddress("HQ Office");
-                admin.setPassword(passwordEncoder.encode("admin"));
+                admin.setPassword(passwordEncoder.encode("password"));
                 admin.setRole(Role.ROLE_ADMIN);
                 admin.setCreatedAt(new Date());
                 admin.setUpdatedAt(new Date());
@@ -179,7 +182,7 @@ public class DataSeeder {
                 ana.setFirstName("Ana");
                 ana.setLastName("Matic");
                 ana.setAddress("Ulica br. 45");
-                ana.setPassword(passwordEncoder.encode("anapass"));
+                ana.setPassword(passwordEncoder.encode("password"));
                 ana.setRole(Role.ROLE_USER);
                 ana.setCreatedAt(new Date());
                 ana.setUpdatedAt(new Date());
@@ -205,6 +208,18 @@ public class DataSeeder {
                 orderProduct.setPrice(firstVariation.getPrice());
                 order.setOrderProducts(List.of(orderProduct));
                 orderRepository.save(order);
+
+                //wishlist john
+                Wishlist wishlist1 = new Wishlist();
+                wishlist1.setUser(john);
+                wishlist1.setProductVariation(propolis);
+
+                Wishlist wishlist2 = new Wishlist();
+                wishlist2.setUser(john);
+                wishlist2.setProductVariation(sprej);
+
+                wishlistRepository.saveAll(List.of(wishlist1, wishlist2));
+
             }
         };
     }
