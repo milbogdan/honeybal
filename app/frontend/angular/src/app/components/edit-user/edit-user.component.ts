@@ -6,11 +6,14 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from '../../models/user.interface';
 import { checkPassword } from '../../utils/utils';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'edit-user',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ToastModule],
   templateUrl: './edit-user.component.html',
+  providers: [ MessageService, ConfirmationService ],
   styleUrl: './edit-user.component.css'
 })
 export class EditUserComponent {
@@ -19,6 +22,7 @@ export class EditUserComponent {
   editUserForm!: FormGroup;
   accountService = inject(AccountService);
   router = inject(Router);
+  messageService = inject(MessageService);
 
   ngOnInit(){
     this.accountService.currentUser.pipe(takeUntil(this.destroy$)).subscribe({
@@ -79,7 +83,11 @@ export class EditUserComponent {
           this.updateUser(dirtyValues);
         }
         else{
-          //Sifre nisu iste baci toats error
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Greška',
+            detail: 'Sifre se ne poklapaju.',
+          });
         }
       }
     }
@@ -91,13 +99,20 @@ export class EditUserComponent {
   private updateUser(dirtyValues: { [key: string]: any }): void {
     if (this.user) {
       const updatedUser = { ...dirtyValues };
-      console.log(updatedUser);
       this.accountService.editUser(updatedUser).subscribe({
         next: (response) => {
-          console.log('User updated successfully');
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Uspešno',
+            detail: 'Informacije korisnika su uspešno izmenjene.',
+          });
         },
         error: (err) => {
-          console.error('Error updating user', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Greška',
+            detail: err.message,
+          });
         },
       });
     }

@@ -9,7 +9,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   
   return accountService.currentUser.pipe(
     filter(user => user !== undefined),
-    tap(user => console.log(user)),
     map(user => {
       if(user === null){
         return router.createUrlTree(['/home']);
