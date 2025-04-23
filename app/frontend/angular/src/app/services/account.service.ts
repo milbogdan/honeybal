@@ -66,4 +66,8 @@ export class AccountService {
       )
       .subscribe();
   }
+
+  editUser(id: number, editedUser: User) {
+    return this.http.put(`${environment.apiUrl}users/put/${id}`, editedUser)
+  }
 }
