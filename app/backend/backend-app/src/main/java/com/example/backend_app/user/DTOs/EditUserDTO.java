@@ -16,6 +16,8 @@ public class EditUserDTO {
 
     private String address;
 
+    private String password;
+
     private Boolean allowEmailNotifications;
 
     private Boolean allowPushNotifications;

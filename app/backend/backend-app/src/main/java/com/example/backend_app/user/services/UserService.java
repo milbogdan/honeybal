@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
 
     public UserDTO getUserFromToken(String token) {
@@ -72,6 +74,9 @@ public class UserService {
         }
         if(editUserDTO.getLastName()!=null){
             user.setLastName(editUserDTO.getLastName());
+        }
+        if(editUserDTO.getPassword()!=null && !passwordEncoder.matches(editUserDTO.getPassword(), user.getPassword())){
+            user.setPassword(passwordEncoder.encode(editUserDTO.getPassword()));
         }
         if(editUserDTO.getAllowEmailNotifications()!=null){
             user.setAllowEmailNotifications(editUserDTO.getAllowEmailNotifications());
