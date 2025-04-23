@@ -83,7 +83,7 @@ public class UserServiceIT {
         editedUser.setFirstName("newFirstName");
         editedUser.setLastName("newLastName");
         editedUser.setAddress("newAddress");
-        UserDTO updatedUserDTO = userService.editUser(editedUser, user.getId());
+        UserDTO updatedUserDTO = userService.editUser(editedUser);
 
         User updatedUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new AssertionError("Korisnik nije pronađen nakon izmene"));

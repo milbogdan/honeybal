@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         //user endpoints
                         .requestMatchers(HttpMethod.GET,"/api/users/get/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/users/getAll").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/api/users/put/{id}").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/users/put").authenticated()
 
                         //product endpoints
                         .requestMatchers(HttpMethod.POST,"/api/products/post").authenticated()

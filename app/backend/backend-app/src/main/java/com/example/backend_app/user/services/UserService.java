@@ -1,5 +1,6 @@
 package com.example.backend_app.user.services;
 
+import com.example.backend_app.auth.services.CurrentUserUtil;
 import com.example.backend_app.auth.services.JwtService;
 import com.example.backend_app.global.exception.ExceptionBadRequest;
 import com.example.backend_app.global.exception.ExceptionForbidden;
@@ -50,12 +51,10 @@ public class UserService {
         return userRepository.findByUsername(username).isPresent();
     }
 
-    public UserDTO editUser(EditUserDTO editUserDTO, Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ExceptionNotFound("User not found!"));
-        UserDetails currentUserDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User currentUser=userRepository.findByEmail(currentUserDetails.getUsername()).orElseThrow(() -> new ExceptionUnauthorized("Not authorized!"));
-        if(!user.getId().equals(currentUser.getId())){
-            throw new ExceptionForbidden("You are not allowed to edit this User!");
+    public UserDTO editUser(EditUserDTO editUserDTO) {
+        User user = CurrentUserUtil.getCurrentUser();
+        if(user==null){
+            throw new ExceptionUnauthorized("You are not logged in!");
         }
         if(editUserDTO.getUsername()!=null){
             if(!isUsernameTaken(editUserDTO.getUsername())){
