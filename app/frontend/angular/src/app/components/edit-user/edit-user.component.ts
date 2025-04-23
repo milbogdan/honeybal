@@ -36,8 +36,8 @@ export class EditUserComponent {
           phone: new FormControl(this.user?.phone),
           password: new FormControl(''),
           confirmPassword: new FormControl(''),
-          notificationCb: new FormControl(),
-          mailNotificationCb: new FormControl(),
+          allowPushNotifications: new FormControl(false),
+          allowEmailNotifications: new FormControl(false),
         });
       }
     });
@@ -47,9 +47,17 @@ export class EditUserComponent {
     const dirtyValues: { [key: string]: any } = {};
 
     Object.keys(this.editUserForm.controls).forEach((key) => {
+      // Izbacujemo password i confirmPassword iz dirtyValues
+      if (key === 'password' || key === 'confirmPassword' || key === 'phone') {
+        return;
+      }
+
       const control = this.editUserForm.get(key);
       if (control?.dirty && control.value !== this.user?.[key as keyof User]) {
         dirtyValues[key] = control.value;
+      }
+      else{
+        dirtyValues[key] = null;
       }
     });
 
@@ -68,7 +76,6 @@ export class EditUserComponent {
         const confirmPassword = confirmPasswordControl.value;
   
         if(checkPassword(password, confirmPassword)){
-          // Pozovi api
           this.updateUser(dirtyValues);
         }
         else{
@@ -77,17 +84,15 @@ export class EditUserComponent {
       }
     }
     else{
-      // Pozovi api
       this.updateUser(dirtyValues);
     }
   }
 
   private updateUser(dirtyValues: { [key: string]: any }): void {
     if (this.user) {
-      console.log(dirtyValues)
-      const updatedUser = { ...this.user, ...dirtyValues };
+      const updatedUser = { ...dirtyValues };
       console.log(updatedUser);
-      this.accountService.editUser(this.user.id, updatedUser).subscribe({
+      this.accountService.editUser(updatedUser).subscribe({
         next: (response) => {
           console.log('User updated successfully');
         },

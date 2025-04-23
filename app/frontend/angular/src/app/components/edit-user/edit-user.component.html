@@ -24,7 +24,7 @@
     </div>
     <div class="mb-3 mt-3">
         <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefon</label>
-        <input type="text" id="phone" autocomplete="new-phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="060 1234567" required />
+        <input formControlName="phone" type="text" id="phone" autocomplete="new-phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="060 1234567" required />
     </div>
     <div class="mb-3 mt-3">
         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
@@ -36,13 +36,13 @@
     </div>
     <div class="flex items-start mb-3">
         <div class="flex items-center h-5">
-        <input formControlName="notificationCb" id="remember_notification" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300" />
+        <input formControlName="allowPushNotifications" id="remember_notification" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300" />
         </div>
         <label for="remember_notification" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Slazem se da mi stizu notifikacije <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">o proizvodima</a>.</label>
     </div>
     <div class="flex items-start mb-3">
         <div class="flex items-center h-5">
-            <input formControlName="mailNotificationCb" id="remember_mail" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300" />
+            <input formControlName="allowEmailNotifications" id="remember_mail" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300" />
         </div>
         <label for="remember_mail" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Slazem se da mi stizu mail poruke <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">o proizvodima</a>.</label>
     </div>
@@ -52,5 +52,4 @@
         class="text-white font-medium rounded-lg text-sm w-full px-5 py-2 text-center bg-[#f8b500] cursor-pointer">
         Sacuvaj
     </button>
-
 </form>

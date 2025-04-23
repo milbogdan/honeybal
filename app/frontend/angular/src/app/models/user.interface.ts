@@ -10,4 +10,6 @@ export interface User {
     updatedAt: string;
     username: string;
     phone?: number;
+    allowEmailNotifications?: boolean;
+    allowPushNotifications?: boolean;
 }
