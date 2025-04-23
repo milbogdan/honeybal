@@ -46,6 +46,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"/api/productCategories/post").authenticated()
                         .requestMatchers(HttpMethod.PUT,"/api/productCategories/put/{id}").authenticated()
 
+                        //wishlist endpoints
+                        .requestMatchers(HttpMethod.POST,"/api/wishlist/post").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/wishlist/get/getAll").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/wishlist/get/delete").authenticated()
+
                         //productVariation endpoints
                         .requestMatchers(HttpMethod.DELETE,"/api/productVariations/delete/{id}").authenticated()
 

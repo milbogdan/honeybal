@@ -31,7 +31,6 @@ public class OrderService {
     private final DeliveryTypesService deliveryTypesService;
     private final ProductVariationService productVariationService;
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
 
     public Order makeOrder(MakeOrderDTO madeOrder) {
         if(!StringUtils.hasText(madeOrder.getAddress())) throw new ExceptionBadRequest("Address is empty");
@@ -44,10 +43,8 @@ public class OrderService {
         order.setPhoneNumber(madeOrder.getPhoneNumber());
         order.setEmail(madeOrder.getEmail());
 
-        Object currentUserObject = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (currentUserObject instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) currentUserObject;
-            User currentUser=userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+        User currentUser = CurrentUserUtil.getCurrentUser();
+        if (currentUser != null) {
             order.setUser(currentUser);
         }
         else{
@@ -86,9 +83,7 @@ public class OrderService {
     }
 
     public Page<Order> getAllForUser(int page, int pageSize) {
-        String username = CurrentUserUtil.getCurrentUsername();
-        User user = userRepository.findByEmail(username).orElse(null);
-        if(user==null) throw new ExceptionUnauthorized("You are not logged in");
+        User user = CurrentUserUtil.getCurrentUser();
         Pageable pageable = PageRequest.of(page,pageSize);
         return orderRepository.findAllByUserId(pageable,user.getId());
     }

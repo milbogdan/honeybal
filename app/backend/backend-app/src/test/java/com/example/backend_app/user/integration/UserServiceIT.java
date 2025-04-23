@@ -46,7 +46,7 @@ public class UserServiceIT {
         userRepository.save(new User(null, "user" , "user@email.com",
                 "firstName" , "lastName", "address",
                 "password" , Role.ROLE_USER, new Date(), new Date(),
-                true, new ArrayList<>(),true,true));
+                true, new ArrayList<>(), new ArrayList<>(),true,true));
     }
 
 
@@ -67,7 +67,7 @@ public class UserServiceIT {
         User user = userRepository.saveAndFlush(new User(null, "test" , "test@email.com",
                 "test" , "test", "test",
                 "test" , Role.ROLE_USER, new Date(), new Date(),
-                true, new ArrayList<>(),true,true));
+                true, new ArrayList<>(), new ArrayList<>(),true,true));
 
         UserDetails currentUserDetails = mock(UserDetails.class);
         when(currentUserDetails.getUsername()).thenReturn(user.getEmail());
