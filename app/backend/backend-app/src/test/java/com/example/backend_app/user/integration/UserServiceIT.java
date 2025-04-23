@@ -46,7 +46,7 @@ public class UserServiceIT {
         userRepository.save(new User(null, "user" , "user@email.com",
                 "firstName" , "lastName", "address",
                 "password" , Role.ROLE_USER, new Date(), new Date(),
-                true, new ArrayList<>(),true,true));
+                true, new ArrayList<>(), new ArrayList<>(),true,true));
     }
 
 
@@ -67,7 +67,7 @@ public class UserServiceIT {
         User user = userRepository.saveAndFlush(new User(null, "test" , "test@email.com",
                 "test" , "test", "test",
                 "test" , Role.ROLE_USER, new Date(), new Date(),
-                true, new ArrayList<>(),true,true));
+                true, new ArrayList<>(), new ArrayList<>(),true,true));
 
         UserDetails currentUserDetails = mock(UserDetails.class);
         when(currentUserDetails.getUsername()).thenReturn(user.getEmail());
@@ -83,7 +83,7 @@ public class UserServiceIT {
         editedUser.setFirstName("newFirstName");
         editedUser.setLastName("newLastName");
         editedUser.setAddress("newAddress");
-        UserDTO updatedUserDTO = userService.editUser(editedUser, user.getId());
+        UserDTO updatedUserDTO = userService.editUser(editedUser);
 
         User updatedUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new AssertionError("Korisnik nije pronađen nakon izmene"));
