@@ -51,8 +51,8 @@ export class ProductListComponent {
   private fetchFavoriteProducts(currentPage : number, pageSize: number) {
     this.favoriteProductsService.getFavoriteProducts(currentPage, pageSize).subscribe({
       next: (response: any) => {
-        console.log(response.content);
         this.favoriteProductIds = response.content.map((fav : any) => fav.id);
+        console.log(this.favoriteProductIds);
       }
     });
   }
@@ -92,8 +92,18 @@ export class ProductListComponent {
     return this.selectedVariations.get(productId) ?? null;
   }
 
-  isProductFavorite(product: Product): boolean {
-    return product.variations.some(variation => this.favoriteProductIds.includes(variation.id));
+  getFavoritesMap(product: Product): Map<number, number[]> {
+    const favoritesMap = new Map<number, number[]>();
+    // console.log(this.favoriteProductIds)
+
+    const favoriteIds = product.variations
+      .filter(variation => this.favoriteProductIds.includes(variation.id))
+      .map(variation => variation.id);
+    console.log("!: ", favoriteIds);
+  
+    favoritesMap.set(product.id, favoriteIds);
+  
+    return favoritesMap;
   }
 
   ngOnDestroy(): void {

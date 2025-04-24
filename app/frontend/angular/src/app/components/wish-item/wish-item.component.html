@@ -1,10 +1,10 @@
 <div class="relative flex flex-col items-center justify-between bg-gray-100 rounded-xl p-4 w-48 shrink-0">
-    <button class="absolute top-0 right-0 m-3 text-xs p-0.5 bg-white text-black rounded-full cursor-pointer hover:bg-red-500 hover:text-white transition-all"><i class="pi pi-times"></i></button>
+    <button (click)="removeFavorite()" class="absolute top-0 right-0 m-3 text-xs p-0.5 bg-white text-black rounded-full cursor-pointer hover:bg-red-500 hover:text-white transition-all"><i class="pi pi-times"></i></button>
     <img src="assets/products/med.png" alt="Item image" class="w-24 h-24 object-contain mb-4">
-    <h2 class="text-center text-sm font-medium text-gray-800 mb-4">Item title</h2>
+    <h2 class="text-center text-sm font-medium text-gray-800 mb-4">{{item.product.name}}</h2>
     
     <div class="w-full flex flex-row justify-between">
-        <span class="text-sm bg-white text-black rounded-lg px-2 py-1 cursor-pointer tracking-widest border-1 border-[#f4b515c7]">Cena: 1200</span>
+        <span class="text-sm bg-white text-black rounded-lg px-2 py-1 cursor-pointer tracking-widest border-1 border-[#f4b515c7]">Cena: {{item.product.productVariation.price}}</span>
         <button class="text-sm bg-[#f4b315] text-white rounded-lg px-2 py-1 cursor-pointer tracking-widest hover:bg-[#f4b515c7] hover:text-white transition-all">Kupi</button>
     </div>
 </div>

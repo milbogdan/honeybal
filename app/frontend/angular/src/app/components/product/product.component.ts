@@ -16,8 +16,8 @@ export class ProductComponent {
   @Input() product! : Product;
   selectedVariation : VariationProducts | null = null;
   quantity : number = 1;
-  favoriteIcon: boolean = false;
-  @Input() isFavorite: boolean = false;
+  isFavorite: boolean = false;
+  @Input() productFavoriteMap!: Map<number, number[]>;
 
   cartService : CartService = inject(CartService);
   router : Router = inject(Router);
@@ -25,6 +25,7 @@ export class ProductComponent {
 
   ngOnInit(){
     this.getInStockItem();
+    console.log("TEST: ", this.productFavoriteMap);
   }
 
   toggleFavorite() {

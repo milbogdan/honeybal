@@ -14,19 +14,16 @@
                 </div>
                 <div class="flex-1 bg-white rounded-xl p-4">
                     <h2 class="font-semibold mb-2">Omiljeni proizvodi:</h2>
-                    <div class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4 content-center">
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
-                        <wish-item></wish-item>
+
+                    <div *ngIf="wishItems.length === 0" class="text-center text-gray-500 italic py-10">
+                        Trenutno nemate nijedan omiljeni proizvod.
+                    </div>
+                    
+                    <div (scroll)="onScroll($event)" class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4 content-center">
+                        <wish-item
+                        *ngFor="let item of wishItems" 
+                        [item]="item"
+                        (removed)="onRemoveFavorite($event)"></wish-item>
                     </div>
                 </div>
             </div>
