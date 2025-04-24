@@ -14,6 +14,7 @@ public interface WishlistMapper {
     @Mapping(source = "id", target = "id")
     @Mapping(source = "productVariation.product.name", target = "product.name")
     @Mapping(source = "productVariation.product.description", target = "product.description")
+    @Mapping(source = "productVariation.id", target = "product.productVariation.id")
     @Mapping(source = "productVariation.size", target = "product.productVariation.size")
     @Mapping(source = "productVariation.imageUrl", target = "product.productVariation.imageUrl")
     @Mapping(source = "productVariation.basePrice", target = "product.productVariation.basePrice")

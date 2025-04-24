@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductVariationDTO {
+    private int id;
     private String size;
     private String imageUrl;
     private Double basePrice;
