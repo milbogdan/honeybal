@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+i.pi {  
+  font-family: "PrimeIcons" !important;  
+  font-style: normal;  
+}
+
 * {
   font-family: 'Poppins', sans-serif;
 }
@@ -32,4 +37,12 @@
   height: 200px;
   opacity: 0.2;
   z-index: 1;
+}
+
+.selected {
+  background-color: #f4b315;
+  color: white;
+  font-weight: 600;
+  border: 1px solid #e0b000;
+  transition: all 0.2s ease-in-out;
 }

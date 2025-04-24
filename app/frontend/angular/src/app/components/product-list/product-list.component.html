@@ -4,7 +4,12 @@
     class="flex flex-col justify-center items-center gap-4 md:flex-row md:justify-start flex-wrap elative w-full mx-auto p-6 bg-white border border-[#dfe7ef] rounded-xl shadow-[0_4px_30px_rgba(221,224,255,0.54)]"
     *ngIf="currentFillters.viewMode === 0"
   >
-    <product *ngFor="let product of products" [product]="product"></product>
+    <product 
+      *ngFor="let product of products" 
+      [product]="product"
+      [isFavorite]="isProductFavorite(product)"
+    >
+    </product>
   </div>
 
   <div *ngIf="currentFillters.viewMode === 1" class="w-full px-4">
@@ -30,7 +35,7 @@
               <img
                 [src]="'assets/products/med.png'"
                 [alt]="product.name"
-                class="w-[30px] h-aut"
+                class="w-[30px] h-auto"
               />
               <span class="text-zinc-500">{{ product.name }}</span>
             </td>

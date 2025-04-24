@@ -4,6 +4,7 @@ import { VariationProducts } from '../../models/variationProducts.interface';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { FavoriteProductService } from '../../services/favorite-product.service';
 
 @Component({
   selector: 'product',
@@ -15,12 +16,40 @@ export class ProductComponent {
   @Input() product! : Product;
   selectedVariation : VariationProducts | null = null;
   quantity : number = 1;
+  favoriteIcon: boolean = false;
+  @Input() isFavorite: boolean = false;
+
   cartService : CartService = inject(CartService);
   router : Router = inject(Router);
+  favoriteProductService : FavoriteProductService = inject(FavoriteProductService);
 
   ngOnInit(){
     this.getInStockItem();
   }
+
+  toggleFavorite() {
+    if (!this.selectedVariation) return;
+  
+    if (!this.isFavorite) {
+      this.favoriteProductService.addProductToFavorite(this.selectedVariation.id).subscribe({
+        next: () => {
+          this.isFavorite = true;
+        },
+        error: () => {
+          console.error('Neuspešno dodavanje u favorite');
+        }
+      });
+    } else {
+      this.favoriteProductService.removeProductFromFavorite(this.selectedVariation.id).subscribe({
+        next: () => {
+          this.isFavorite = false;
+        },
+        error: () => {
+          console.error('Neuspešno uklanjanje iz favorita');
+        }
+      });
+    }
+  }  
 
   getInStockItem(){
     this.selectedVariation = this.product.variations.find(variation => variation.in_stock === true || variation.in_stock === false)  || null;

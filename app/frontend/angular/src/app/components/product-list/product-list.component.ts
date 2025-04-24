@@ -8,6 +8,7 @@ import { ProductService } from '../../services/product.service';
 import { FilterService } from '../../services/filter.service';
 import { Subscription } from 'rxjs';
 import { ProductComponent } from '../product/product.component';
+import { FavoriteProductService } from '../../services/favorite-product.service';
 
 @Component({
   selector: 'product-list',
@@ -25,14 +26,17 @@ export class ProductListComponent {
   currentFillters: any = {};
   filterSubscription!: Subscription;
   selectedVariations: Map<number, VariationProducts> = new Map();
+  favoriteProductIds: number[] = [];
 
   productService: ProductService = inject(ProductService);
   filterService : FilterService = inject(FilterService);
+  favoriteProductsService : FavoriteProductService = inject(FavoriteProductService);
 
   ngOnInit(){
     this.filterSubscription = this.filterService.filter$.subscribe((filters) => {
       this.currentFillters = filters;
       this.fetchProducts(this.currentPage, this.rows, this.currentFillters);
+      this.fetchFavoriteProducts(this.currentPage, this.rows);
     });
   }
 
@@ -41,6 +45,16 @@ export class ProductListComponent {
       this.rows = event.rows ?? 5;
       this.currentPage = (this.first / this.rows);
       this.fetchProducts(this.currentPage, this.rows, this.currentFillters);
+      this.fetchFavoriteProducts(this.currentPage, this.rows);
+  }
+
+  private fetchFavoriteProducts(currentPage : number, pageSize: number) {
+    this.favoriteProductsService.getFavoriteProducts(currentPage, pageSize).subscribe({
+      next: (response: any) => {
+        console.log(response.content);
+        this.favoriteProductIds = response.content.map((fav : any) => fav.id);
+      }
+    });
   }
 
   private fetchProducts(currentPage : number, pageSize: number, filters: any){
@@ -76,6 +90,10 @@ export class ProductListComponent {
 
   getSelectedVariation(productId: number): VariationProducts | null {
     return this.selectedVariations.get(productId) ?? null;
+  }
+
+  isProductFavorite(product: Product): boolean {
+    return product.variations.some(variation => this.favoriteProductIds.includes(variation.id));
   }
 
   ngOnDestroy(): void {
