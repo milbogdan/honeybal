@@ -1,6 +1,7 @@
 package com.example.backend_app.user.DTOs;
 
 import com.example.backend_app.user.models.Role;
+import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.util.Date;
@@ -26,5 +27,9 @@ public class UserDTO {
     private Date updatedAt;
 
     private Boolean isVerified;
+
+    private Boolean allowEmailNotifications = true;
+
+    private Boolean allowPushNotifications = true;
 
 }

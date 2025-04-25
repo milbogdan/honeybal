@@ -1,6 +1,7 @@
 package com.example.backend_app.user.models;
 
 import com.example.backend_app.orders.models.Order;
+import com.example.backend_app.products.models.Wishlist;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +61,16 @@ public class User implements UserDetails{
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Wishlist> wishlist = new ArrayList<>();
+
+
+    @Column(nullable = false)
+    private Boolean allowEmailNotifications = true;
+
+    @Column(nullable = false)
+    private Boolean allowPushNotifications = true;
 
     @PrePersist
     protected void onCreate() {

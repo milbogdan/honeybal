@@ -1,120 +1,180 @@
-<div *ngIf="loading" class="loader">
+<div *ngIf="loading" class="flex justify-center items-center h-screen">
     <loader></loader>
 </div>
 
-<div id="page-wrapper" *ngIf="!loading">
+<p-toast></p-toast>
+<div id="page-wrapper" class="bg-[#f2f4fc] h-screen overflow-x-hidden overflow-y-auto" *ngIf="!loading">
     <app-navbar></app-navbar>
 
-    <div id="steps" class="container mx-auto">
-        <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)" />
+    <div class="container mx-auto my-6">
+        <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)"></p-steps>
     </div>
-    
+
     <div id="content" class="container mx-auto">
-
-        <div class="tableResponsive" *ngIf="activeIndex === 0">
-            <div class="title">
-                <span>Moja korpa</span>
+        <div *ngIf="activeIndex === 0">
+            <div class="text-xl font-semibold border-b pb-2 mb-4">Moja korpa</div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm text-left">
+                    <thead class="border-b">
+                        <tr>
+                            <th></th>
+                            <th>Proizvod</th>
+                            <th>Cena</th>
+                            <th>Popust</th>
+                            <th>Cena sa popustom</th>
+                            <th>Kolicina</th>
+                            <th>Ukupno</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of cartItems" class="border-b">
+                            <td><img src="assets/products/med.png" alt="asd" class="w-[70px]"></td>
+                            <td class="flex flex-col">
+                                <span class="uppercase text-gray-500">{{product.catergyName}}</span>
+                                <span>{{product.productName}}</span>
+                                <span>Velicina: {{product.variationSize}}</span>
+                            </td>
+                            <td>{{product.variationBasePrice}}.00 RSD</td>
+                            <td>{{product.variationDiscount}}</td>
+                            <td>{{product.variationPrice}}.00 RSD</td>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <button class="px-2">-</button>
+                                    <strong>{{product.variationQuantity}}</strong>
+                                    <button class="px-2">+</button>
+                                </div>
+                            </td>
+                            <td>123</td>
+                            <td>Uklonite</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <th></th>
-                <th>Proizod</th>
-                <th>Cena</th>
-                <th>Popust</th>
-                <th>Cena sa popustom</th>
-                <th>Kolicina</th>
-                <th>Ukupno</th>
-                <th></th>
-                <tr *ngFor="let product of cartItems">
-                    <td><img src="{{product.variationImageUrl}}" alt="asd" width="100px"></td>
-                    <td class="productDetails">
-                        <span>{{product.catergyName | uppercase}}</span>
-                        <span>{{product.productName}}</span>
-                        <span>Velicina: {{product.variationSize}}</span>
-                    </td>
-                    <td>{{product.variationBasePrice}}.00 RSD</td>
-                    <td>{{product.variationDiscount}}</td>
-                    <td>{{product.variationPrice}}.00 RSD</td>
-                    <td class="quantity">
-                        <div class="qty">
-                            <span>-</span>
-                            <strong>{{product.variationQuantity}}</strong>
-                            <span>+</span>
-                        </div>
-                    </td>
-                    <td>123</td>
-                    <!-- (click)="deleteProduct(product)" -->
-                    <td>Uklonite</td>
-                </tr>
-            </table>
-            <div>
-                <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
-            </div>
-
-            <div class="navigator">
-                <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
-                <button  class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
+            <div class="text-right mt-4 font-bold text-lg">
+                Ukupno za placanje: {{totalPrice()}}.00 RSD
             </div>
         </div>
 
-        <div class="userInfo" *ngIf="activeIndex === 1">
-            <div class="title">
-                <span>Podaci kupca</span>
-            </div>
-            <form #userInfoForm="ngForm" (ngSubmit)="onSubmit(userInfoForm)"></form>
-
-            <div class="info" [ngClass]="{'separate': user === null}">
-                <div class="inps">
-                    <div class="inp">
-                        <label for="name">*Ime</label>
-                        <input type="text">
+        <div *ngIf="activeIndex === 1">
+            <div class="text-xl font-semibold border-b pb-2 mb-4">Podaci kupca</div>
+            <div [ngClass]="{'grid lg:grid-cols-3 gap-8': user === null, 'flex flex-col': user !== null}">
+                <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                    <div>
+                        <label>*Ime</label>
+                        <input type="text" [(ngModel)]="userFirstName" class="input input-bordered w-full">
                     </div>
-                    <div class="inp">
-                        <label for="name">*Prezime</label>
-                        <input type="text">
+                    <div>
+                        <label>*Prezime</label>
+                        <input type="text" [(ngModel)]="userLastName" class="input input-bordered w-full">
                     </div>
-                    <div class="inp">
-                        <label for="name">*Email</label>
-                        <input type="text">
+                    <div>
+                        <label>*Email</label>
+                        <input type="text" [(ngModel)]="userEmail" class="input input-bordered w-full">
                     </div>
-                    <div class="inp">
-                        <label for="name">*Telefon</label>
-                        <input type="text" >
+                    <div>
+                        <label>*Telefon</label>
+                        <input type="text" [(ngModel)]="userPhone" class="input input-bordered w-full">
                     </div>
-                    <div class="inp">
-                        <label for="name">*Grad</label>
-                        <input type="text" >
+                    <div>
+                        <label>*Grad</label>
+                        <input type="text" [(ngModel)]="userCity" class="input input-bordered w-full">
                     </div>
-                    <div class="inp">
-                        <label for="name">*Postanski broj</label>
-                        <input type="text" >
+                    <div>
+                        <label>*Postanski broj</label>
+                        <input type="text" [(ngModel)]="userPostalCode" class="input input-bordered w-full">
                     </div>
-                    <div class="inp">
-                        <label for="name">*Adresa</label>
-                        <input type="text" >
+                    <div>
+                        <label>*Adresa</label>
+                        <input type="text" [(ngModel)]="userAddress" class="input input-bordered w-full">
+                    </div>
+                    <div>
+                        <label>*Metod dostave</label>
+                        <select [(ngModel)]="deliveryMethod" class="select select-bordered w-full">
+                            <option *ngFor="let option of deliveryOptions" [value]="option.id">{{option.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label>Komentar za dostavu</label>
+                        <textarea [(ngModel)]="deliveryComment" class="textarea textarea-bordered w-full"></textarea>
                     </div>
                 </div>
-                
-                <div *ngIf="user === null" class="userNotLogged">
-                    <span class="title">Dodatne pogodnosti za registrovane kupce</span>
-                    <ul>
-                        <li><i class="pi pi-check"></i> Obavestenja o proizvodima</li>
-                        <li><i class="pi pi-check"></i> Lakse online narucivanje</li>
-                        <li><i class="pi pi-check"></i> Odabir omiljenih proizvoda</li>
+                <div *ngIf="user === null" class="mt-6 bg-gray-100 p-4 rounded">
+                    <span class="text-lg font-semibold">Dodatne pogodnosti za registrovane kupce</span>
+                    <ul class="flex flex-col items-end list-disc mt-2">
+                        <li><i class="pi pi-check mr-2"></i>Obavestenja o proizvodima</li>
+                        <li><i class="pi pi-check mr-2"></i>Lakse online narucivanje</li>
+                        <li><i class="pi pi-check mr-2"></i>Odabir omiljenih proizvoda</li>
                     </ul>
-                    <div class="btns">
-                        <button routerLink="/register">Registruj se</button>
-                        <button routerLink="/login">Prijavi se</button>
+                    <div class="flex flex-row mt-4 gap-4">
+                        <button routerLink="/register" class="w-full bg-[#f4b315] text-white rounded-xl px-3 py-1 cursor-pointer tracking-widest hover:bg-[#f4b515c7] hover:text-white transition-all">Registruj se</button>
+                        <button routerLink="/login" class="w-full bg-[#173B45] text-white border-1 border-solid rounded-xl px-3 py-1 cursor-pointer tracking-widest hover:bg-zinc-600 hover:text-white transition-all">Prijavi se</button>
                     </div>
                 </div>
             </div>
+            <div class="text-right mt-4 font-bold text-lg">
+                Ukupno za placanje: {{totalPrice()}}.00 RSD
+            </div>
+        </div>
 
-            <div class="total">
-                <span class="totalPrice">Ukupno za placanje: {{totalPrice()}}.00 RSD</span>
+        <div *ngIf="activeIndex === 2">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <div class="text-xl font-semibold border-b pb-2 mb-4">Pregled kupovine</div>
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr>
+                                <th>Proizvod</th>
+                                <th>Kolicina</th>
+                                <th>Cena</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of cartItems">
+                                <td>{{product.productName}}</td>
+                                <td>{{product.variationQuantity}}</td>
+                                <td>{{product.variationPrice}}.00 RSD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div class="text-xl font-semibold border-b pb-2 mb-4">Informacije o kupcu</div>
+                    <div class="text-sm space-y-2">
+                        <p><strong>Ime:</strong> {{userFirstName}}</p>
+                        <p><strong>Prezime:</strong> {{userLastName}}</p>
+                        <p><strong>Email:</strong> {{userEmail}}</p>
+                        <p><strong>Telefon:</strong> {{userPhone}}</p>
+                        <p><strong>Grad:</strong> {{userCity}}</p>
+                        <p><strong>Postanski broj:</strong> {{userPostalCode}}</p>
+                        <p><strong>Adresa:</strong> {{userAddress}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right mt-4 font-bold text-lg">
+                Ukupno za placanje: {{totalPrice()}}.00 RSD
             </div>
 
-            <div class="navigator">
-                <button routerLink="/products" class="btn btn-primary">Proizvodi</button>
-                <button  class="btn btn-primary" (click)="goToNextStep()">Sledeci korak</button>
+            <p-confirmdialog #cd>
+                <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+                    <div class="flex flex-col items-center p-4 bg-white rounded">
+                        <span class="font-bold text-lg mt-3 mb-2">{{ message.header }}</span>
+                        <p class="mb-4">{{ message.message }}</p>
+                        <div class="flex gap-4">
+                            <button (click)="onAccept()" class="">Naruci</button>
+                            <button (click)="onReject()" class="">Otkazi</button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-confirmdialog>
+        </div>
+
+        <div class="flex justify-between mt-6">
+            <button routerLink="/products" class="bg-[#f4b315] text-white rounded-xl px-3 py-1 cursor-pointer tracking-widest hover:bg-[#f4b515c7] hover:text-white transition-all">Proizvodi</button>
+            <div class="flex gap-4">
+                <button *ngIf="activeIndex !== 0" class="bg-white border-1 border-solid rounded-xl px-3 py-1 cursor-pointer tracking-widest hover:bg-[#173B45] hover:text-white transition-all" (click)="goToPrevStep()">Prethodni korak</button>
+                <button *ngIf="activeIndex !== 2" class="bg-[#173B45] text-white border-1 border-solid rounded-xl px-3 py-1 cursor-pointer tracking-widest hover:bg-zinc-600 hover:text-white transition-all" (click)="goToNextStep()">Sledeci korak</button>
+                <button *ngIf="activeIndex == 2" class="bg-[#f4b315] text-white rounded-xl px-3 py-1 cursor-pointer tracking-widest hover:bg-[#f4b515c7] hover:text-white transition-all" (click)="buy()">Zavrsi narudzbinu</button>
             </div>
         </div>
     </div>

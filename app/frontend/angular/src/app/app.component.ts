@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AccountService } from './services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'angular';
+  accountService = inject(AccountService);
+
+  ngOnInit() {
+    this.accountService.loadCurrentUser();
+  }
 }

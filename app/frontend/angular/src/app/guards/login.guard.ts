@@ -1,18 +1,19 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
-import { map } from 'rxjs';
+import { CanActivateFn, Router } from '@angular/router';
+import { filter, map, tap } from 'rxjs';
 import { AccountService } from '../services/account.service';
 
 export const loginGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountService);
-  return accountService.user$.pipe(
+  const router = inject(Router);
+
+  return accountService.currentUser.pipe(
+    filter(user => user !== undefined),
     map(user => {
-      if (user === null) {
-        return true;
-      } else {
-        return false;
+      if (user) {
+        return router.createUrlTree(['/home']);
       }
+      return true;
     })
   );
-
 };

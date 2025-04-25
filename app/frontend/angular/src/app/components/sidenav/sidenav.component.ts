@@ -22,7 +22,7 @@ export class SidenavComponent {
   collapsed : boolean = false;
   screenWidth = 0;
   navData = navbarData;
-  user : User | null = null;
+  user : User | null | undefined = undefined;
   private destroy$ = new Subject<void>();
   router : Router = inject(Router);
   accountService : AccountService = inject(AccountService);
@@ -33,7 +33,7 @@ export class SidenavComponent {
       this.setCollapsedState();
     }
 
-    this.accountService.user$.pipe(takeUntil(this.destroy$))
+    this.accountService.currentUser.pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (user) => {
         // console.log(this.accountService.user$);

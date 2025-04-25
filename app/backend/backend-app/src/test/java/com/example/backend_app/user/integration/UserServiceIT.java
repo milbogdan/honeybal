@@ -46,7 +46,7 @@ public class UserServiceIT {
         userRepository.save(new User(null, "user" , "user@email.com",
                 "firstName" , "lastName", "address",
                 "password" , Role.ROLE_USER, new Date(), new Date(),
-                true, new ArrayList<>()));
+                true, new ArrayList<>(), new ArrayList<>(),true,true));
     }
 
 
@@ -67,12 +67,14 @@ public class UserServiceIT {
         User user = userRepository.saveAndFlush(new User(null, "test" , "test@email.com",
                 "test" , "test", "test",
                 "test" , Role.ROLE_USER, new Date(), new Date(),
-                true, new ArrayList<>()));
+                true, new ArrayList<>(), new ArrayList<>(),true,true));
 
-        UserDetails currentUserDetails = mock(UserDetails.class);
-        when(currentUserDetails.getUsername()).thenReturn(user.getEmail());
+
+
         Authentication authentication = mock(Authentication.class);
-        when(authentication.getPrincipal()).thenReturn(currentUserDetails);
+        when(authentication.getPrincipal()).thenReturn(user);
+        when(authentication.isAuthenticated()).thenReturn(true);
+
         SecurityContext securityContext = mock(SecurityContext.class);
         when(securityContext.getAuthentication()).thenReturn(authentication);
 
@@ -83,10 +85,10 @@ public class UserServiceIT {
         editedUser.setFirstName("newFirstName");
         editedUser.setLastName("newLastName");
         editedUser.setAddress("newAddress");
-        UserDTO updatedUserDTO = userService.editUser(editedUser, user.getId());
+        UserDTO updatedUserDTO = userService.editUser(editedUser);
 
         User updatedUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new AssertionError("Korisnik nije pronađen nakon izmene"));
+                .orElseThrow(() -> new AssertionError("User not found after edit"));
 
         assertThat(updatedUser.getusername(), is("changedUsername"));
         assertThat(updatedUser.getFirstName(), is("newFirstName"));

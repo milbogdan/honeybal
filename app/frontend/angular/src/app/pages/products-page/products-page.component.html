@@ -1,19 +1,30 @@
-<div *ngIf="loading" class="loader">
-    <loader></loader>
+<!-- Loader -->
+<div *ngIf="0" class="w-screen h-screen bg-[#f2f4fc] flex items-center justify-center">
+  <loader></loader>
 </div>
 
-<div id="page-wrapper">
-    <app-navbar></app-navbar>
+<!-- Page Wrapper -->
+<div *ngIf="1" class="min-h-screen bg-[#f2f4fc] overflow-y-auto overflow-x-hidden">
+  <app-navbar></app-navbar>
 
-    <div class="container search-view-wrapper">
-        <search-bar></search-bar>
-        <view-change></view-change>
+  <!-- Search Bar + View Toggle -->
+  <div class="w-full max-w-full px-4 md:px-8 flex flex-col md:flex-row justify-between items-center mt-8 gap-4">
+    <search-bar></search-bar>
+    <view-change></view-change>
+  </div>
+
+  <!-- Content: Filter + Product List -->
+  <div class="w-full max-w-full px-4 md:px-8 grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-6 my-8">
+    <!-- Product Filter -->
+    <div class="w-full">
+      <product-filter></product-filter>
     </div>
 
-    <div class="content__wrapper container">
-        <!-- *ngIf="!isMobile" -->
-        <product-filter></product-filter>
-
-        <product-list></product-list>
+    <!-- Product List -->
+    <div class="w-full">
+      <product-list></product-list>
     </div>
+  </div>
+
+  <app-footer></app-footer>
 </div>

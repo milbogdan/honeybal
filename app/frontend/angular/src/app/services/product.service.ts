@@ -9,6 +9,7 @@ import { Product } from '../models/product.interface';
 })
 export class ProductService {
     private http : HttpClient = inject(HttpClient);
+    loading : boolean = false;
     
     getAllProducts(pageNumber : number, pageSize : number, filters? : any) : Observable<Product[]>{
         let params = new HttpParams();
@@ -43,5 +44,9 @@ export class ProductService {
             product,
             {withCredentials:true}
         )
+    }
+
+    getProductById(id : number) : Observable<Product>{
+        return this.http.get<Product>(environment.apiUrl + `products/get/${id}`);
     }
 }

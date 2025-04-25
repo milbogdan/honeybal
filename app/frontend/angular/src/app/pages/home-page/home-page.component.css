@@ -15,3 +15,11 @@
     overflow-y: auto !important;
     overflow-x: hidden !important;
 }
+
+#footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f2f4fc;
+    text-align: center;
+}

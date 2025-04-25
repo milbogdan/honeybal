@@ -13,6 +13,7 @@ export class CartSidebarComponent {
   @Input() visible! : boolean;
   @Output() closeEmitter : EventEmitter<boolean> = new EventEmitter<boolean>();
   cartItems: any[] = [];
+  numOfItemsIncart : number = 0;
   cartService : CartService = inject(CartService);
   router : Router = inject(Router);
 
@@ -22,6 +23,7 @@ export class CartSidebarComponent {
         this.cartItems = cartItems;
       }
     });
+    this.numOfItemsIncart = this.cartItems.length; 
   }
 
   closeSidebar() : void {

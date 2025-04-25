@@ -9,4 +9,7 @@ export interface User {
     role: string;
     updatedAt: string;
     username: string;
+    phone?: number;
+    allowEmailNotifications?: boolean;
+    allowPushNotifications?: boolean;
 }

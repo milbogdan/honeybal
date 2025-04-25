@@ -1,4 +1,5 @@
 package com.example.backend_app.orders.services;
+import com.example.backend_app.auth.services.CurrentUserUtil;
 import com.example.backend_app.global.exception.ExceptionBadRequest;
 import com.example.backend_app.global.exception.ExceptionUnauthorized;
 import com.example.backend_app.orders.DTOs.MakeOrderDTO;
@@ -30,8 +31,6 @@ public class OrderService {
     private final DeliveryTypesService deliveryTypesService;
     private final ProductVariationService productVariationService;
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
-
 
     public Order makeOrder(MakeOrderDTO madeOrder) {
         if(!StringUtils.hasText(madeOrder.getAddress())) throw new ExceptionBadRequest("Address is empty");
@@ -44,10 +43,8 @@ public class OrderService {
         order.setPhoneNumber(madeOrder.getPhoneNumber());
         order.setEmail(madeOrder.getEmail());
 
-        Object currentUserObject = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (currentUserObject instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) currentUserObject;
-            User currentUser=userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+        User currentUser = CurrentUserUtil.getCurrentUser();
+        if (currentUser != null) {
             order.setUser(currentUser);
         }
         else{
@@ -83,5 +80,11 @@ public class OrderService {
     public Page<Order> getAll(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page,pageSize);
         return orderRepository.findAll(pageable);
+    }
+
+    public Page<Order> getAllForUser(int page, int pageSize) {
+        User user = CurrentUserUtil.getCurrentUser();
+        Pageable pageable = PageRequest.of(page,pageSize);
+        return orderRepository.findAllByUserId(pageable,user.getId());
     }
 }

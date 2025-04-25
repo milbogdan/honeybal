@@ -1,5 +1,6 @@
 package com.example.backend_app.global.config;
 
+import com.example.backend_app.global.exception.CustomExceptionHandlers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +20,18 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final CustomExceptionHandlers customExceptionHandlers;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       http
+
+        http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         //user endpoints
                         .requestMatchers(HttpMethod.GET,"/api/users/get/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/users/getAll").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/api/users/put/{id}").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/users/put").authenticated()
 
                         //product endpoints
                         .requestMatchers(HttpMethod.POST,"/api/products/post").authenticated()
@@ -43,13 +46,22 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"/api/productCategories/post").authenticated()
                         .requestMatchers(HttpMethod.PUT,"/api/productCategories/put/{id}").authenticated()
 
+                        //wishlist endpoints
+                        .requestMatchers(HttpMethod.POST,"/api/wishlist/post").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/wishlist/get/getAll").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/wishlist/get/delete").authenticated()
+
                         //productVariation endpoints
                         .requestMatchers(HttpMethod.DELETE,"/api/productVariations/delete/{id}").authenticated()
 
                         //order endpoints
                         .requestMatchers(HttpMethod.POST,"/api/orders/post").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/orders/getAll").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/orders/getAllForUser").authenticated()
 
+                        //rabbitmq endpoints
+                        .requestMatchers(HttpMethod.POST,"/api/rabbit/publish").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/rabbit/publishEmail").permitAll()
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/swagger-ui/**",
@@ -59,11 +71,16 @@ public class SecurityConfiguration {
                 .formLogin(form -> form.disable())
                 .logout(logout -> logout.permitAll());
 
-       http.authenticationProvider(authenticationProvider);
-       http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authenticationProvider(authenticationProvider);
 
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling(ex -> ex
+                .authenticationEntryPoint(customExceptionHandlers.customAuthenticationEntryPoint())
+                .accessDeniedHandler(customExceptionHandlers.customAccessDeniedHandler())
+        );
 
-       http.cors();
+        http.cors();
+
 
        return http.build();
     }

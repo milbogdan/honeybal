@@ -1,64 +1,36 @@
-<header class="header">
-    <nav class="nav">
-        <div class="nav__data">
-        <a  class="nav__logo" routerLink="/home">
-            <img src="assets/logoFinal.png" alt="logo">
+<div *ngIf="(isLoading$ | async)" class="loader">
+    <loader></loader>
+</div>
+
+<header class="navbar">
+  <div class="navbar__container py-3">
+    <a class="navbar__brand" routerLink="/home">honeybal</a>
+
+    <button class="navbar__toggle" (click)="toggleMenu()">
+      <i class="pi pi-bars" *ngIf="!isMenuOpen"></i>
+      <i class="pi pi-times" *ngIf="isMenuOpen"></i>
+    </button>
+
+    <nav class="navbar__menu" [class.active]="isMenuOpen">
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+      <a routerLink="/gallery" routerLinkActive="active">Gallery</a>
+      <a routerLink="/about" routerLinkActive="active">About</a>
+      <a routerLink="/login" routerLinkActive="active" *ngIf="!loggedUser">Login</a>
+
+      <ng-container *ngIf="loggedUser">
+        <a routerLink="/profile"><i class="pi pi-user bg-white rounded-full p-2 hover:text-[#f8b500] transition-all"></i></a>
+        <a routerLink="/"><i class="pi pi-bell bg-white rounded-full p-2 hover:text-[#f8b500] transition-all"></i></a>
+        <a (click)="logout()"><i class="pi pi-sign-out bg-white rounded-full p-2 hover:text-[#f8b500] transition-all"></i></a>
+      </ng-container>
+
+        <a class="cart-icon bg-zinc" (click)="openCart()">
+            <i class="pi pi-shopping-cart bg-white rounded-full p-2 hover:text-[#f8b500] transition-all"></i>
         </a>
-
-        <div class="nav__toggle" (click)="toggleMenu()">
-            <i class="pi pi-bars" *ngIf="!isMenuOpen"></i>
-            <i class="pi pi-times" *ngIf="isMenuOpen"></i>
-        </div>
-        </div>
-        
-        <div class="nav__menu" [class.show-menu]="isMenuOpen">
-        <ul class="nav__list">
-            <li><a routerLink="/home" class="nav__link">Home</a></li>
-            <li><a routerLink="/products" class="nav__link">Products</a></li>
-
-            <li class="dropdown__item">
-            <div class="nav__link">
-                About Us <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-            </div>
-            </li>
-
-            <li><a class="nav__link">Gallery</a></li>
-
-            <li>
-                <div class="nav__link flex items-center gap-2">
-                    <p-avatar shape="circle" icon="pi pi-shopping-cart" (click)="openCart()"/>
-                </div>
-            </li>
-
-            <li *ngIf="user == null"><a routerLink="/login" class="nav__link">Login</a></li>
-
-            <li *ngIf="(user)" class="dropdown__item">
-            <div class="nav__link flex items-center gap-2">
-                <p-avatar shape="circle" icon="pi pi-user"/>
-            </div>
-            <ul class="dropdown__menu">
-                <li>
-                <a href="#" class="dropdown__link">
-                    <i class="pi pi-user"></i> Profile
-                </a>
-                </li>
-                <li>
-                <a href="#" class="dropdown__link">
-                    <i class="pi pi-envelope"></i> Messages
-                </a>
-                </li>
-                <li>
-                <a class="dropdown__link" (click)="logout()">
-                    <i class="pi pi-sign-out"></i> Logout
-                </a>
-                </li>
-            </ul>
-            </li>
-        </ul>
-        </div>
     </nav>
+  </div>
 </header>
-  
+
 <div class="backdrop" [ngClass]="{show : visible$ | async}" (click)="closeCart()"></div>
 <cart-sidebar 
 (closeEmitter)="closeCart()"

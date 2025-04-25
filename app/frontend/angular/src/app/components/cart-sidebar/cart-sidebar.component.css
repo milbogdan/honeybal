@@ -181,6 +181,7 @@ button:hover{
 }
 
 .cart-actions button {
+    flex: 1;
     border: none;
     background-color: #000;
     color: #fff;
@@ -190,8 +191,4 @@ button:hover{
     text-transform: uppercase;
     letter-spacing: 2px;
     cursor: pointer;
-}
-
-.cart-actions button:nth-of-type(2){
-    background: rgb(244,179,21);
 }

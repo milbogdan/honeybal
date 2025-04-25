@@ -20,7 +20,7 @@ target/
 *.ipr
 
 #Ignoring environment variables
-.env
+a
 
 ### NetBeans ###
 /nbproject/private/
