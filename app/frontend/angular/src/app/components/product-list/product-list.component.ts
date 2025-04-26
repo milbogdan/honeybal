@@ -26,7 +26,7 @@ export class ProductListComponent {
   currentFillters: any = {};
   filterSubscription!: Subscription;
   selectedVariations: Map<number, VariationProducts> = new Map();
-  favoriteProductIds: number[] = [];
+  favoriteVatiation: any[] = [];
 
   productService: ProductService = inject(ProductService);
   filterService : FilterService = inject(FilterService);
@@ -35,9 +35,14 @@ export class ProductListComponent {
   ngOnInit(){
     this.filterSubscription = this.filterService.filter$.subscribe((filters) => {
       this.currentFillters = filters;
-      this.fetchProducts(this.currentPage, this.rows, this.currentFillters);
-      this.fetchFavoriteProducts(this.currentPage, this.rows);
+      this.loadData();
     });
+  }
+
+  async loadData() {
+    await this.fetchFavoriteProducts(this.currentPage, this.rows);
+  
+    this.fetchProducts(this.currentPage, this.rows, this.currentFillters);
   }
 
   onPageChange(event: any) {
@@ -51,34 +56,36 @@ export class ProductListComponent {
   private fetchFavoriteProducts(currentPage : number, pageSize: number) {
     this.favoriteProductsService.getFavoriteProducts(currentPage, pageSize).subscribe({
       next: (response: any) => {
-        this.favoriteProductIds = response.content.map((fav : any) => fav.id);
-        console.log(this.favoriteProductIds);
+        console.log(response.content);
+        this.favoriteVatiation = response.content;
       }
     });
   }
 
-  private fetchProducts(currentPage : number, pageSize: number, filters: any){
+  private fetchProducts(currentPage : number, pageSize: number, filters: any) {
     this.productService.loading = true;
 
     this.productService.getAllProducts(currentPage, pageSize, filters).subscribe({
       next: (data : any) => {
         this.totalElements = data.totalElements;  
         this.totalPages = data.totalPages;
-        this.products = data.content;
         
-        if(filters.inStock != null){
-          this.products = data.content.map((product : Product) => {
+        let fetchedProducts = data.content;
+
+        if (filters.inStock != null) {
+          fetchedProducts = fetchedProducts.map((product : Product) => {
             const filteredVariations = product.variations.filter((variation : VariationProducts) => variation.in_stock === filters.inStock);
             return { ...product, variations: filteredVariations };
           }).filter((product : Product) => product.variations.length > 0);
         }
 
-        // this.loadingSubject.next(false);
+        this.products = this.markFavoriteProducts(fetchedProducts);
+        console.log(this.products);
+
         this.productService.loading = false;
       },
       error: (err : any) => {
-        // console.log(err);
-        // this.loadingSubject.next(false);
+        console.error(err);
         this.productService.loading = false;
       }
     });
@@ -92,18 +99,29 @@ export class ProductListComponent {
     return this.selectedVariations.get(productId) ?? null;
   }
 
-  getFavoritesMap(product: Product): Map<number, number[]> {
-    const favoritesMap = new Map<number, number[]>();
-    // console.log(this.favoriteProductIds)
+  private markFavoriteProducts(products: Product[]): Product[] {
+    const favoriteVariationIds = new Map(
+      this.favoriteVatiation.map(fav => [fav.product.productVariation.id, fav.id])
+    );
+  
+    return products.map(product => {
+      product.variations = product.variations.map(variation => {
+        const wishId = favoriteVariationIds.get(variation.id);
+        variation.isFavorite = wishId !== undefined;
+        variation.wishId = wishId;
+        return variation;
+      });
+      return product;
+    });
+  }
 
-    const favoriteIds = product.variations
-      .filter(variation => this.favoriteProductIds.includes(variation.id))
-      .map(variation => variation.id);
-    console.log("!: ", favoriteIds);
-  
-    favoritesMap.set(product.id, favoriteIds);
-  
-    return favoritesMap;
+  updateProduct(updatedProduct: Product) {
+    this.products = this.products.map(product => {
+      if (product.id === updatedProduct.id) {
+        return updatedProduct;
+      }
+      return product;
+    });
   }
 
   ngOnDestroy(): void {

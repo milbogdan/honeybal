@@ -2,8 +2,8 @@
   
   <!-- Favorite product  -->
   <div (click)="toggleFavorite()" class="bg-white rounded-md absolute m-3 top-0 right-0 cursor-pointer shadow-md hover:scale-110 transition-transform">
-    <i *ngIf="isFavorite === false" class="pi pi-star p-2 text-lg text-gray-400"></i>
-    <i *ngIf="isFavorite === true" class="pi pi-star-fill p-2 text-lg text-amber-400"></i>
+    <i *ngIf="selectedVariation?.isFavorite === false" class="pi pi-star p-2 text-lg text-gray-400"></i>
+    <i *ngIf="selectedVariation?.isFavorite === true" class="pi pi-star-fill p-2 text-lg text-amber-400"></i>
   </div>
 
   <!-- Slika -->

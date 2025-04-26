@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Product } from '../../models/product.interface';
 import { VariationProducts } from '../../models/variationProducts.interface';
 import { CartService } from '../../services/cart.service';
@@ -16,8 +16,8 @@ export class ProductComponent {
   @Input() product! : Product;
   selectedVariation : VariationProducts | null = null;
   quantity : number = 1;
-  isFavorite: boolean = false;
-  @Input() productFavoriteMap!: Map<number, number[]>;
+  @Input() isFavorite?: boolean;
+  @Output() favoriteChanged = new EventEmitter<Product>();
 
   cartService : CartService = inject(CartService);
   router : Router = inject(Router);
@@ -25,30 +25,47 @@ export class ProductComponent {
 
   ngOnInit(){
     this.getInStockItem();
-    console.log("TEST: ", this.productFavoriteMap);
   }
 
   toggleFavorite() {
     if (!this.selectedVariation) return;
+    const updatedProduct = { ...this.product };
   
-    if (!this.isFavorite) {
+    if (!this.selectedVariation.isFavorite) {
       this.favoriteProductService.addProductToFavorite(this.selectedVariation.id).subscribe({
         next: () => {
           this.isFavorite = true;
+          
+          updatedProduct.variations = updatedProduct.variations.map(variation => {
+            if (variation.id === this.selectedVariation?.id) {
+              variation.isFavorite = true;
+            }
+            return variation;
+          });
+          this.favoriteChanged.emit(updatedProduct);
         },
         error: () => {
           console.error('Neuspešno dodavanje u favorite');
         }
       });
     } else {
-      this.favoriteProductService.removeProductFromFavorite(this.selectedVariation.id).subscribe({
-        next: () => {
-          this.isFavorite = false;
-        },
-        error: () => {
-          console.error('Neuspešno uklanjanje iz favorita');
-        }
-      });
+      if (this.selectedVariation?.wishId) {
+        this.favoriteProductService.removeProductFromFavorite(this.selectedVariation.wishId).subscribe({
+          next: () => {
+            this.isFavorite = false;
+            updatedProduct.variations = updatedProduct.variations.map(variation => {
+              if (variation.id === this.selectedVariation?.id) {
+                variation.isFavorite = false;
+              }
+              return variation;
+            });
+            this.favoriteChanged.emit(updatedProduct);
+          },
+          error: () => {
+            console.error('Neuspešno uklanjanje iz favorita');
+          }
+        });
+      }
     }
   }  
 
@@ -58,10 +75,10 @@ export class ProductComponent {
     return this.selectedVariation;  
   }
 
-  onSelectVariation(variation : VariationProducts | null){
-    if(variation?.in_stock !== true && this.product.variations.length == 1) return;
-    
-    this.selectedVariation = variation; 
+  onSelectVariation(variation: VariationProducts | null) {
+    if (variation?.in_stock !== true && this.product.variations.length == 1) return;
+  
+    this.selectedVariation = variation;
   }
 
   increaseQuantity(){

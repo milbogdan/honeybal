@@ -6,4 +6,6 @@ export interface VariationProducts {
     price: number;
     discount: number;
     in_stock: boolean;
+    isFavorite?: boolean; 
+    wishId?: number;
 }
