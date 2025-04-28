@@ -20,7 +20,18 @@
 
       <ng-container *ngIf="loggedUser">
         <a routerLink="/profile"><i class="pi pi-user bg-white rounded-full p-2 hover:text-[#f8b500] transition-all"></i></a>
-        <a routerLink="/"><i class="pi pi-bell bg-white rounded-full p-2 hover:text-[#f8b500] transition-all"></i></a>
+
+        <div class="notifications-wrapper relative">
+          <i  
+             class="pi pi-bell bg-white rounded-full p-2 hover:text-[#f8b500] transition-all cursor-pointer"
+             (click)="overlayPanel.toggle($event)">
+          </i>
+        
+          <p-overlayPanel #overlayPanel [showCloseIcon]="true" [dismissable]="true" my="top left" at="bottom left" [style]="{ width: '450px' }">
+            <notifications></notifications>
+          </p-overlayPanel>
+        </div>
+        
         <a class="cart-icon bg-zinc" (click)="openCart()">
           <i class="pi pi-shopping-cart bg-white rounded-full p-2 hover:text-[#f8b500] transition-all"></i>
         </a>

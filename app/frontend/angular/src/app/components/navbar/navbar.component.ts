@@ -8,6 +8,9 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { CartSidebarComponent } from '../cart-sidebar/cart-sidebar.component';
 import { LoaderComponent } from '../loader/loader.component';
+import { NotificationsComponent } from '../notifications/notifications.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +22,9 @@ import { LoaderComponent } from '../loader/loader.component';
     AsyncPipe,
     RouterModule,
     LoaderComponent,
+    NotificationsComponent,
+    OverlayPanelModule,
+    ButtonModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',

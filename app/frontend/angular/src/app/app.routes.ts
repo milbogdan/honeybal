@@ -11,10 +11,12 @@ import { ProductDetailPageComponent } from './pages/product-detail-page/product-
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomePageComponent },
+    { path: 'about', component: AboutPageComponent },
     { path: 'profile', component: ProfilePageComponent, canActivate: [authGuard] },
     { path: 'products', component: ProductsPageComponent },
     { path: 'login', component: LoginPageComponent, canActivate: [loginGuard] },
